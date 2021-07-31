@@ -10,7 +10,7 @@
 #define GET_FUNC(module, name, type) (type)dlsym(module, name);
 #endif
 
-bool GoResource::Start() {
+bool Go::Resource::Start() {
     auto module = LOAD_LIB((_resource->GetPath().ToString() + SEPARATOR
             + _resource->GetMain().ToString()).c_str());
     if(module == nullptr)
@@ -34,6 +34,6 @@ bool GoResource::Start() {
     return true;
 }
 
-bool GoResource::Stop() {
+bool Go::Resource::Stop() {
     return true;
 }

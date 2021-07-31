@@ -1,17 +1,16 @@
 #include "GoRuntime.h"
 #include "GoResource.h"
 
-GoRuntime* GoRuntime::Instance = nullptr;
+Go::Runtime* Go::Runtime::Instance = nullptr;
 
-GoRuntime *GoRuntime::GetInstance() {
-    if (Instance == nullptr) Instance = new GoRuntime();
+Go::Runtime* Go::Runtime::GetInstance() {
+    if (Instance == nullptr) Instance = new Go::Runtime();
 
     return Instance;
 }
 
-alt::IResource::Impl *GoRuntime::CreateImpl(alt::IResource *resource) {
-    return new GoResource(this, resource);
+alt::IResource::Impl* Go::Runtime::CreateImpl(alt::IResource* resource) {
+    return new Go::Resource(this, resource);
 }
 
-// Not implemented
-void GoRuntime::DestroyImpl(alt::IResource::Impl *impl) { }
+void Go::Runtime::DestroyImpl(alt::IResource::Impl* impl) { }

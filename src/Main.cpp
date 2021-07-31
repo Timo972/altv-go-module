@@ -4,7 +4,7 @@
 EXPORT bool altMain(alt::ICore* core) {
     alt::ICore::SetInstance(core);
 
-    auto runtime = GoRuntime::GetInstance();
+    auto runtime = Go::Runtime::GetInstance();
 
     core->RegisterScriptRuntime("go", runtime);
     core->LogInfo("Go Module Loaded");
