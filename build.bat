@@ -3,8 +3,8 @@ IF NOT EXIST build\ (
     mkdir build
 )
 
-IF NOT EXIST dist\ (
-    mkdir dist
+IF NOT EXIST bin\ (
+    mkdir bin
 )
 pushd build
 cmake -G"Visual Studio 16" -A x64 ..
