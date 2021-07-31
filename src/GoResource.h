@@ -9,8 +9,11 @@ namespace Go {
         Go::Runtime* _runtime;
         alt::IResource* _resource;
     public:
-        Resource(Go::Runtime* runtime, alt::IResource* resource) : _runtime(runtime), _resource(resource) {}
+        Resource(Go::Runtime* runtime, alt::IResource* resource);
+        ~Resource() override = default;
         bool Start() override;
         bool Stop() override;
+        bool OnEvent(const alt::CEvent *ev) override;
+        void OnTick() override;
     };
 }

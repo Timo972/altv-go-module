@@ -10,6 +10,8 @@
 #define GET_FUNC(module, name, type) (type)dlsym(module, name);
 #endif
 
+Go::Resource::Resource(Go::Runtime* runtime, alt::IResource* resource) : _runtime(runtime), _resource(resource) { }
+
 bool Go::Resource::Start() {
     auto module = LOAD_LIB((_resource->GetPath().ToString() + SEPARATOR
             + _resource->GetMain().ToString()).c_str());
@@ -37,3 +39,11 @@ bool Go::Resource::Start() {
 bool Go::Resource::Stop() {
     return true;
 }
+
+bool Go::Resource::OnEvent(const alt::CEvent *ev) {
+    return true;
+}
+
+void Go::Resource::OnTick() { }
+
+
