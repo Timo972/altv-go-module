@@ -40,7 +40,7 @@ bool Go::Resource::Stop() {
     return true;
 }
 
-bool Go::Resource::OnEvent(const alt::CEvent *ev) {
+bool Go::Resource::OnEvent(const alt::CEvent* ev) {
     return true;
 }
 

@@ -6,4 +6,6 @@
 #define SEPARATOR "/"
 #endif
 
+#define ALT_SERVER_API
+
 #include "SDK.h"

@@ -20,4 +20,3 @@ void Go::Runtime::DestroyImpl(alt::IResource::Impl* impl) {
 
     if(resource != nullptr) delete resource;
 }
-
