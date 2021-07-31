@@ -21,4 +21,4 @@ include_directories(
 add_library(
         ${PROJECT_MODULE_NAME} SHARED
         ${PROJECT_SOURCE_FILES}
-        src/GoRuntime.cpp src/GoRuntime.h src/GoResource.cpp src/GoResource.h)
+)
