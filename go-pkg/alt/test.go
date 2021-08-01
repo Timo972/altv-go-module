@@ -1,3 +1,7 @@
 package alt
 
-func Test() {}
+import "fmt"
+
+func Test() {
+	fmt.Println("---------> Testing Go API")
+}
