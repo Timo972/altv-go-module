@@ -22,8 +22,8 @@ bool Go::Resource::Start() {
 
         return false;
     }
-
-    auto main = GET_FUNC(module, "StartResource", void(*)());
+    
+    auto main = GET_FUNC(module, "InitResource", void(*)());
     if(main == nullptr)
     {
         alt::ICore::Instance()

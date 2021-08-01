@@ -1,0 +1,3 @@
+package alt
+
+func Test() {}

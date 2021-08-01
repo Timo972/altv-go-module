@@ -3,10 +3,10 @@ package main
 import "C"
 import "fmt"
 
+func main() {}
 
-func main() { }
-
-//export StartResource
-func StartResource() {
+//export InitResource
+func InitResource() {
 	fmt.Println("---------> Hello from go resource")
 }
+
