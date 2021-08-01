@@ -5,17 +5,17 @@ set(PROJECT_MODULE_NAME go-module)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set_target_properties(PROPERTIES PREFIX "")
 
-file(GLOB_RECURSE PROJECT_SOURCE_FILES "./src/*.h" "./src/*.hpp" "./src/*.cpp")
+file(GLOB_RECURSE PROJECT_SOURCE_FILES "runtime/src/*.h" "runtime/src/*.hpp" "runtime/src/*.cpp")
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
 include_directories(
-
-        "${PROJECT_SOURCE_DIR}/src"
-        "${PROJECT_SOURCE_DIR}/vendors/cpp-sdk"
+        "runtime/src"
+        "runtime/vendors/cpp-sdk"
 )
 
 add_library(
