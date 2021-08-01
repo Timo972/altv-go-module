@@ -1,1 +1,1 @@
-module "github.com/shockdev04/altv-go-module/tree/master/go-pkg"
+module "alt-go-pkg"
