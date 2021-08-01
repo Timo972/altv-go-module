@@ -1,1 +1,0 @@
-module "github.com/shockdev04/altv-go-module"
