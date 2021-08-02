@@ -23,8 +23,8 @@ bool Go::Resource::Start() {
         return false;
     }
 
-    auto main = GET_FUNC(module, "InitResource", void(*)());
-    if(main == nullptr)
+    auto start = GET_FUNC(module, "Start", void(*)());
+    if(start == nullptr)
     {
         alt::ICore::Instance()
             .LogError("Main entrypoint not found");
@@ -32,7 +32,7 @@ bool Go::Resource::Start() {
         return false;
     }
 
-    main();
+    start();
     return true;
 }
 
