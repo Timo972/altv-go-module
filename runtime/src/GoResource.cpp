@@ -41,6 +41,13 @@ bool Go::Resource::Stop() {
 }
 
 bool Go::Resource::OnEvent(const alt::CEvent* ev) {
+    auto type = ev->GetType();
+
+    if(!IsEventRegistered(type)) {
+        return false;
+    }
+
+    NotifyEvent(ev);
     return true;
 }
 

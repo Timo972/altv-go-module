@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_target_properties(PROPERTIES PREFIX "")
 
-file(GLOB_RECURSE PROJECT_SOURCE_FILES "runtime/src/*.h" "runtime/src/*.hpp" "runtime/src/*.cpp")
+file(GLOB_RECURSE PROJECT_SOURCE_FILES "runtime/src/*.h" "runtime/src/*.hpp" "runtime/src/*.cpp"
+        "runtime/src/events/*.h" "runtime/src/events/*.hpp" "runtime/src/events/*.cpp")
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
