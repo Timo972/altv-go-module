@@ -1,21 +1,11 @@
 #include "GoResource.h"
 
-#ifndef IS_UNIX
-#include "windows.h"
-#define LOAD_LIB(path) LoadLibrary(path)
-#define GET_FUNC(module, name, type) (type)GetProcAddress(module, name);
-#else
-#include <dlfcn.h>
-#define LOAD_LIBRARY(name) dlopen(name, RTLD_NOW);
-#define GET_FUNC(module, name, type) (type)dlsym(module, name);
-#endif
-
 Go::Resource::Resource(Go::Runtime* runtime, alt::IResource* resource) : _runtime(runtime), _resource(resource) { }
 
 bool Go::Resource::Start() {
-    auto module = LOAD_LIB((_resource->GetPath().ToString() + SEPARATOR
+    Module = LOAD_LIB((_resource->GetPath().ToString() + SEPARATOR
             + _resource->GetMain().ToString()).c_str());
-    if(module == nullptr)
+    if(Module == nullptr)
     {
         alt::ICore::Instance()
             .LogError("Failed to open main file");
@@ -23,7 +13,7 @@ bool Go::Resource::Start() {
         return false;
     }
 
-    auto start = GET_FUNC(module, "Start", void(*)());
+    auto start = GET_FUNC(Module, "Start", void(*)());
     if(start == nullptr)
     {
         alt::ICore::Instance()
