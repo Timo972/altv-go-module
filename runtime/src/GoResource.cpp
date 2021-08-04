@@ -37,7 +37,7 @@ bool Go::Resource::OnEvent(const alt::CEvent* ev) {
         return false;
     }
 
-    NotifyEvent(ev);
+    NotifyEvent(ev, _resource->GetName().CStr(), Module);
     return true;
 }
 

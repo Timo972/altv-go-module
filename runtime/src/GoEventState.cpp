@@ -14,7 +14,7 @@ void Go::EventContext::SetState(IEventState* const s) {
     _state = s;
 }
 
-void Go::EventContext::Request(const alt::CEvent* ev) {
-    _state->Call(ev);
+void Go::EventContext::Request(const alt::CEvent* ev,  const std::string& resourceName, ModuleLibrary* module) {
+    _state->Call(ev, resourceName, module);
 }
 

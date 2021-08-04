@@ -21,7 +21,7 @@ bool Go::EventsManager::IsEventRegistered(alt::CEvent::Type type) {
     return std::find(_registeredEvents.begin(), _registeredEvents.end(), type) != _registeredEvents.end();
 }
 
-void Go::EventsManager::NotifyEvent(const alt::CEvent* ev) {
+void Go::EventsManager::NotifyEvent(const alt::CEvent* ev, const std::string& resourceName, ModuleLibrary* module) {
     auto type = ev->GetType();
 
     switch (type) {
@@ -120,5 +120,5 @@ void Go::EventsManager::NotifyEvent(const alt::CEvent* ev) {
             break;
     }
 
-    _eventContext->Request(ev);
+    _eventContext->Request(ev, resourceName, module);
 }
