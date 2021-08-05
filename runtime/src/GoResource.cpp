@@ -13,6 +13,21 @@ bool Go::Resource::Start() {
         return false;
     }
 
+    auto resourceName = _resource->GetName().CStr();
+    auto resourcePath = _resource->GetPath().CStr();
+    auto resourcePtr = _resource;
+
+    auto go = GET_FUNC(Module, "initGoResource", void(*)(alt::IResource* resourcePtr,
+            const char* resourceName, const char* ResourcePath));
+    if(go == nullptr) {
+        alt::ICore::Instance()
+            .LogError("Error while initializing Go Resource");
+
+        return false;
+    }
+
+    go(resourcePtr, resourceName, resourcePath);
+
     auto start = GET_FUNC(Module, "Start", void(*)());
     if(start == nullptr)
     {
