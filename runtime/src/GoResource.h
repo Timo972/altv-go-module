@@ -19,5 +19,6 @@ namespace Go {
             bool Stop() override;
             bool OnEvent(const alt::CEvent *ev) override;
             void OnTick() override;
+
         };
 }

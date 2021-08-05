@@ -11,6 +11,7 @@ Go::Runtime* Go::Runtime::GetInstance() {
 
 alt::IResource::Impl* Go::Runtime::CreateImpl(alt::IResource* impl) {
     auto resource = new Go::Resource(this, impl);
+    _resources.push_back({{impl->GetName().CStr(), resource}});
 
     return resource;
 }
@@ -20,3 +21,15 @@ void Go::Runtime::DestroyImpl(alt::IResource::Impl* impl) {
 
     if(resource != nullptr) delete resource;
 }
+
+
+alt::IResource::Impl *Go::Runtime::GetResource(const std::string& name) {
+    for (auto& resource : _resources) {
+       if (resource.find(name) != resource.end()) {
+           return resource[name];
+       }
+    }
+
+    return nullptr;
+}
+
