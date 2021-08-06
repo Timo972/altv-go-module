@@ -1,6 +1,6 @@
 #pragma once
 
-#ifndef IS_UNIX
+#ifdef WIN32
 #include "windows.h"
 #define SEPARATOR "\\"
 #define LOAD_LIB(path) LoadLibrary(path)
