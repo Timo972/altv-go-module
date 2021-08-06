@@ -11,5 +11,6 @@ using ModuleLibrary = HINSTANCE__;
 #define SEPARATOR "/"
 #define LOAD_LIB(name) dlopen(name, RTLD_NOW);
 #define GET_FUNC(module, name, type) (type)dlsym(module, name);
+using ModuleLibrary = void;
 #endif
 
