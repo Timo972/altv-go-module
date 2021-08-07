@@ -6,16 +6,19 @@
 
 #include "Main.h"
 
-namespace Go {
-    class Runtime: public alt::IScriptRuntime {
+namespace Go
+{
+    class Runtime : public alt::IScriptRuntime
+    {
     private:
-        static Runtime* Instance;
-        std::vector<std::map<std::string, alt::IResource::Impl*>> _resources;
+        static Runtime *Instance;
+        std::vector<std::map<std::string, alt::IResource::Impl *>> _resources;
+
     public:
         Runtime() = default;
-        alt::IResource::Impl* CreateImpl(alt::IResource* resource) override;
-        void DestroyImpl(alt::IResource::Impl* impl) override;
-        alt::IResource::Impl* GetResource(const std::string& name);
-        static Go::Runtime* GetInstance();
+        alt::IResource::Impl *CreateImpl(alt::IResource *resource) override;
+        void DestroyImpl(alt::IResource::Impl *impl) override;
+        alt::IResource::Impl *GetResource(const std::string &name);
+        static Go::Runtime *GetInstance();
     };
 }

@@ -5,9 +5,10 @@
 #include "GoResource.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
-    EXPORT bool RegisterAltEvent(const char* resourceName, unsigned short eventType);
+    EXPORT bool RegisterAltEvent(const char *resourceName, unsigned short eventType);
 #ifdef __cplusplus
 }
 #endif
