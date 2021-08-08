@@ -1,5 +1,11 @@
 #include "BaseObject.h"
 
+EXPORT unsigned char BaseObject_GetType(void* base)
+{
+    auto baseObject = reinterpret_cast<alt::IBaseObject*>(base);
+    return static_cast<unsigned char>(baseObject->GetType());
+}
+
 EXPORT int BaseObject_HasMetaData(void* base, const char *key)
 {
     auto baseObject = reinterpret_cast<alt::IBaseObject*>(base);
@@ -11,6 +17,7 @@ EXPORT SentData BaseObject_GetMetaData(void* base, const char *key)
     auto baseObject = reinterpret_cast<alt::IBaseObject*>(base);
     auto meta = baseObject->GetMetaData(key).Get();
 
+    // Temporary
     SentData sentData;
     sentData.Ptr = meta;
     sentData.Type = static_cast<unsigned int>(meta->GetType());
