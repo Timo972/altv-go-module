@@ -24,7 +24,7 @@ bool Go::Resource::Start()
 
     go(_resource, _resource->GetName().CStr(), _resource->GetPath().CStr());
 
-    auto start = GET_FUNC(Module, "OnStart", void (*)());
+    auto start = GET_FUNC(Module, "onStart", void (*)());
     if (start == nullptr)
     {
         alt::ICore::Instance()

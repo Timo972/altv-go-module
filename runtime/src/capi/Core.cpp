@@ -24,3 +24,11 @@ EXPORT void Core_LogColored(const char *message)
 {
     alt::ICore::Instance().LogColored(message);
 }
+
+EXPORT void* CreateMValueBool(int val)
+{
+    auto value = alt::ICore::Instance().CreateMValueBool(val).Get();
+    value->AddRef();
+
+    return value;
+}

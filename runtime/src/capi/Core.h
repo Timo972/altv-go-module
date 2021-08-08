@@ -11,6 +11,7 @@ extern "C"
     EXPORT void Core_LogWarning(const char *message);
     EXPORT void Core_LogError(const char *message);
     EXPORT void Core_LogColored(const char *message);
+    EXPORT void *CreateMValueBool(int value);
 #ifdef __cplusplus
 }
 #endif
