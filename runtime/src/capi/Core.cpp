@@ -33,12 +33,15 @@ EXPORT void *Core_CreateMValueBool(int val)
     return value;
 }
 
+// Works, others wrong
 EXPORT void *Core_CreateMValueInt(long long val)
 {
-    auto value = alt::ICore::Instance().CreateMValueInt(val).Get();
+    auto value = alt::ICore::Instance().CreateMValueInt(val);
     value->AddRef();
 
-    return value;
+    alt::ICore::Instance().LogError(std::to_string(reinterpret_cast<long long>(value.Get())));
+
+    return value.Get();
 }
 
 EXPORT void *Core_CreateMValueUInt(unsigned long long val)
@@ -74,6 +77,7 @@ EXPORT bool Core_GetMValueBool(void *val)
 EXPORT long long Core_GetMValueInt(void *val)
 {
     auto value = reinterpret_cast<alt::IMValueInt*>(val);
+    alt::ICore::Instance().LogError(std::to_string(value->Value()));
     return value->Value();
 }
 

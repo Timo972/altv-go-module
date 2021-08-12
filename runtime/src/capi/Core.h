@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "Main.h"
 
 #ifdef __cplusplus
@@ -17,7 +18,7 @@ extern "C"
     EXPORT void *Core_CreateMValueDouble(double val);
     EXPORT void *Core_CreateMValueString(const char *val);
     EXPORT bool Core_GetMValueBool(void *val);
-    EXPORT long long Core_GetMValueInt(void *val);
+    EXPORT long long Core_GetMValueInt(void *val); 
     EXPORT unsigned long long Core_GetMValueUInt(void *val);
     EXPORT double Core_GetMValueDouble(void *val);
     EXPORT const char *Core_GetMValueString(void *val);

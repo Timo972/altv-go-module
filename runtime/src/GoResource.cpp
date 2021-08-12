@@ -13,6 +13,8 @@ bool Go::Resource::Start()
         return false;
     }
 
+    auto resourceName = _resource->GetName().CStr();
+    auto resourcePath = _resource->GetPath().CStr();
     auto go = GET_FUNC(Module, "initGoResource", void (*)(alt::IResource * resourcePtr, const char *resourceName, const char *ResourcePath));
     if (go == nullptr)
     {
@@ -22,14 +24,13 @@ bool Go::Resource::Start()
         return false;
     }
 
-    go(_resource, _resource->GetName().CStr(), _resource->GetPath().CStr());
+    go(_resource, resourceName, resourcePath);
 
-    auto start = GET_FUNC(Module, "onStart", void (*)());
+
+    auto start = GET_FUNC(Module, "OnStart", void (*)());
     if (start == nullptr)
     {
-        alt::ICore::Instance()
-            .LogError("Main entrypoint not found");
-
+        alt::ICore::Instance().LogError("Main entrypoint not found");
         return false;
     }
 
@@ -56,3 +57,4 @@ bool Go::Resource::OnEvent(const alt::CEvent *ev)
 }
 
 void Go::Resource::OnTick() {}
+

@@ -5,7 +5,7 @@
 // Temporary
 typedef struct {
     const void* Ptr;
-    unsigned int Type;
-} SentData;
+    unsigned char Type;
+} MetaData;
 
 #include "SDK.h"
