@@ -4,7 +4,8 @@
 #include "Library.h"
 #include "GoRuntime.h"
 #include "GoEventManager.h"
-#include "GoEventState.h"
+
+#include "events/PlayerConnectEvent.h"
 
 namespace Go
 {

@@ -34,6 +34,8 @@ bool Go::Resource::Start()
         return false;
     }
 
+    RegisterEventHandler(1, new PlayerConnectEvent());
+
     start();
     return true;
 }

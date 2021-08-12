@@ -6,20 +6,18 @@
 
 #include "Main.h"
 #include "Library.h"
-#include "GoEventState.h"
+#include "GoEventFactory.h"
 
 #include "./events/PlayerConnectEvent.h"
 
 namespace Go
 {
-    class EventsManager
+class EventsManager : public Go::EventFactory
     {
     private:
         std::vector<alt::CEvent::Type> _registeredEvents;
-        Go::EventContext *_eventContext;
-
     public:
-        EventsManager();
+        EventsManager() = default;
         bool RegisterEvent(alt::CEvent::Type type);
         bool UnregisterEvent(alt::CEvent::Type type);
         bool IsEventRegistered(alt::CEvent::Type type);

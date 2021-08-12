@@ -1,11 +1,12 @@
 #include "PlayerConnectEvent.h"
 
-void Go::PlayerConnectEvent::Call(const alt::CEvent *ev, const std::string &resourceName, ModuleLibrary *module)
+void Go::PlayerConnectEvent::Call(const alt::CEvent *ev, ModuleLibrary *module)
 {
-    auto call = GET_FUNC(module, "altPlayerConnectEvent", void (*)(alt::IPlayer *playerObject));
+    static auto call = GET_FUNC(module, "altPlayerConnectEvent", void (*)(alt::IPlayer *playerObject));
+
     if (call == nullptr)
     {
-        alt::ICore::Instance().LogError("Couldn't not call PlayerConnectEvent");
+        alt::ICore::Instance().LogError("Couldn't not call PlayerConnectEvent.");
         return;
     }
 
@@ -14,3 +15,4 @@ void Go::PlayerConnectEvent::Call(const alt::CEvent *ev, const std::string &reso
 
     call(player);
 }
+

@@ -2,14 +2,13 @@
 
 #include "Main.h"
 #include "Library.h"
-#include "GoEventState.h"
+#include "GoEventFactory.h"
 
 namespace Go
 {
-    class PlayerConnectEvent : public Go::IEventState
+    class PlayerConnectEvent : public Go::IEvent
     {
     public:
-        PlayerConnectEvent() = default;
-        void Call(const alt::CEvent *ev, const std::string &resourceName, ModuleLibrary *module) override;
+        void Call(const alt::CEvent *ev, ModuleLibrary *module) override;
     };
 }
