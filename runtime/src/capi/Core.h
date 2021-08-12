@@ -22,6 +22,8 @@ extern "C"
     EXPORT unsigned long long Core_GetMValueUInt(void *val);
     EXPORT double Core_GetMValueDouble(void *val);
     EXPORT const char *Core_GetMValueString(void *val);
+    EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
+                               float rotX, float rotY, float rotZ);
 #ifdef __cplusplus
 }
 #endif

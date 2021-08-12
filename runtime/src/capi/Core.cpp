@@ -112,3 +112,20 @@ EXPORT void *Core_CreateMValueDict()
 
 }
 */
+
+EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
+                           float rotX, float rotY, float rotZ)
+{
+    alt::Position position;
+    position.x = posX;
+    position.y = posY;
+    position.z = posZ;
+
+    alt::Rotation rotation;
+    rotation.roll = rotX;
+    rotation.pitch = rotY;
+    rotation.yaw = rotZ;
+
+    auto vehicle = alt::ICore::Instance().CreateVehicle(model, position, rotation);
+    return vehicle.Get();
+}

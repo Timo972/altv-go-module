@@ -39,3 +39,58 @@ EXPORT void Player_DeleteMetaData(void *base, const char *key)
     baseObject->DeleteMetaData(key);
     baseObject->RemoveRef();
 }
+
+EXPORT Position Player_GetPosition(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto pos = player->GetPosition();
+
+    Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+
+    return position;
+}
+
+EXPORT void Player_SetPosition(void *p, float x, float y, float z)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+
+    alt::Position position;
+    position.x = x;
+    position.y = y;
+    position.z = z;
+
+    player->SetPosition(position);
+}
+
+EXPORT long Player_GetDimension(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetDimension();
+}
+
+EXPORT void Player_SetDimension(void *p, long dimension)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->SetDimension(dimension);
+}
+
+EXPORT void Player_Spawn(void *p, float x, float y, float z, unsigned long delay)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+
+    alt::Position position;
+    position.x = x;
+    position.y = y;
+    position.z = z;
+
+    player->Spawn(position, delay);
+}
+
+EXPORT void Player_SetModel(void *p, unsigned long model)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->SetModel(model);
+}
