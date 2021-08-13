@@ -40,6 +40,76 @@ EXPORT void Player_DeleteMetaData(void *base, const char *key)
     baseObject->RemoveRef();
 }
 
+EXPORT int Player_HasSyncedMetaData(void* base, const char *key)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    return baseObject->HasSyncedMetaData(key);
+}
+
+
+EXPORT MetaData Player_GetSyncedMetaData(void* base, const char *key)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    auto meta = baseObject->GetSyncedMetaData(key);
+
+    // Temporary
+    MetaData metaData;
+    metaData.Ptr = meta.Get();
+    metaData.Type = static_cast<unsigned char>(meta->GetType());
+
+    return metaData;
+}
+
+EXPORT void Player_SetSyncedMetaData(void *base, const char *key, void *val)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+
+    baseObject->SetSyncedMetaData(key, value);
+}
+
+EXPORT void Player_DeleteSyncedMetaData(void *base, const char *key)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    baseObject->DeleteSyncedMetaData(key);
+    baseObject->RemoveRef();
+}
+
+EXPORT int Player_HasStreamSyncedMetaData(void* base, const char *key)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    return baseObject->HasStreamSyncedMetaData(key);
+}
+
+
+EXPORT MetaData Player_GetStreamSyncedMetaData(void* base, const char *key)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    auto meta = baseObject->GetStreamSyncedMetaData(key);
+
+    // Temporary
+    MetaData metaData;
+    metaData.Ptr = meta.Get();
+    metaData.Type = static_cast<unsigned char>(meta->GetType());
+
+    return metaData;
+}
+
+EXPORT void Player_SetStreamSyncedMetaData(void *base, const char *key, void *val)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+
+    baseObject->SetStreamSyncedMetaData(key, value);
+}
+
+EXPORT void Player_DeleteStreamSyncedMetaData(void *base, const char *key)
+{
+    auto baseObject = reinterpret_cast<alt::IPlayer*>(base);
+    baseObject->DeleteStreamSyncedMetaData(key);
+    baseObject->RemoveRef();
+}
+
 EXPORT Position Player_GetPosition(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
@@ -89,6 +159,18 @@ EXPORT void Player_Spawn(void *p, float x, float y, float z, unsigned long delay
     player->Spawn(position, delay);
 }
 
+EXPORT void Player_Despawn(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->Despawn();
+}
+
+EXPORT unsigned long Player_GetModel(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetModel();
+}
+
 EXPORT void Player_SetModel(void *p, unsigned long model)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
@@ -125,6 +207,12 @@ EXPORT unsigned long Player_GetWeaponTintIndex(void *p, unsigned long weapon)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetWeaponTintIndex(weapon);
+}
+
+EXPORT unsigned long Player_GetCurrentWeaponTintIndex(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetCurrentWeaponTintIndex();
 }
 
 EXPORT unsigned long Player_GetCurrentWeapon(void *p)
@@ -410,4 +498,61 @@ EXPORT bool Player_IsEntityInStreamingRange(void *p, void *e) {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto entity = reinterpret_cast<alt::IEntity*>(e);
     return player->IsEntityInStreamingRange(entity);
+}
+
+EXPORT unsigned long Player_GetMaxHealth(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetMaxHealth();
+}
+
+EXPORT unsigned long Player_GetMaxArmour(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetMaxArmour();
+}
+
+EXPORT void Player_Detach(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->Detach();
+}
+
+EXPORT void Player_AttachToEntity(void *p, void *e, unsigned long otherBoneIndex, unsigned long myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto entity = reinterpret_cast<alt::IEntity*>(e);
+    auto position = new alt::Position(pos.x, pos.y, pos.z);
+    auto rotation = new alt::Rotation(rot.roll, rot.pitch, rot.yaw);
+    player->AttachToEntity(entity, otherBoneIndex, myBoneIndex, *position, *rotation, collision, noFixedRotation);
+}
+
+EXPORT void Player_SetVisible(void *p, bool toggle)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->SetVisible(toggle);
+}
+
+EXPORT bool Player_GetVisible(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetVisible();
+}
+
+EXPORT unsigned long Player_GetID(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetID();
+}
+
+EXPORT void * Player_GetNetworkOwner(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetNetworkOwner().Get();
+}
+
+EXPORT void Player_SetNetworkOwner(void *p, void *o, bool disableMigration){
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto owner = reinterpret_cast<alt::IPlayer*>(o);
+    player->SetNetworkOwner(owner, disableMigration);
 }
