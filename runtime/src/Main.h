@@ -27,4 +27,28 @@ typedef struct rgba {
     unsigned long a;
 } RGBA;
 
+typedef struct cloth {
+    unsigned int drawableId;
+    unsigned int textureId;
+    unsigned int paletteId;
+} Cloth;
+
+typedef struct dlcCloth {
+    unsigned long dlc;
+    unsigned int drawableId;
+    unsigned int textureId;
+    unsigned int paletteId;
+} DlcCloth;
+
+typedef struct prop {
+    unsigned int drawableId;
+    unsigned int textureId;
+} Prop;
+
+typedef struct dlcProp {
+    unsigned long dlc;
+    unsigned int drawableId;
+    unsigned int textureId;
+} DlcProp;
+
 #include "SDK.h"
