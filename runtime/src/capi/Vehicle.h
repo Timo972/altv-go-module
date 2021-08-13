@@ -22,13 +22,13 @@ extern "C"
     EXPORT Position Vehicle_GetPosition(void *v);
     EXPORT void Vehicle_SetPosition(void *v, float x, float y, float z);
     EXPORT Rotation Vehicle_GetRotation(void *v);
-    EXPORT void Vehicle_SetRotation(void *v, Rotation rot);
+    EXPORT void Vehicle_SetRotation(void *v, float roll, float pitch, float yaw);
     EXPORT long Vehicle_GetDimension(void *v);
     EXPORT void Vehicle_SetDimension(void *v, long dimension);
 
     EXPORT unsigned long Vehicle_GetID(void *v);
     EXPORT unsigned long Vehicle_GetModel(void *v);
-    EXPORT void Vehicle_GetHealth(void *p, unsigned long model);
+    EXPORT void Player_Despawn(void *p);
     
     EXPORT void Vehicle_Detach(void *v);
     EXPORT void Vehicle_AttachToEntity(void *v, void *e, unsigned long otherBoneIndex, unsigned long myBoneIndex, Position position, Rotation rotation, bool collision, bool noFixedRotation);
@@ -45,10 +45,10 @@ extern "C"
     EXPORT unsigned long Vehicle_GetModKit(void *v);
     EXPORT bool Vehicle_IsPrimaryColorRGB(void *v);
     EXPORT unsigned long Vehicle_GetPrimaryColor(void *v);
-    EXPORT RGBA Vehicle_GetPrimaryColorRGBA(void *v);
+    EXPORT RGBA Vehicle_GetPrimaryColorRGB(void *v);
     EXPORT bool Vehicle_IsSecondaryColorRGB(void *v);
     EXPORT unsigned long Vehicle_GetSecondaryColor(void *v);
-    EXPORT RGBA Vehicle_GetSecondaryColorRGBA(void *v);
+    EXPORT RGBA Vehicle_GetSecondaryColorRGB(void *v);
     EXPORT unsigned long Vehicle_GetPearlColor(void *v);
     EXPORT unsigned long Vehicle_GetWheelColor(void *v);
     EXPORT unsigned long Vehicle_GetInteriorColor(void *v);
@@ -115,9 +115,9 @@ extern "C"
     EXPORT bool Vehicle_SetMod(void *v, unsigned long category, unsigned long id);
     EXPORT bool Vehicle_SetModKit(void *v, unsigned long id);
     EXPORT void Vehicle_SetPrimaryColor(void *v, unsigned long color);
-    EXPORT void Vehicle_SetPrimaryColorRGB(void *v, RGBA color);
+    EXPORT void Vehicle_SetPrimaryColorRGB(void *v, unsigned long r, unsigned long g, unsigned long b, unsigned long a);
     EXPORT void Vehicle_SetSecondaryColor(void *v, unsigned long color);
-    EXPORT void Vehicle_SetSecondaryColorRGB(void *v, RGBA color);
+    EXPORT void Vehicle_SetSecondaryColorRGB(void *v, unsigned long r, unsigned long g, unsigned long b, unsigned long a);
     EXPORT void Vehicle_SetPearlColor(void *v, unsigned long color);
     EXPORT void Vehicle_SetWheelColor(void *v, unsigned long color);
     EXPORT void Vehicle_SetInteriorColor(void *v, unsigned long color);
@@ -132,7 +132,7 @@ extern "C"
     EXPORT void Vehicle_SetWindowTint(void *v, unsigned long tint);
     EXPORT void Vehicle_SetDirtLevel(void *v, unsigned long level);
     EXPORT void Vehicle_SetNeonActive(void *v, bool left, bool right, bool front, bool back);
-    EXPORT void Vehicle_SetNeonColor(void *v, RGBA color);
+    EXPORT void Vehicle_SetNeonColor(void *v, unsigned long r, unsigned long g, unsigned long b, unsigned long a);
     EXPORT void Vehicle_SetLivery(void *v, unsigned long livery);
     EXPORT void Vehicle_SetRoofLivery(void *v, unsigned long roofLivery);
     EXPORT void Vehicle_LoadAppearanceDataFromBase64(void *v, const char* base64);
