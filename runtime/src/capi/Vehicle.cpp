@@ -47,7 +47,7 @@ EXPORT MetaData Vehicle_GetSyncedMetaData(void* base, const char *key)
 {
 
     auto vehicle = reinterpret_cast<alt::IVehicle*>(base);
-    auto meta = vehicle->GetMetaData(key);
+    auto meta = vehicle->GetSyncedMetaData(key);
 
     // Temporary
     MetaData metaData;
@@ -63,14 +63,14 @@ EXPORT void Vehicle_SetSyncedMetaData(void *base, const char *key, void *val)
     auto vehicle = reinterpret_cast<alt::IVehicle*>(base);
     auto value = reinterpret_cast<alt::IMValue*>(val);
 
-    vehicle->SetMetaData(key, value);
+    vehicle->SetSyncedMetaData(key, value);
 }
 
 EXPORT void Vehicle_DeleteSyncedMetaData(void *base, const char *key)
 {
 
     auto vehicle = reinterpret_cast<alt::IVehicle*>(base);
-    vehicle->DeleteMetaData(key);
+    vehicle->DeleteSyncedMetaData(key);
     vehicle->RemoveRef();
 }
 
@@ -84,7 +84,7 @@ EXPORT MetaData Vehicle_GetStreamSyncedMetaData(void* base, const char *key)
 {
 
     auto vehicle = reinterpret_cast<alt::IVehicle*>(base);
-    auto meta = vehicle->GetMetaData(key);
+    auto meta = vehicle->GetStreamSyncedMetaData(key);
 
     // Temporary
     MetaData metaData;
@@ -100,14 +100,14 @@ EXPORT void Vehicle_SetStreamSyncedMetaData(void *base, const char *key, void *v
     auto vehicle = reinterpret_cast<alt::IVehicle*>(base);
     auto value = reinterpret_cast<alt::IMValue*>(val);
 
-    vehicle->SetMetaData(key, value);
+    vehicle->SetStreamSyncedMetaData(key, value);
 }
 
 EXPORT void Vehicle_DeleteStreamSyncedMetaData(void *base, const char *key)
 {
 
     auto vehicle = reinterpret_cast<alt::IVehicle*>(base);
-    vehicle->DeleteMetaData(key);
+    vehicle->DeleteStreamSyncedMetaData(key);
     vehicle->RemoveRef();
 }
 
