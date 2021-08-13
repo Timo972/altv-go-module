@@ -214,7 +214,7 @@ EXPORT void Player_SetHealth(void *p, unsigned int health)
     player->SetHealth(health);
 }
 
-EXPORT bool Player_HasWeaponComponent(void *p, unsigned long weapon, unsigned long component)
+EXPORT int Player_HasWeaponComponent(void *p, unsigned long weapon, unsigned long component)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->HasWeaponComponent(weapon, component);
@@ -246,37 +246,37 @@ EXPORT unsigned long Player_GetCurrentWeapon(void *p)
     return player->GetCurrentWeapon();
 }
 
-EXPORT bool Player_IsDead(void *p)
+EXPORT int Player_IsDead(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsDead();
 }
 
-EXPORT bool Player_IsJumping(void *p)
+EXPORT int Player_IsJumping(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsJumping();
 }
 
-EXPORT bool Player_IsInRagdoll(void *p)
+EXPORT int Player_IsInRagdoll(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsInRagdoll();
 }
 
-EXPORT bool Player_IsAiming(void *p)
+EXPORT int Player_IsAiming(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsAiming();
 }
 
-EXPORT bool Player_IsShooting(void *p)
+EXPORT int Player_IsShooting(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsShooting();
 }
 
-EXPORT bool Player_IsReloading(void *p)
+EXPORT int Player_IsReloading(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsReloading();
@@ -326,7 +326,7 @@ EXPORT Rotation Player_GetHeadRotation(void *p)
     return rotation;
 }
 
-EXPORT bool Player_IsInVehicle(void *p)
+EXPORT int Player_IsInVehicle(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsInVehicle();
@@ -363,13 +363,13 @@ EXPORT Position Player_GetEntityAimOffset(void *p)
     return offset;
 }
 
-EXPORT bool Player_IsFlashlightActive(void *p)
+EXPORT int Player_IsFlashlightActive(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsFlashlightActive();
 }
 
-EXPORT bool Player_IsConnected(void *p)
+EXPORT int Player_IsConnected(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->IsConnected();
@@ -453,7 +453,7 @@ EXPORT void Player_SetMaxHealth(void *p, unsigned int health)
     player->SetMaxHealth(health);
 }
 
-EXPORT void Player_GiveWeapon(void *p, unsigned long weapon, long ammo, bool selectWeapon)
+EXPORT void Player_GiveWeapon(void *p, unsigned long weapon, long ammo, int selectWeapon)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->GiveWeapon(weapon, ammo, selectWeapon);
@@ -519,7 +519,7 @@ EXPORT void Player_ClearProps(void *p, unsigned int component)
     player->ClearProps(component);
 }
 
-EXPORT bool Player_IsEntityInStreamingRange(void *p, void *e) {
+EXPORT int Player_IsEntityInStreamingRange(void *p, void *e) {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto entity = reinterpret_cast<alt::IEntity*>(e);
     return player->IsEntityInStreamingRange(entity);
@@ -543,7 +543,7 @@ EXPORT void Player_Detach(void *p)
     player->Detach();
 }
 
-EXPORT void Player_AttachToEntity(void *p, void *e, int otherBoneIndex, int myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
+EXPORT void Player_AttachToEntity(void *p, void *e, int otherBoneIndex, int myBoneIndex, Position pos, Rotation rot, int collision, int noFixedRotation)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto entity = reinterpret_cast<alt::IEntity*>(e);
@@ -552,13 +552,13 @@ EXPORT void Player_AttachToEntity(void *p, void *e, int otherBoneIndex, int myBo
     player->AttachToEntity(entity, otherBoneIndex, myBoneIndex, *position, *rotation, collision, noFixedRotation);
 }
 
-EXPORT void Player_SetVisible(void *p, bool toggle)
+EXPORT void Player_SetVisible(void *p, int toggle)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetVisible(toggle);
 }
 
-EXPORT bool Player_GetVisible(void *p)
+EXPORT int Player_GetVisible(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetVisible();
@@ -576,7 +576,7 @@ EXPORT void * Player_GetNetworkOwner(void *p)
     return player->GetNetworkOwner().Get();
 }
 
-EXPORT void Player_SetNetworkOwner(void *p, void *o, bool disableMigration){
+EXPORT void Player_SetNetworkOwner(void *p, void *o, int disableMigration){
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto owner = reinterpret_cast<alt::IPlayer*>(o);
     player->SetNetworkOwner(owner, disableMigration);
