@@ -28,7 +28,6 @@ extern "C"
 
     EXPORT unsigned long Vehicle_GetID(void *v);
     EXPORT unsigned long Vehicle_GetModel(void *v);
-    EXPORT void Player_Despawn(void *p);
     
     EXPORT void Vehicle_Detach(void *v);
     EXPORT void Vehicle_AttachToEntity(void *v, void *e, unsigned long otherBoneIndex, unsigned long myBoneIndex, Position position, Rotation rotation, bool collision, bool noFixedRotation);
@@ -92,16 +91,16 @@ extern "C"
     EXPORT bool Vehicle_DoesWheelHasTire(void *v, unsigned long wheelId);
     EXPORT bool Vehicle_IsWheelDetached(void *v, unsigned long wheelId);
     EXPORT bool Vehicle_IsWheelOnFire(void *v, unsigned long wheelId);
-    EXPORT float Vehicle_GetWHeelHealth(void *v, unsigned long wheelId);
+    EXPORT float Vehicle_GetWheelHealth(void *v, unsigned long wheelId);
     EXPORT unsigned long Vehicle_GetRepairsCount(void *v);
     EXPORT unsigned long Vehicle_GetBodyHealth(void *v);
     EXPORT unsigned long Vehicle_GetBodyAdditionalHealth(void *v);
     EXPORT const char* Vehicle_GetHealthDataBase64(void *v);
     EXPORT unsigned long Vehicle_GetPartDamageLevel(void *v, unsigned long partId);
     EXPORT unsigned long Vehicle_GetPartBulletHoles(void *v, unsigned long partId);
-    EXPORT bool Vehicle_IsLightDamaged(void *v);
-    EXPORT bool Vehicle_IsWindowDamaged(void *v);
-    EXPORT bool Vehicle_IsSpecialLightDamaged(void *v);
+    EXPORT bool Vehicle_IsLightDamaged(void *v, unsigned int lightId);
+    EXPORT bool Vehicle_IsWindowDamaged(void *v, unsigned int windowId);
+    EXPORT bool Vehicle_IsSpecialLightDamaged(void *v, unsigned int specialLightId);
     EXPORT bool Vehicle_HasArmoredWindows(void *v);
     EXPORT float Vehicle_GetArmoredWindowHealth(void *v, unsigned long windowId);
     EXPORT unsigned long Vehicle_GetArmoredWindowShootCount(void *v, unsigned long windowId);
@@ -122,7 +121,7 @@ extern "C"
     EXPORT void Vehicle_SetWheelColor(void *v, unsigned long color);
     EXPORT void Vehicle_SetInteriorColor(void *v, unsigned long color);
     EXPORT void Vehicle_SetDashboardColor(void *v, unsigned long color);
-    EXPORT void Vehicle_SetTireSmokeColor(void *v, unsigned long color);
+    EXPORT void Vehicle_SetTireSmokeColor(void *v, float r, float g, float b, float a);
     EXPORT void Vehicle_SetWheels(void *v, unsigned long type, unsigned long variation);
     EXPORT void Vehicle_SetRearWheels(void *v, unsigned long variation);
     EXPORT void Vehicle_SetCustomTires(void *v, bool state);
