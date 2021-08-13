@@ -16,6 +16,7 @@ const definitionRegex =
 const reinterprets = {
   Player: "alt::IPlayer*",
   Vehicle: "alt::IVehicle*",
+  Entity: "alt::IEntity*"
 };
 
 const returnsWithImplicitOrNoCast = [
@@ -79,7 +80,6 @@ function validateGetAndDeleteMetaDefinition(args) {
 function generateCAPIFunction(match, className, funcName, returnType, argStr) {
   const definition = match.substring(0, match.length - 1);
   const mainVarName = className.toLowerCase();
-  const castTo = reinterprets[className];
   const trimmedReturnType = returnType.trim().replace(/\s/g, "");
   const args = argStr.split(",").map((val) => {
     const lastIdxOfSpace = val.lastIndexOf(" ") + 1;
@@ -96,12 +96,15 @@ function generateCAPIFunction(match, className, funcName, returnType, argStr) {
   });
   const base = args.shift();
 
+  let castTo = reinterprets[className];
+  if (typeof castTo == "undefined")
+    castTo = `alt::I${className}*`;
+    console.warn(`Could not find proper cast preconfigured, using ${castTo}`)
+    //throw new Error(`Could not find cast for class ${className}`);
+
   let valid = true;
   let isMeta = true;
   let funcBody = `{\n`;
-
-  if (typeof castTo == "undefined")
-    throw new Error(`Could not find cast for class ${className}`);
 
   if (funcName.includes("MetaData")) {
     let type = "";
