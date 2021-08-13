@@ -191,7 +191,7 @@ EXPORT void Vehicle_Detach(void *v)
    vehicle->Detach();
 }
 
-EXPORT void Vehicle_AttachToEntity(void *v, void *e, unsigned long otherBoneIndex, unsigned long myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
+EXPORT void Vehicle_AttachToEntity(void *v, void *e, unsigned int otherBoneIndex, unsigned int myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    auto entity = reinterpret_cast<alt::IEntity*>(e);
@@ -239,13 +239,13 @@ EXPORT bool Vehicle_IsDestroyed(void *v)
    return vehicle->IsDestroyed();
 }
 
-EXPORT unsigned long Vehicle_GetMod(void *v, unsigned long category)
+EXPORT unsigned long Vehicle_GetMod(void *v, unsigned int category)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetMod(category);
 }
 
-EXPORT unsigned long Vehicle_GetModsCount(void *v, unsigned long category)
+EXPORT unsigned long Vehicle_GetModsCount(void *v, unsigned int category)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetModsCount(category);
@@ -413,7 +413,7 @@ EXPORT unsigned long Vehicle_GetDirtLevel(void *v)
    return vehicle->GetDirtLevel();
 }
 
-EXPORT bool Vehicle_IsExtraOn(void *v, unsigned long extraID)
+EXPORT bool Vehicle_IsExtraOn(void *v, unsigned int extraID)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->IsExtraOn(extraID);
@@ -493,13 +493,13 @@ EXPORT unsigned long Vehicle_GetLockState(void *v)
    return vehicle->GetLockState();
 }
 
-EXPORT unsigned long Vehicle_GetDoorState(void *v, unsigned long doorId)
+EXPORT unsigned long Vehicle_GetDoorState(void *v, unsigned int doorId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetDoorState(doorId);
 }
 
-EXPORT bool Vehicle_IsWindowOpened(void *v, unsigned long windowId)
+EXPORT bool Vehicle_IsWindowOpened(void *v, unsigned int windowId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->IsWindowOpened(windowId);
@@ -553,31 +553,31 @@ EXPORT unsigned long Vehicle_GetWheelsCount(void *v)
    return vehicle->GetWheelsCount();
 }
 
-EXPORT bool Vehicle_IsWheelBurst(void *v, unsigned long wheelId)
+EXPORT bool Vehicle_IsWheelBurst(void *v, unsigned int wheelId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->IsWheelBurst(wheelId);
 }
 
-EXPORT bool Vehicle_DoesWheelHasTire(void *v, unsigned long wheelId)
+EXPORT bool Vehicle_DoesWheelHasTire(void *v, unsigned int wheelId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->DoesWheelHasTire(wheelId);
 }
 
-EXPORT bool Vehicle_IsWheelDetached(void *v, unsigned long wheelId)
+EXPORT bool Vehicle_IsWheelDetached(void *v, unsigned int wheelId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->IsWheelDetached(wheelId);
 }
 
-EXPORT bool Vehicle_IsWheelOnFire(void *v, unsigned long wheelId)
+EXPORT bool Vehicle_IsWheelOnFire(void *v, unsigned int wheelId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->IsWheelOnFire(wheelId);
 }
 
-EXPORT float Vehicle_GetWheelHealth(void *v, unsigned long wheelId)
+EXPORT float Vehicle_GetWheelHealth(void *v, unsigned int wheelId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetWheelHealth(wheelId);
@@ -601,13 +601,13 @@ EXPORT unsigned long Vehicle_GetBodyAdditionalHealth(void *v)
    return vehicle->GetBodyAdditionalHealth();
 }
 
-EXPORT unsigned long Vehicle_GetPartDamageLevel(void *v, unsigned long partId)
+EXPORT unsigned long Vehicle_GetPartDamageLevel(void *v, unsigned int partId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetPartDamageLevel(partId);
 }
 
-EXPORT unsigned long Vehicle_GetPartBulletHoles(void *v, unsigned long partId)
+EXPORT unsigned long Vehicle_GetPartBulletHoles(void *v, unsigned int partId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetPartBulletHoles(partId);
@@ -637,19 +637,19 @@ EXPORT bool Vehicle_HasArmoredWindows(void *v)
    return vehicle->HasArmoredWindows();
 }
 
-EXPORT float Vehicle_GetArmoredWindowHealth(void *v, unsigned long windowId)
+EXPORT float Vehicle_GetArmoredWindowHealth(void *v, unsigned int windowId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetArmoredWindowHealth(windowId);
 }
 
-EXPORT unsigned long Vehicle_GetArmoredWindowShootCount(void *v, unsigned long windowId)
+EXPORT unsigned long Vehicle_GetArmoredWindowShootCount(void *v, unsigned int windowId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetArmoredWindowShootCount(windowId);
 }
 
-EXPORT unsigned long Vehicle_GetBumperDamageLevel(void *v, unsigned long bumperId)
+EXPORT unsigned long Vehicle_GetBumperDamageLevel(void *v, unsigned int bumperId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetBumperDamageLevel(bumperId);
@@ -661,7 +661,7 @@ EXPORT bool Vehicle_IsManualEngineControl(void *v)
    return vehicle->IsManualEngineControl();
 }
 
-EXPORT void Vehicle_ToggleExtra(void *v, unsigned long extraID, bool state)
+EXPORT void Vehicle_ToggleExtra(void *v, unsigned int extraID, bool state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->ToggleExtra(extraID, state);
@@ -673,25 +673,25 @@ EXPORT void Vehicle_SetFixed(void *v)
    vehicle->SetFixed();
 }
 
-EXPORT bool Vehicle_SetMod(void *v, unsigned long category, unsigned long id)
+EXPORT bool Vehicle_SetMod(void *v, unsigned int category, unsigned int id)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->SetMod(category, id);
 }
 
-EXPORT bool Vehicle_SetModKit(void *v, unsigned long id)
+EXPORT bool Vehicle_SetModKit(void *v, unsigned int id)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->SetModKit(id);
 }
 
-EXPORT void Vehicle_SetPrimaryColor(void *v, unsigned long color)
+EXPORT void Vehicle_SetPrimaryColor(void *v, unsigned int color)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetPrimaryColor(color);
 }
 
-EXPORT void Vehicle_SetPrimaryColorRGB(void *v, unsigned long r, unsigned long g, unsigned long b, unsigned long a)
+EXPORT void Vehicle_SetPrimaryColorRGB(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
 
@@ -705,13 +705,13 @@ EXPORT void Vehicle_SetPrimaryColorRGB(void *v, unsigned long r, unsigned long g
    vehicle->SetPrimaryColorRGB(rgba);
 }
 
-EXPORT void Vehicle_SetSecondaryColor(void *v, unsigned long color)
+EXPORT void Vehicle_SetSecondaryColor(void *v, unsigned int color)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetSecondaryColor(color);
 }
 
-EXPORT void Vehicle_SetSecondaryColorRGB(void *v, unsigned long r, unsigned long g, unsigned long b, unsigned long a)
+EXPORT void Vehicle_SetSecondaryColorRGB(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
 
@@ -725,31 +725,31 @@ EXPORT void Vehicle_SetSecondaryColorRGB(void *v, unsigned long r, unsigned long
    vehicle->SetSecondaryColorRGB(rgba);
 }
 
-EXPORT void Vehicle_SetPearlColor(void *v, unsigned long color)
+EXPORT void Vehicle_SetPearlColor(void *v, unsigned int color)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetPearlColor(color);
 }
 
-EXPORT void Vehicle_SetWheelColor(void *v, unsigned long color)
+EXPORT void Vehicle_SetWheelColor(void *v, unsigned int color)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheelColor(color);
 }
 
-EXPORT void Vehicle_SetInteriorColor(void *v, unsigned long color)
+EXPORT void Vehicle_SetInteriorColor(void *v, unsigned int color)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetInteriorColor(color);
 }
 
-EXPORT void Vehicle_SetDashboardColor(void *v, unsigned long color)
+EXPORT void Vehicle_SetDashboardColor(void *v, unsigned int color)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetDashboardColor(color);
 }
 
-EXPORT void Vehicle_SetTireSmokeColor(void *v, float r, float g, float b, float a)
+EXPORT void Vehicle_SetTireSmokeColor(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
 
@@ -763,13 +763,13 @@ EXPORT void Vehicle_SetTireSmokeColor(void *v, float r, float g, float b, float 
    vehicle->SetTireSmokeColor(rgba);
 }
 
-EXPORT void Vehicle_SetWheels(void *v, unsigned long type, unsigned long variation)
+EXPORT void Vehicle_SetWheels(void *v, unsigned int type, unsigned int variation)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheels(type, variation);
 }
 
-EXPORT void Vehicle_SetRearWheels(void *v, unsigned long variation)
+EXPORT void Vehicle_SetRearWheels(void *v, unsigned int variation)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetRearWheels(variation);
@@ -781,13 +781,13 @@ EXPORT void Vehicle_SetCustomTires(void *v, bool state)
    vehicle->SetCustomTires(state);
 }
 
-EXPORT void Vehicle_SetSpecialDarkness(void *v, unsigned long value)
+EXPORT void Vehicle_SetSpecialDarkness(void *v, unsigned int value)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetSpecialDarkness(value);
 }
 
-EXPORT void Vehicle_SetNumberplateIndex(void *v, unsigned long index)
+EXPORT void Vehicle_SetNumberplateIndex(void *v, unsigned int index)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetNumberplateIndex(index);
@@ -799,13 +799,13 @@ EXPORT void Vehicle_SetNumberplateText(void *v, const char* text)
    vehicle->SetNumberplateText(text);
 }
 
-EXPORT void Vehicle_SetWindowTint(void *v, unsigned long tint)
+EXPORT void Vehicle_SetWindowTint(void *v, unsigned int tint)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWindowTint(tint);
 }
 
-EXPORT void Vehicle_SetDirtLevel(void *v, unsigned long level)
+EXPORT void Vehicle_SetDirtLevel(void *v, unsigned int level)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetDirtLevel(level);
@@ -817,7 +817,7 @@ EXPORT void Vehicle_SetNeonActive(void *v, bool left, bool right, bool front, bo
    vehicle->SetNeonActive(left, right, front, back);
 }
 
-EXPORT void Vehicle_SetNeonColor(void *v, unsigned long r, unsigned long g, unsigned long b, unsigned long a)
+EXPORT void Vehicle_SetNeonColor(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
 
@@ -831,13 +831,13 @@ EXPORT void Vehicle_SetNeonColor(void *v, unsigned long r, unsigned long g, unsi
    vehicle->SetNeonColor(rgba);
 }
 
-EXPORT void Vehicle_SetLivery(void *v, unsigned long livery)
+EXPORT void Vehicle_SetLivery(void *v, unsigned int livery)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetLivery(livery);
 }
 
-EXPORT void Vehicle_SetRoofLivery(void *v, unsigned long roofLivery)
+EXPORT void Vehicle_SetRoofLivery(void *v, unsigned int roofLivery)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetRoofLivery(roofLivery);
@@ -849,13 +849,13 @@ EXPORT void Vehicle_SetEngineOn(void *v, bool state)
    vehicle->SetEngineOn(state);
 }
 
-EXPORT void Vehicle_SetHeadlightColor(void *v, unsigned long color)
+EXPORT void Vehicle_SetHeadlightColor(void *v, unsigned int color)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetHeadlightColor(color);
 }
 
-EXPORT void Vehicle_SetRadioStationIndex(void *v, unsigned long stationIndex)
+EXPORT void Vehicle_SetRadioStationIndex(void *v, unsigned int stationIndex)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetRadioStationIndex(stationIndex);
@@ -867,25 +867,25 @@ EXPORT void Vehicle_SetSirenActive(void *v, bool state)
    vehicle->SetSirenActive(state);
 }
 
-EXPORT void Vehicle_SetLockState(void *v, unsigned long state)
+EXPORT void Vehicle_SetLockState(void *v, unsigned int state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetLockState(state);
 }
 
-EXPORT void Vehicle_SetDoorState(void *v, unsigned long doorId, unsigned long state)
+EXPORT void Vehicle_SetDoorState(void *v, unsigned int doorId, unsigned int state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetDoorState(doorId, state);
 }
 
-EXPORT void Vehicle_SetWindowOpened(void *v, unsigned long windowId, bool state)
+EXPORT void Vehicle_SetWindowOpened(void *v, unsigned int windowId, bool state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWindowOpened(windowId, state);
 }
 
-EXPORT void Vehicle_SetRoofState(void *v, unsigned long state)
+EXPORT void Vehicle_SetRoofState(void *v, unsigned int state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetRoofState(state);
@@ -909,37 +909,37 @@ EXPORT void Vehicle_SetPetrolTankHealth(void *v, unsigned long health)
    vehicle->SetPetrolTankHealth(health);
 }
 
-EXPORT void Vehicle_SetWheelBurst(void *v, unsigned long wheelId, bool state)
+EXPORT void Vehicle_SetWheelBurst(void *v, unsigned int wheelId, bool state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheelBurst(wheelId, state);
 }
 
-EXPORT void Vehicle_SetWheelHasTire(void *v, unsigned long wheelId, bool state)
+EXPORT void Vehicle_SetWheelHasTire(void *v, unsigned int wheelId, bool state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheelHasTire(wheelId, state);
 }
 
-EXPORT void Vehicle_SetWheelDetached(void *v, unsigned long wheelId, bool state)
+EXPORT void Vehicle_SetWheelDetached(void *v, unsigned int wheelId, bool state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheelDetached(wheelId, state);
 }
 
-EXPORT void Vehicle_SetWheelOnFire(void *v, unsigned long wheelId, bool state)
+EXPORT void Vehicle_SetWheelOnFire(void *v, unsigned int wheelId, bool state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheelOnFire(wheelId, state);
 }
 
-EXPORT void Vehicle_SetWheelHealth(void *v, unsigned long wheelId, float health)
+EXPORT void Vehicle_SetWheelHealth(void *v, unsigned int wheelId, float health)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheelHealth(wheelId, health);
 }
 
-EXPORT void Vehicle_SetWheelFixed(void *v, unsigned long wheelId)
+EXPORT void Vehicle_SetWheelFixed(void *v, unsigned int wheelId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWheelFixed(wheelId);
@@ -957,49 +957,49 @@ EXPORT void Vehicle_SetBodyAdditionalHealth(void *v, unsigned long health)
    vehicle->SetBodyAdditionalHealth(health);
 }
 
-EXPORT void Vehicle_SetPartDamageLevel(void *v, unsigned long partId, unsigned long damage)
+EXPORT void Vehicle_SetPartDamageLevel(void *v, unsigned int partId, unsigned int damage)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetPartDamageLevel(partId, damage);
 }
 
-EXPORT void Vehicle_SetPartBulletHoles(void *v, unsigned long partId, unsigned long shootsCount)
+EXPORT void Vehicle_SetPartBulletHoles(void *v, unsigned int partId, unsigned int shootsCount)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetPartBulletHoles(partId, shootsCount);
 }
 
-EXPORT void Vehicle_SetLightDamaged(void *v, unsigned long lightId, bool isDamaged)
+EXPORT void Vehicle_SetLightDamaged(void *v, unsigned int lightId, bool isDamaged)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetLightDamaged(lightId, isDamaged);
 }
 
-EXPORT void Vehicle_SetWindowDamaged(void *v, unsigned long windowId, bool isDamaged)
+EXPORT void Vehicle_SetWindowDamaged(void *v, unsigned int windowId, bool isDamaged)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetWindowDamaged(windowId, isDamaged);
 }
 
-EXPORT void Vehicle_SetSpecialLightDamaged(void *v, unsigned long specialLightId, bool isDamaged)
+EXPORT void Vehicle_SetSpecialLightDamaged(void *v, unsigned int specialLightId, bool isDamaged)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetSpecialLightDamaged(specialLightId, isDamaged);
 }
 
-EXPORT void Vehicle_SetArmoredWindowHealth(void *v, unsigned long windowId, float health)
+EXPORT void Vehicle_SetArmoredWindowHealth(void *v, unsigned int windowId, float health)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetArmoredWindowHealth(windowId, health);
 }
 
-EXPORT void Vehicle_SetArmoredWindowShootCount(void *v, unsigned long windowId, unsigned long count)
+EXPORT void Vehicle_SetArmoredWindowShootCount(void *v, unsigned int windowId, unsigned int count)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetArmoredWindowShootCount(windowId, count);
 }
 
-EXPORT void Vehicle_SetBumperDamageLevel(void *v, unsigned long bumperId, unsigned long damageLevel)
+EXPORT void Vehicle_SetBumperDamageLevel(void *v, unsigned int bumperId, unsigned int damageLevel)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    vehicle->SetBumperDamageLevel(bumperId, damageLevel);
