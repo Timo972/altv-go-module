@@ -135,7 +135,7 @@ EXPORT void Player_SetPosition(void *p, float x, float y, float z)
     player->SetPosition(position);
 }
 
-EXPORT Position Player_GetRotation(void *p)
+EXPORT Rotation Player_GetRotation(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto rot = player->GetRotation();
