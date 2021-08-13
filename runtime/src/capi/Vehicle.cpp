@@ -191,7 +191,7 @@ EXPORT void Vehicle_Detach(void *v)
    vehicle->Detach();
 }
 
-EXPORT void Vehicle_AttachToEntity(void *v, void *e, unsigned int otherBoneIndex, unsigned int myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
+EXPORT void Vehicle_AttachToEntity(void *v, void *e, int otherBoneIndex, int myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    auto entity = reinterpret_cast<alt::IEntity*>(e);

@@ -30,7 +30,7 @@ extern "C"
     EXPORT unsigned long Vehicle_GetModel(void *v);
     
     EXPORT void Vehicle_Detach(void *v);
-    EXPORT void Vehicle_AttachToEntity(void *v, void *e, unsigned int otherBoneIndex, unsigned int myBoneIndex, Position position, Rotation rotation, bool collision, bool noFixedRotation);
+    EXPORT void Vehicle_AttachToEntity(void *v, void *e, int otherBoneIndex, int myBoneIndex, Position position, Rotation rotation, bool collision, bool noFixedRotation);
     EXPORT void Vehicle_SetVisible(void *v, bool toggle);
     EXPORT bool Vehicle_GetVisible(void *v);
     EXPORT void * Vehicle_GetNetworkOwner(void *v);

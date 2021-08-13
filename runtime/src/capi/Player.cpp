@@ -202,13 +202,13 @@ EXPORT void Player_SetModel(void *p, unsigned long model)
     player->SetModel(model);
 }
 
-EXPORT unsigned long Player_GetHealth(void *p)
+EXPORT unsigned int Player_GetHealth(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetHealth();
 }
 
-EXPORT void Player_SetHealth(void *p, unsigned long health)
+EXPORT void Player_SetHealth(void *p, unsigned int health)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetHealth(health);
@@ -228,13 +228,13 @@ EXPORT bool Player_HasWeaponComponent(void *p, unsigned long weapon, unsigned lo
     return components;
 }*/
 
-EXPORT unsigned long Player_GetWeaponTintIndex(void *p, unsigned long weapon)
+EXPORT unsigned int Player_GetWeaponTintIndex(void *p, unsigned long weapon)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetWeaponTintIndex(weapon);
 }
 
-EXPORT unsigned long Player_GetCurrentWeaponTintIndex(void *p)
+EXPORT unsigned int Player_GetCurrentWeaponTintIndex(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetCurrentWeaponTintIndex();
@@ -282,13 +282,13 @@ EXPORT bool Player_IsReloading(void *p)
     return player->IsReloading();
 }
 
-EXPORT unsigned long Player_GetArmour(void *p)
+EXPORT unsigned int Player_GetArmour(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetArmour();
 }
 
-EXPORT void Player_SetArmour(void *p, unsigned long armour)
+EXPORT void Player_SetArmour(void *p, unsigned int armour)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetArmour(armour);
@@ -338,7 +338,7 @@ EXPORT void * Player_GetVehicle(void *p)
     return player->GetVehicle().Get();
 }
 
-EXPORT unsigned long Player_GetSeat(void *p)
+EXPORT unsigned int Player_GetSeat(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetSeat();
@@ -411,7 +411,7 @@ EXPORT const char* Player_GetAuthToken(void *p)
     return player->GetAuthToken().CStr();
 }
 
-EXPORT void Player_SetMaxArmour(void *p, unsigned long armour)
+EXPORT void Player_SetMaxArmour(void *p, unsigned int armour)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetMaxArmour(armour);
@@ -423,7 +423,7 @@ EXPORT void Player_SetCurrentWeapon(void *p, unsigned long weapon)
     player->SetCurrentWeapon(weapon);
 }
 
-EXPORT void Player_SetWeaponTintIndex(void *p, unsigned long weapon, unsigned long tintIndex)
+EXPORT void Player_SetWeaponTintIndex(void *p, unsigned long weapon, unsigned int tintIndex)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetWeaponTintIndex(weapon, tintIndex);
@@ -447,13 +447,13 @@ EXPORT void Player_ClearBloodDamage(void *p)
     player->ClearBloodDamage();
 }
 
-EXPORT void Player_SetMaxHealth(void *p, unsigned long health)
+EXPORT void Player_SetMaxHealth(void *p, unsigned int health)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetMaxHealth(health);
 }
 
-EXPORT void Player_GiveWeapon(void *p, unsigned long weapon, unsigned long ammo, bool selectWeapon)
+EXPORT void Player_GiveWeapon(void *p, unsigned long weapon, long ammo, bool selectWeapon)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->GiveWeapon(weapon, ammo, selectWeapon);
@@ -489,31 +489,31 @@ EXPORT void Player_Kick(void *p, const char* reason)
     player->Kick(reason);
 }
 
-EXPORT void Player_SetClothes(void *p, unsigned long component, unsigned long drawable, unsigned long texture, unsigned long palette)
+EXPORT void Player_SetClothes(void *p, unsigned int component, unsigned int drawable, unsigned int texture, unsigned int palette)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetClothes(component, drawable, texture, palette);
 }
 
-EXPORT void Player_SetDlcClothes(void *p, unsigned long component, unsigned long drawable, unsigned long texture, unsigned long palette, unsigned long dlc)
+EXPORT void Player_SetDlcClothes(void *p, unsigned int component, unsigned int drawable, unsigned int texture, unsigned int palette, unsigned long dlc)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetDlcClothes(component, drawable, texture, palette, dlc);
 }
 
-EXPORT void Player_SetProps(void *p, unsigned long component, unsigned long drawable, unsigned long texture)
+EXPORT void Player_SetProps(void *p, unsigned int component, unsigned int drawable, unsigned int texture)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetProps(component, drawable, texture);
 }
 
-EXPORT void Player_SetDlcProps(void *p, unsigned long component, unsigned long drawable, unsigned long texture, unsigned long dlc)
+EXPORT void Player_SetDlcProps(void *p, unsigned int component, unsigned int drawable, unsigned int texture, unsigned long dlc)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetDlcProps(component, drawable, texture, dlc);
 }
 
-EXPORT void Player_ClearProps(void *p, unsigned long component)
+EXPORT void Player_ClearProps(void *p, unsigned int component)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->ClearProps(component);
@@ -525,13 +525,13 @@ EXPORT bool Player_IsEntityInStreamingRange(void *p, void *e) {
     return player->IsEntityInStreamingRange(entity);
 }
 
-EXPORT unsigned long Player_GetMaxHealth(void *p)
+EXPORT unsigned int Player_GetMaxHealth(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetMaxHealth();
 }
 
-EXPORT unsigned long Player_GetMaxArmour(void *p)
+EXPORT unsigned int Player_GetMaxArmour(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player->GetMaxArmour();
@@ -543,7 +543,7 @@ EXPORT void Player_Detach(void *p)
     player->Detach();
 }
 
-EXPORT void Player_AttachToEntity(void *p, void *e, unsigned long otherBoneIndex, unsigned long myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
+EXPORT void Player_AttachToEntity(void *p, void *e, int otherBoneIndex, int myBoneIndex, Position pos, Rotation rot, bool collision, bool noFixedRotation)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto entity = reinterpret_cast<alt::IEntity*>(e);
