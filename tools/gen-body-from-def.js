@@ -22,7 +22,8 @@ const returnsWithImplicitOrNoCast = [
   "long",
   "bool",
   "float",
-  "unsigned long",
+  "unsignedlong",
+  "unsignedlonglong",
   "int",
 ];
 
@@ -79,7 +80,7 @@ function generateCAPIFunction(match, className, funcName, returnType, argStr) {
   const definition = match.substring(0, match.length - 1);
   const mainVarName = className.toLowerCase();
   const castTo = reinterprets[className];
-  const trimmedReturnType = returnType.trim();
+  const trimmedReturnType = returnType.trim().replace(/\s/g, "");
   const args = argStr.split(",").map((val) => {
     const lastIdxOfSpace = val.lastIndexOf(" ") + 1;
     let type = val.substring(0, lastIdxOfSpace).trim();
@@ -127,10 +128,10 @@ function generateCAPIFunction(match, className, funcName, returnType, argStr) {
     } else if (trimmedReturnType === "void") {
       // console.log(`Processing setter: ${className}_${funcName}`);
       funcBody += `   ${defaultFunc(mainVarName, funcName, args)}\n`;
-    } else if (trimmedReturnType === "const char *") {
+    } else if (trimmedReturnType === "constchar*") {
       // console.log(`Processing c_str getter: ${className}_${funcName}`);
       funcBody += `   return ${cStrFunc(mainVarName, funcName, args)}\n`;
-    } else if (trimmedReturnType.replace(" ", "") === "void*") {
+    } else if (trimmedReturnType === "void*") {
       // console.log(`Processing void* getter: ${className}_${funcName}`);
       funcBody += `   return ${voidRefFunc(mainVarName, funcName, args)}\n`;
     } else {
