@@ -657,7 +657,7 @@ EXPORT const char* Vehicle_GetScriptDataBase64(void *v)
 EXPORT void Vehicle_ToggleExtra(void *v, unsigned long extraID, bool state)
 {
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-    return vehicle->ToggleExtra(extraID, state);
+    vehicle->ToggleExtra(extraID, state);
 }
 
 EXPORT void Vehicle_SetFixed(void *v);
