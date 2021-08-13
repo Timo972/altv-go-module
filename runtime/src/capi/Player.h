@@ -20,7 +20,7 @@ extern "C"
     EXPORT unsigned long Player_GetHealth(void *p);
     EXPORT void Player_SetHealth(void *p, unsigned long health);
     EXPORT bool Player_HasWeaponComponent(void *p, unsigned long weapon, unsigned long component);
-    EXPORT unsigned long* Player_GetCurrentWeaponComponents(void *p);
+    //EXPORT alt::Array<unsigned int> Player_GetCurrentWeaponComponents(void *p);
     EXPORT unsigned long Player_GetWeaponTintIndex(void *p, unsigned long weapon);
     EXPORT unsigned long Player_GetCurrentWeapon(void *p);
     EXPORT bool Player_IsDead(void *p);
@@ -33,11 +33,11 @@ extern "C"
     EXPORT void Player_SetArmour(void *p, unsigned long armour);
     EXPORT float Player_GetMoveSpeed(void *p);
     EXPORT Position Player_GetAimPos(void *p);
-    EXPORT Position Player_GetHeadRotation(void *p);
+    EXPORT Rotation Player_GetHeadRotation(void *p);
     EXPORT bool Player_IsInVehicle(void *p);
     EXPORT void * Player_GetVehicle(void *p);
     EXPORT unsigned long Player_GetSeat(void *p);
-    EXPORT void * Player_EntityAimingAt(void *p);
+    EXPORT void * Player_GetEntityAimingAt(void *p);
     EXPORT Position Player_GetEntityAimOffset(void *p);
     EXPORT bool Player_IsFlashlightActive(void *p);
     EXPORT bool Player_IsConnected(void *p);
@@ -68,7 +68,7 @@ extern "C"
     EXPORT void Player_SetProps(void *p, unsigned long component, unsigned long drawable, unsigned long texture);
     EXPORT void Player_SetDlcProps(void *p, unsigned long component, unsigned long drawable, unsigned long texture, unsigned long dlc);
     EXPORT void Player_ClearProps(void *p, unsigned long component);
-    EXPORT bool Player_IsEntityInStreamingRange(void *entity);
+    EXPORT bool Player_IsEntityInStreamingRange(void *p, void *entity);
 
 #ifdef __cplusplus
 }

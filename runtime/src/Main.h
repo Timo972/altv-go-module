@@ -14,4 +14,10 @@ typedef struct pos {
     float z;
 } Position;
 
+typedef struct rot {
+    float roll;
+    float pitch;
+    float yaw;
+} Rotation;
+
 #include "SDK.h"
