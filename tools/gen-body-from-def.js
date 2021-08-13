@@ -27,10 +27,10 @@ const returnsWithImplicitOrNoCast = [
   "int",
 ];
 
-const defaultGetMeta = (varName, cast, base, args) =>
+const defaultGetMeta = (varName, cast, base, args, type) =>
   `
     auto ${varName} = reinterpret_cast<${cast}>(${base.name});
-    auto meta = ${varName}->GetMetaData(${args[0].name});
+    auto meta = ${varName}->Get${type}MetaData(${args[0].name});
 
     // Temporary
     MetaData metaData;
@@ -39,17 +39,17 @@ const defaultGetMeta = (varName, cast, base, args) =>
 
     return metaData;
 `;
-const defaultSetMeta = (varName, cast, base, args) =>
+const defaultSetMeta = (varName, cast, base, args, type) =>
   `
     auto ${varName} = reinterpret_cast<${cast}>(${base.name});
     auto value = reinterpret_cast<alt::IMValue*>(${args[1].name});
 
-    ${varName}->SetMetaData(${args[0].name}, value);
+    ${varName}->Set${type}MetaData(${args[0].name}, value);
 `;
-const defaultDeleteMeta = (varName, cast, base, args) =>
+const defaultDeleteMeta = (varName, cast, base, args, type) =>
   `
     auto ${varName} = reinterpret_cast<${cast}>(${base.name});
-    ${varName}->DeleteMetaData(${args[0].name});
+    ${varName}->Delete${type}MetaData(${args[0].name});
     ${varName}->RemoveRef();
 `;
 
@@ -103,18 +103,25 @@ function generateCAPIFunction(match, className, funcName, returnType, argStr) {
   if (typeof castTo == "undefined")
     throw new Error(`Could not find cast for class ${className}`);
 
-  if (funcName.includes("Set") && funcName.includes("MetaData")) {
-    if (validateSetMetaDefinition(args)) {
-      funcBody += defaultSetMeta(mainVarName, castTo, base, args);
-    } else return [emptyTemplate(definition), false];
-  } else if (funcName.includes("Get") && funcName.includes("MetaData")) {
-    if (validateGetAndDeleteMetaDefinition(args)) {
-      funcBody += defaultGetMeta(mainVarName, castTo, base, args);
-    } else return [emptyTemplate(definition), false];
-  } else if (funcName.includes("Delete") && funcName.includes("MetaData")) {
-    if (validateGetAndDeleteMetaDefinition(args)) {
-      funcBody += defaultDeleteMeta(mainVarName, castTo, base, args);
-    } else return [emptyTemplate(definition), false];
+  if (funcName.includes("MetaData")) {
+    let type = "";
+
+    if (funcName.includes("Stream")) type += "Stream";
+    if (funcName.includes("Synced")) type += "Synced";
+
+    if (funcName.includes("Set")) {
+      if (validateSetMetaDefinition(args)) {
+        funcBody += defaultSetMeta(mainVarName, castTo, base, args, type);
+      } else return [emptyTemplate(definition), false];
+    } else if (funcName.includes("Get")) {
+      if (validateGetAndDeleteMetaDefinition(args)) {
+        funcBody += defaultGetMeta(mainVarName, castTo, base, args, type);
+      } else return [emptyTemplate(definition), false];
+    } else if (funcName.includes("Delete")) {
+      if (validateGetAndDeleteMetaDefinition(args)) {
+        funcBody += defaultDeleteMeta(mainVarName, castTo, base, args, type);
+      } else return [emptyTemplate(definition), false];
+    }
   } else {
     isMeta = false;
   }
