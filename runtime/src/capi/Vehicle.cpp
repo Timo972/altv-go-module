@@ -784,7 +784,15 @@ EXPORT void Vehicle_SetNeonActive(void *v, bool left, bool right, bool front, bo
 EXPORT void Vehicle_SetNeonColor(void *v, unsigned long r, unsigned long g, unsigned long b, unsigned long a)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-   vehicle->SetNeonColor(r, g, b, a);
+
+   alt::RGBA rgba;
+
+   rgba.r = r;
+   rgba.g = g;
+   rgba.b = b;
+   rgba.a = a;
+
+   vehicle->SetNeonColor(rgba);
 }
 
 EXPORT void Vehicle_SetLivery(void *v, unsigned long livery)
