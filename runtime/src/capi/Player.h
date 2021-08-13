@@ -21,6 +21,8 @@ extern "C"
     EXPORT void Player_DeleteStreamSyncedMetaData(void *base, const char *key);
     EXPORT Position Player_GetPosition(void *p);
     EXPORT void Player_SetPosition(void* p, float x, float y, float z);
+    EXPORT Rotation Player_GetRotation(void *p);
+    EXPORT void Player_SetRotation(void *p, float roll, float pitch, float yaw);
     EXPORT long Player_GetDimension(void* p);
     EXPORT void Player_SetDimension(void* p, long dimension);
     EXPORT void Player_Spawn(void *p, float x, float y, float z, unsigned long delay);

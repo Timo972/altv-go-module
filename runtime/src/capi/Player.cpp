@@ -135,6 +135,31 @@ EXPORT void Player_SetPosition(void *p, float x, float y, float z)
     player->SetPosition(position);
 }
 
+EXPORT Position Player_GetRotation(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto rot = player->GetRotation();
+
+    Rotation rotation;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+    rotation.roll = rot.roll;
+
+    return rotation;
+}
+
+EXPORT void Player_SetRotation(void *p, float roll, float pitch, float yaw)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+
+    alt::Rotation rotation;
+    rotation.roll = roll;
+    rotation.pitch = pitch;
+    rotation.yaw = yaw;
+
+    player->SetRotation(rotation);
+}
+
 EXPORT long Player_GetDimension(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
