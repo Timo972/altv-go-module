@@ -5,3 +5,5 @@ cmake-build-debug/
 cmake-build-default/
 .idea/
 .vscode/
+Module.c
+Module.h
