@@ -12,6 +12,7 @@
 #include "events/PlayerEnterVehicleEvent.h"
 #include "events/PlayerLeaveVehicleEvent.h"
 #include "events/PlayerChangeVehicleSeatEvent.h"
+#include "events/RemoveEntityEvent.h"
 
 namespace Go
 {
