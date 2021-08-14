@@ -14,6 +14,7 @@
 #include "events/PlayerChangeVehicleSeatEvent.h"
 #include "events/RemoveEntityEvent.h"
 #include "events/ConsoleCommandEvent.h"
+#include "events/WeaponDamageEvent.h"
 
 namespace Go
 {
