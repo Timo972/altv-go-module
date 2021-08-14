@@ -40,6 +40,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::PLAYER_DEATH, new PlayerDeathEvent(Module));
     RegisterEventHandler(Go::EventType::PLAYER_ENTER_VEHICLE, new PlayerEnterVehicleEvent(Module));
     RegisterEventHandler(Go::EventType::PLAYER_LEAVE_VEHICLE, new PlayerLeaveVehicleEvent(Module));
+    RegisterEventHandler(Go::EventType::PLAYER_CHANGE_VEHICLE_SEAT, new PlayerChangeVehicleSeatEvent(Module));
 
     start();
     return true;
