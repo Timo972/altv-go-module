@@ -20,15 +20,12 @@ void Go::WeaponDamageEvent::Call(const alt::CEvent *ev)
     auto weapon = event->GetWeaponHash();
     auto offset = event->GetShotOffset();
 
-    // TODO
     Position cOffset;
     cOffset.x = offset[0];
     cOffset.y = offset[1];
     cOffset.z = offset[2];
 
-    // TODO add bodyPart enum
-
-    auto cancel = call(source, target, weapon, damage, cOffset, static_cast<short>(event->GetBodyPart()));
+    auto cancel = call(source, target, weapon, damage, cOffset, static_cast<short>(bodyPart));
 
     if(cancel) {
         event->Cancel();
