@@ -6,6 +6,15 @@
 #include "GoEventManager.h"
 
 #include "events/PlayerConnectEvent.h"
+#include "events/PlayerDisconnectEvent.h"
+#include "events/PlayerDamageEvent.h"
+#include "events/PlayerDeathEvent.h"
+#include "events/PlayerEnterVehicleEvent.h"
+#include "events/PlayerLeaveVehicleEvent.h"
+#include "events/PlayerChangeVehicleSeatEvent.h"
+#include "events/RemoveEntityEvent.h"
+#include "events/ConsoleCommandEvent.h"
+#include "events/WeaponDamageEvent.h"
 
 namespace Go
 {

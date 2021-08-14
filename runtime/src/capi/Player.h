@@ -73,9 +73,10 @@ extern "C"
     EXPORT void Player_SetDateTime(void *p, int day, int month, int year, int hour, int minute, int second);
     EXPORT void Player_SetWeather(void *p, unsigned long weather);
     EXPORT void Player_Kick(void *p, const char* reason);
-    /**
-     * Cloth and Prop Getters
-     * */
+    EXPORT Cloth Player_GetClothes(void *p, unsigned int component);
+    EXPORT DlcCloth Player_GetDlcClothes(void *p, unsigned int component);
+    EXPORT Prop Player_GetProps(void *p, unsigned int component);
+    EXPORT DlcProp Player_GetDlcProps(void *p, unsigned int component);
     EXPORT void Player_SetClothes(void *p, unsigned int component, unsigned int drawable, unsigned int texture, unsigned int palette);
     EXPORT void Player_SetDlcClothes(void *p, unsigned int component, unsigned int drawable, unsigned int texture, unsigned int palette, unsigned long dlc);
     EXPORT void Player_SetProps(void *p, unsigned int component, unsigned int drawable, unsigned int texture);

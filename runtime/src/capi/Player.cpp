@@ -504,6 +504,58 @@ EXPORT void Player_Kick(void *p, const char* reason)
     player->Kick(reason);
 }
 
+EXPORT Cloth Player_GetClothes(void *p, unsigned int component)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto cloth = player->GetClothes(component);
+
+    Cloth cCloth;
+    cCloth.drawableId = cloth.drawableId;
+    cCloth.textureId = cloth.textureId;
+    cCloth.paletteId = cloth.paletteId;
+
+    return cCloth;
+}
+
+EXPORT DlcCloth Player_GetDlcClothes(void *p, unsigned int component)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto cloth = player->GetDlcClothes(component);
+
+    DlcCloth dlcCloth;
+    dlcCloth.dlc = cloth.dlc;
+    dlcCloth.drawableId = cloth.drawableId;
+    dlcCloth.textureId = cloth.textureId;
+    dlcCloth.paletteId = cloth.paletteId;
+
+    return dlcCloth;
+}
+
+EXPORT Prop Player_GetProps(void *p, unsigned int component)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto prop = player->GetProps(component);
+
+    Prop cProp;
+    cProp.drawableId = prop.drawableId;
+    cProp.textureId = prop.textureId;
+
+    return cProp;
+}
+
+EXPORT DlcProp Player_GetDlcProps(void *p, unsigned int component)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto prop = player->GetDlcProps(component);
+
+    DlcProp dlcProp;
+    dlcProp.dlc = prop.dlc;
+    dlcProp.drawableId = prop.drawableId;
+    dlcProp.textureId = prop.textureId;
+
+    return dlcProp;
+}
+
 EXPORT void Player_SetClothes(void *p, unsigned int component, unsigned int drawable, unsigned int texture, unsigned int palette)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
