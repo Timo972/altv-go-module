@@ -34,7 +34,7 @@ bool Go::Resource::Start()
         return false;
     }
 
-    RegisterEventHandler(1, new PlayerConnectEvent());
+    RegisterEventHandler(Go::EventType::PLAYER_CONNECT, new PlayerConnectEvent(Module));
 
     start();
     return true;
@@ -54,7 +54,7 @@ bool Go::Resource::OnEvent(const alt::CEvent *ev)
         return false;
     }
 
-    NotifyEvent(ev, _resource->GetName().CStr(), Module);
+    NotifyEvent(ev, _resource->GetName().CStr());
     return true;
 }
 

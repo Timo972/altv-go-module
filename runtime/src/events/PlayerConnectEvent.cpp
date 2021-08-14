@@ -1,8 +1,10 @@
 #include "PlayerConnectEvent.h"
 
-void Go::PlayerConnectEvent::Call(const alt::CEvent *ev, ModuleLibrary *module)
+Go::PlayerConnectEvent::PlayerConnectEvent(ModuleLibrary *module) : IEvent(module) { }
+
+void Go::PlayerConnectEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(module, "altPlayerConnectEvent", void (*)(alt::IPlayer *playerObject));
+    static auto call = GET_FUNC(Library, "altPlayerConnectEvent", void (*)(alt::IPlayer *playerObject));
 
     if (call == nullptr)
     {
@@ -15,4 +17,3 @@ void Go::PlayerConnectEvent::Call(const alt::CEvent *ev, ModuleLibrary *module)
 
     call(player);
 }
-

@@ -9,6 +9,7 @@ namespace Go
     class PlayerConnectEvent : public Go::IEvent
     {
     public:
-        void Call(const alt::CEvent *ev, ModuleLibrary *module) override;
+        explicit PlayerConnectEvent(ModuleLibrary *module);
+        void Call(const alt::CEvent *ev) override;
     };
 }

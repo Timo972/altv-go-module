@@ -21,6 +21,6 @@ class EventsManager : public Go::EventFactory
         bool RegisterEvent(alt::CEvent::Type type);
         bool UnregisterEvent(alt::CEvent::Type type);
         bool IsEventRegistered(alt::CEvent::Type type);
-        void NotifyEvent(const alt::CEvent *ev, const std::string &resourceName, ModuleLibrary *module);
+        void NotifyEvent(const alt::CEvent *ev, const std::string &resourceName);
     };
 }
