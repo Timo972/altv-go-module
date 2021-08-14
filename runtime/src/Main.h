@@ -51,9 +51,4 @@ typedef struct dlcProp {
     unsigned int textureId;
 } DlcProp;
 
-typedef struct array {
-    const char* *args;
-    unsigned long long size;
-} Array;
-
 #include "SDK.h"

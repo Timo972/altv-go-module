@@ -4,7 +4,7 @@ Go::ConsoleCommandEvent::ConsoleCommandEvent(ModuleLibrary *module) : IEvent(mod
 
 void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altConsoleCommandEvent", void (*)(const char* name, Array args));
+    static auto call = GET_FUNC(Library, "altConsoleCommandEvent", void (*)(const char* name, const char* *args, unsigned long long size));
 
     if (call == nullptr)
     {
@@ -16,7 +16,7 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
     auto name = event->GetName();
     auto args = event->GetArgs();
 
-    uint64_t size = args.GetSize();
+    auto size = args.GetSize();
 
 #ifdef _WIN32
     auto constArgs = new const char* [size];
@@ -24,9 +24,13 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
     const char* constArgs[size];
 #endif
 
-    Array cArgs;
-    cArgs.size = size;
-    cArgs.args = constArgs;
+    for (uint64_t i = 0; i < size; i++) {
+        constArgs[i] = args[i].CStr();
+    }
 
-    call(name.CStr(), cArgs);
+    call(name.CStr(), constArgs, size);
+
+#ifdef _WIN32
+    delete[] constArgs;
+#endif
 }
