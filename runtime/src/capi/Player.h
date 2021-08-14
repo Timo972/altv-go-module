@@ -32,7 +32,7 @@ extern "C"
     EXPORT unsigned int Player_GetHealth(void *p);
     EXPORT void Player_SetHealth(void *p, unsigned int health);
     EXPORT int Player_HasWeaponComponent(void *p, unsigned long weapon, unsigned long component);
-    //EXPORT alt::Array<unsigned int> Player_GetCurrentWeaponComponents(void *p);
+    EXPORT Array Player_GetCurrentWeaponComponents(void *p);
     EXPORT unsigned int Player_GetWeaponTintIndex(void *p, unsigned long weapon);
     EXPORT unsigned int Player_GetCurrentWeaponTintIndex(void *p);
     EXPORT unsigned long Player_GetCurrentWeapon(void *p);

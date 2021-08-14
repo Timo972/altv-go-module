@@ -27,4 +27,9 @@ typedef struct rgba {
     unsigned long a;
 } RGBA;
 
+typedef struct array {
+    unsigned long long size;
+    const void* ref;
+} Array;
+
 #include "SDK.h"

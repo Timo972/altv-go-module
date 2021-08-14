@@ -220,13 +220,25 @@ EXPORT int Player_HasWeaponComponent(void *p, unsigned long weapon, unsigned lon
     return player->HasWeaponComponent(weapon, component);
 }
 
-/*EXPORT alt::Array<unsigned int> Player_GetCurrentWeaponComponents(void *p)
+EXPORT Array Player_GetCurrentWeaponComponents(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto components = player->GetCurrentWeaponComponents();
 
-    return components;
-}*/
+    unsigned long long size = components.GetSize();
+
+#ifdef _WIN32
+    auto constArgs = new const int* [size];
+#else
+    const int* constArgs[size];
+#endif
+
+    Array arr;
+    arr.size = size;
+    arr.ref = constArgs;
+
+    return arr;
+}
 
 EXPORT unsigned int Player_GetWeaponTintIndex(void *p, unsigned long weapon)
 {
