@@ -228,9 +228,9 @@ EXPORT Array Player_GetCurrentWeaponComponents(void *p)
     unsigned long long size = components.GetSize();
 
 #ifdef _WIN32
-    auto constArgs = new const int* [size];
+    auto constArgs = new const unsigned int* [size];
 #else
-    const int* constArgs[size];
+    const unsigned int* constArgs[size];
 #endif
 
     Array arr;
