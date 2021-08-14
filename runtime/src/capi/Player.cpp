@@ -225,17 +225,17 @@ EXPORT Array Player_GetCurrentWeaponComponents(void *p)
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     auto components = player->GetCurrentWeaponComponents();
 
-    unsigned long long size = components.GetSize();
+    auto size = components.GetSize();
 
-#ifdef _WIN32
-    auto constArgs = new const unsigned int* [size];
-#else
-    const unsigned int* constArgs[size];
-#endif
+    unsigned int comps[size];
+
+    for(uint64_t i = 0; i < size; i++) {
+        comps[i] = components[i];
+    }
 
     Array arr;
     arr.size = size;
-    arr.ref = constArgs;
+    arr.array = comps;
 
     return arr;
 }

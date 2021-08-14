@@ -29,7 +29,7 @@ typedef struct rgba {
 
 typedef struct array {
     unsigned long long size;
-    const unsigned int** ref;
+    const unsigned int* array;
 } Array;
 
 #include "SDK.h"
