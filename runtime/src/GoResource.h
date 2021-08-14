@@ -7,6 +7,7 @@
 
 #include "events/PlayerConnectEvent.h"
 #include "events/PlayerDisconnectEvent.h"
+#include "events/PlayerDamageEvent.h"
 
 namespace Go
 {

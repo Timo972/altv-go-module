@@ -8,7 +8,7 @@ void Go::PlayerDisconnectEvent::Call(const alt::CEvent *ev)
 
     if (call == nullptr)
     {
-        alt::ICore::Instance().LogError("Couldn't not call PlayerConnectEvent.");
+        alt::ICore::Instance().LogError("Couldn't not call PlayerDisconnectEvent.");
         return;
     }
 
