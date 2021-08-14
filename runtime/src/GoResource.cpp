@@ -44,6 +44,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::REMOVE_ENTITY_EVENT, new RemoveEntityEvent(Module));
     RegisterEventHandler(Go::EventType::CONSOLE_COMMAND_EVENT, new ConsoleCommandEvent(Module));
     RegisterEventHandler(Go::EventType::WEAPON_DAMAGE_EVENT, new WeaponDamageEvent(Module));
+    RegisterEventHandler(Go::EventType::EXPLOSION_EVENT, new ExplosionEvent(Module));
 
     start();
     return true;

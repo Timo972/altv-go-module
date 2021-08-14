@@ -15,6 +15,7 @@
 #include "events/RemoveEntityEvent.h"
 #include "events/ConsoleCommandEvent.h"
 #include "events/WeaponDamageEvent.h"
+#include "events/ExplosionEvent.h"
 
 namespace Go
 {
