@@ -226,9 +226,12 @@ EXPORT Array Player_GetCurrentWeaponComponents(void *p)
     auto components = player->GetCurrentWeaponComponents();
 
     auto size = components.GetSize();
-
-    unsigned int comps[size];
-
+#ifdef _WIN32
+    auto comps = new unsigned int [size];
+    //unsigned int comps[size];
+#else
+    unsigned int* comps[size];
+#endif
     for(uint64_t i = 0; i < size; i++) {
         comps[i] = components[i];
     }
