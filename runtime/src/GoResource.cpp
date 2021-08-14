@@ -37,6 +37,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::PLAYER_CONNECT, new PlayerConnectEvent(Module));
     RegisterEventHandler(Go::EventType::PLAYER_DISCONNECT, new PlayerDisconnectEvent(Module));
     RegisterEventHandler(Go::EventType::PLAYER_DAMAGE, new PlayerDamageEvent(Module));
+    RegisterEventHandler(Go::EventType::PLAYER_DEATH, new PlayerDeathEvent(Module));
 
     start();
     return true;

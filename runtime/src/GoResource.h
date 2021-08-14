@@ -8,6 +8,7 @@
 #include "events/PlayerConnectEvent.h"
 #include "events/PlayerDisconnectEvent.h"
 #include "events/PlayerDamageEvent.h"
+#include "events/PlayerDeathEvent.h"
 
 namespace Go
 {
