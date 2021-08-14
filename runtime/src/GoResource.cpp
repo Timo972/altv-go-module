@@ -45,6 +45,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::CONSOLE_COMMAND_EVENT, new ConsoleCommandEvent(Module));
     RegisterEventHandler(Go::EventType::WEAPON_DAMAGE_EVENT, new WeaponDamageEvent(Module));
     RegisterEventHandler(Go::EventType::EXPLOSION_EVENT, new ExplosionEvent(Module));
+    RegisterEventHandler(Go::EventType::RESOURCE_START, new ResourceStartEvent(Module));
 
     start();
     return true;
