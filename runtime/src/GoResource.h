@@ -10,6 +10,7 @@
 #include "events/PlayerDamageEvent.h"
 #include "events/PlayerDeathEvent.h"
 #include "events/PlayerEnterVehicleEvent.h"
+#include "events/PlayerLeaveVehicleEvent.h"
 
 namespace Go
 {
