@@ -4,7 +4,7 @@ Go::PlayerEnterVehicleEvent::PlayerEnterVehicleEvent(ModuleLibrary *module) : IE
 
 void Go::PlayerEnterVehicleEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altPlayerEnterVehicleEvent", void (*)(alt::IPlayer *playerObject, alt::IVehicle *vehicleObject, unsigned char seat));
+    static auto call = GET_FUNC(Library, "altPlayerEnterVehicleEvent", bool (*)(alt::IPlayer *playerObject, alt::IVehicle *vehicleObject, unsigned char seat));
 
     if (call == nullptr)
     {
@@ -17,5 +17,9 @@ void Go::PlayerEnterVehicleEvent::Call(const alt::CEvent *ev)
     auto player = event->GetPlayer().Get();
     auto seat = event->GetSeat();
 
-    call(player, vehicle, seat);
+    auto cancel = call(player, vehicle, seat);
+
+    if(cancel) {
+        event->Cancel();
+    }
 }
