@@ -6,6 +6,7 @@
 #include "GoEventManager.h"
 
 #include "events/PlayerConnectEvent.h"
+#include "events/PlayerDisconnectEvent.h"
 
 namespace Go
 {

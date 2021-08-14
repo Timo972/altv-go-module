@@ -35,6 +35,7 @@ bool Go::Resource::Start()
     }
 
     RegisterEventHandler(Go::EventType::PLAYER_CONNECT, new PlayerConnectEvent(Module));
+    RegisterEventHandler(Go::EventType::PLAYER_DISCONNECT, new PlayerDisconnectEvent(Module));
 
     start();
     return true;
