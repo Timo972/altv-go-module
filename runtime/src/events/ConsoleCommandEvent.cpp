@@ -4,7 +4,7 @@ Go::ConsoleCommandEvent::ConsoleCommandEvent(ModuleLibrary *module) : IEvent(mod
 
 void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altConsoleCommandEvent", void (*)(const char* name));
+    static auto call = GET_FUNC(Library, "altConsoleCommandEvent", void (*)(const char* name, Array args));
 
     if (call == nullptr)
     {
@@ -16,6 +16,17 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
     auto name = event->GetName();
     auto args = event->GetArgs();
 
-    // TODO pass args array correctly
-    call(name.CStr());
+    uint64_t size = args.GetSize();
+
+#ifdef _WIN32
+    auto constArgs = new const char* [size];
+#else
+    const char* constArgs[size];
+#endif
+
+    Array cArgs;
+    cArgs.size = size;
+    cArgs.args = constArgs;
+
+    call(name.CStr(), cArgs);
 }
