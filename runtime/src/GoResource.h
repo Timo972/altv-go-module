@@ -24,6 +24,7 @@
 #include "events/GlobalMetaDataChangeEvent.h"
 #include "events/GlobalSyncedMetaDataChangeEvent.h"
 #include "events/ResourceStopEvent.h"
+#include "events/ResourceErrorEvent.h"
 
 namespace Go
 {
