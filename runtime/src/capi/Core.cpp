@@ -326,9 +326,9 @@ EXPORT const char *Core_GetRootDirectory()
     return alt::ICore::Instance().GetRootDirectory().CStr();
 }
 
-EXPORT void *Core_StartResource(const char *name)
+EXPORT int Core_StartResource(const char *name)
 {
-    return alt::ICore::Instance().StartResource(name);
+    return alt::ICore::Instance().StartResource(name)->IsStarted();
 }
 
 EXPORT void Core_StopResource(const char *name)
@@ -336,9 +336,9 @@ EXPORT void Core_StopResource(const char *name)
     alt::ICore::Instance().StopResource(name);
 }
 
-EXPORT void *Core_RestartResource(const char *name)
+EXPORT int Core_RestartResource(const char *name)
 {
-    return alt::ICore::Instance().RestartResource(name);
+    return alt::ICore::Instance().RestartResource(name)->IsStarted();
 }
 
 EXPORT void Core_SetSyncedMetaData(const char *key, void *val)

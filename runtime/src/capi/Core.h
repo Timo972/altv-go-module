@@ -44,9 +44,9 @@ extern "C"
     EXPORT Array Core_GetOptionalPermissions();
     EXPORT void Core_DestroyBaseObject(void *h);
     EXPORT const char *Core_GetRootDirectory();
-    EXPORT void *Core_StartResource(const char *name);
+    EXPORT int Core_StartResource(const char *name);
     EXPORT void Core_StopResource(const char *name);
-    EXPORT void *Core_RestartResource(const char *name);
+    EXPORT int Core_RestartResource(const char *name);
     EXPORT void Core_SetSyncedMetaData(const char *key, void *val);
     EXPORT void Core_DeleteSyncedMetaData(const char *key);
     EXPORT Array Core_GetPlayersByName(const char *name);
