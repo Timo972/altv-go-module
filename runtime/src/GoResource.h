@@ -20,6 +20,7 @@
 #include "events/ColShapeEvent.h"
 #include "events/FireEvent.h"
 #include "events/SyncedMetaDataChangeEvent.h"
+#include "events/StreamSyncedMetaDataChangeEvent.h"
 
 namespace Go
 {

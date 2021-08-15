@@ -49,6 +49,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::COLSHAPE_EVENT, new ColShapeEvent(Module));
     RegisterEventHandler(Go::EventType::FIRE_EVENT, new FireEvent(Module));
     RegisterEventHandler(Go::EventType::SYNCED_META_CHANGE, new SyncedMetaDataChangeEvent(Module));
+    RegisterEventHandler(Go::EventType::STREAM_SYNCED_META_CHANGE, new StreamSyncedMetaDataChangeEvent(Module));
 
     start();
     return true;
