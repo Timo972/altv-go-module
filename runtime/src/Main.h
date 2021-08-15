@@ -51,6 +51,11 @@ typedef struct dlcProp {
     unsigned int textureId;
 } DlcProp;
 
+typedef struct fireInfo {
+    Position position;
+    unsigned long weaponHash;
+} FireInfo;
+
 typedef struct array {
     unsigned long long size;
     void* array;
