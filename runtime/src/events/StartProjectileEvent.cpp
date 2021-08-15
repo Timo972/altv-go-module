@@ -31,7 +31,7 @@ void Go::StartProjectileEvent::Call(const alt::CEvent *ev)
 
     auto cancel = call(player, position, direction, ammo, weapon);
 
-    if(cancel) {
+    if(!cancel) {
         event->Cancel();
     }
 }

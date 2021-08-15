@@ -4,7 +4,7 @@ Go::PlayerDeathEvent::PlayerDeathEvent(ModuleLibrary *module) : IEvent(module) {
 
 void Go::PlayerDeathEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altPlayerDeathEvent", bool (*)(alt::IPlayer *playerObject, alt::IEntity *killerObject, unsigned long weapon));
+    static auto call = GET_FUNC(Library, "altPlayerDeathEvent", void (*)(alt::IPlayer *playerObject, alt::IEntity *killerObject, unsigned long weapon));
 
     if (call == nullptr)
     {
@@ -17,9 +17,5 @@ void Go::PlayerDeathEvent::Call(const alt::CEvent *ev)
     auto killer = event->GetKiller().Get();
     auto weapon = event->GetWeapon();
 
-    auto cancel = call(player, killer, weapon);
-
-    if(cancel) {
-        event->Cancel();
-    }
+    call(player, killer, weapon);
 }
