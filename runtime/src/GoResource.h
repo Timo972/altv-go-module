@@ -26,6 +26,7 @@
 #include "events/ResourceStopEvent.h"
 #include "events/ResourceErrorEvent.h"
 #include "events/VehicleDestroyEvent.h"
+#include "events/StartProjectileEvent.h"
 
 namespace Go
 {

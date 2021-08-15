@@ -55,6 +55,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::RESOURCE_STOP, new ResourceStopEvent(Module));
     RegisterEventHandler(Go::EventType::RESOURCE_ERROR, new ResourceErrorEvent(Module));
     RegisterEventHandler(Go::EventType::VEHICLE_DESTROY, new VehicleDestroyEvent(Module));
+    RegisterEventHandler(Go::EventType::START_PROJECTILE_EVENT, new StartProjectileEvent(Module));
 
     start();
     return true;
