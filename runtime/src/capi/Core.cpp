@@ -260,12 +260,12 @@ EXPORT void Core_DeleteMetaData(const char *key)
     alt::ICore::Instance().DeleteMetaData(key);
 }
 
-EXPORT int Core_HasSyncedMeta(const char *key)
+EXPORT int Core_HasSyncedMetaData(const char *key)
 {
     return alt::ICore::Instance().HasSyncedMetaData(key);
 }
 
-EXPORT MetaData Core_GetSyncedMeta(const char *key)
+EXPORT MetaData Core_GetSyncedMetaData(const char *key)
 {
     auto meta = alt::ICore::Instance().GetSyncedMetaData(key);
     MetaData metaData;

@@ -38,8 +38,8 @@ extern "C"
     EXPORT MetaData Core_GetMetaData(const char *key);
     EXPORT void Core_SetMetaData(const char *key, void *val);
     EXPORT void Core_DeleteMetaData(const char *key);
-    EXPORT int Core_HasSyncedMeta(const char *key);
-    EXPORT MetaData Core_GetSyncedMeta(const char *key);
+    EXPORT int Core_HasSyncedMetaData(const char *key);
+    EXPORT MetaData Core_GetSyncedMetaData(const char *key);
     EXPORT Array Core_GetRequiredPermissions();
     EXPORT Array Core_GetOptionalPermissions();
     EXPORT void Core_DestroyBaseObject(void *h);
