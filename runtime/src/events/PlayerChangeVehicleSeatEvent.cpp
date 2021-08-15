@@ -4,7 +4,7 @@ Go::PlayerChangeVehicleSeatEvent::PlayerChangeVehicleSeatEvent(ModuleLibrary *mo
 
 void Go::PlayerChangeVehicleSeatEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altPlayerChangeVehicleSeatEvent", bool (*)(alt::IPlayer *playerObject, alt::IVehicle *vehicleObject, unsigned char oldSeat, unsigned char newSeat));
+    static auto call = GET_FUNC(Library, "altPlayerChangeVehicleSeatEvent", void (*)(alt::IPlayer *playerObject, alt::IVehicle *vehicleObject, unsigned char oldSeat, unsigned char newSeat));
 
     if (call == nullptr)
     {
@@ -18,9 +18,5 @@ void Go::PlayerChangeVehicleSeatEvent::Call(const alt::CEvent *ev)
     auto newSeat = event->GetNewSeat();
     auto oldSeat = event->GetOldSeat();
 
-    auto cancel = call(player, vehicle, oldSeat, newSeat);
-
-    if(cancel) {
-        event->Cancel();
-    }
+    call(player, vehicle, oldSeat, newSeat);
 }
