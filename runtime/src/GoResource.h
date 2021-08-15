@@ -31,6 +31,7 @@
 #include "events/VehicleAttachEvent.h"
 #include "events/VehicleDetachEvent.h"
 #include "events/NetOwnerChangeEvent.h"
+#include "events/PlayerEnteringVehicleEvent.h"
 
 namespace Go
 {

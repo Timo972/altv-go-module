@@ -60,6 +60,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::VEHICLE_ATTACH, new VehicleAttachEvent(Module));
     RegisterEventHandler(Go::EventType::VEHICLE_DETACH, new VehicleDetachEvent(Module));
     RegisterEventHandler(Go::EventType::NETOWNER_CHANGE, new NetOwnerChangeEvent(Module));
+    RegisterEventHandler(Go::EventType::PLAYER_ENTERING_VEHICLE, new PlayerEnteringVehicleEvent(Module));
 
     start();
     return true;
