@@ -17,6 +17,21 @@
 #include "events/WeaponDamageEvent.h"
 #include "events/ExplosionEvent.h"
 #include "events/ResourceStartEvent.h"
+#include "events/ColShapeEvent.h"
+#include "events/FireEvent.h"
+#include "events/SyncedMetaDataChangeEvent.h"
+#include "events/StreamSyncedMetaDataChangeEvent.h"
+#include "events/GlobalMetaDataChangeEvent.h"
+#include "events/GlobalSyncedMetaDataChangeEvent.h"
+#include "events/ResourceStopEvent.h"
+#include "events/ResourceErrorEvent.h"
+#include "events/VehicleDestroyEvent.h"
+#include "events/StartProjectileEvent.h"
+#include "events/PlayerWeaponChangeEvent.h"
+#include "events/VehicleAttachEvent.h"
+#include "events/VehicleDetachEvent.h"
+#include "events/NetOwnerChangeEvent.h"
+#include "events/PlayerEnteringVehicleEvent.h"
 
 namespace Go
 {
