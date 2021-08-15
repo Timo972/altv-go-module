@@ -21,10 +21,10 @@ typedef struct rot {
 } Rotation;
 
 typedef struct rgba {
-    unsigned long r;
-    unsigned long g;
-    unsigned long b;
-    unsigned long a;
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+    unsigned char a;
 } RGBA;
 
 typedef struct cloth {

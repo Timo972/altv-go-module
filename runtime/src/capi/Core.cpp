@@ -130,7 +130,7 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
     return vehicle.Get();
 }
 
-EXPORT void *Core_CreateCheckpoint(unsigned short type, float x, float y, float z, float radius, float height, unsigned short r, unsigned short g, unsigned short b, unsigned short a)
+EXPORT void *Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     alt::RGBA rgba;
     rgba.r = r;
