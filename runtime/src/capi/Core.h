@@ -24,6 +24,7 @@ extern "C"
     EXPORT const char *Core_GetMValueString(void *val);
     EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                                float rotX, float rotY, float rotZ);
+    EXPORT void *Core_CreateVoiceChannel(int spacial, float maxDistance);
 #ifdef __cplusplus
 }
 #endif

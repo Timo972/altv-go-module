@@ -129,3 +129,9 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
     auto vehicle = alt::ICore::Instance().CreateVehicle(model, position, rotation);
     return vehicle.Get();
 }
+
+EXPORT void *Core_CreateVoiceChannel(int spacial, float maxDistance)
+{
+    auto voiceChannel = alt::ICore::Instance().CreateVoiceChannel(spacial, maxDistance);
+    return voiceChannel.Get();
+}
