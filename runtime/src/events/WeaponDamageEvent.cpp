@@ -31,7 +31,7 @@ void Go::WeaponDamageEvent::Call(const alt::CEvent *ev)
 
     auto cancel = call(source, e, weapon, damage, cOffset, static_cast<short>(bodyPart));
 
-    if(cancel) {
+    if(!cancel) {
         event->Cancel();
     }
 }

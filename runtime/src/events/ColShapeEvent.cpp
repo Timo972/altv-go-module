@@ -4,18 +4,11 @@ Go::ColShapeEvent::ColShapeEvent(ModuleLibrary *module) : IEvent(module) { }
 
 void Go::ColShapeEvent::Call(const alt::CEvent *ev)
 {
-    static auto callEnter = GET_FUNC(Library, "altEntityEnterColShapeEvent", void (*)(alt::IColShape* colshape, alt::IEntity* entity));
-    static auto callLeave = GET_FUNC(Library, "altEntityLeaveColShapeEvent", void (*)(alt::IColShape* colshape, alt::IEntity* entity));
+    static auto call = GET_FUNC(Library, "altColShapeEvent", void (*)(alt::IColShape* colshape, Entity entity, int state));
 
-    if (callEnter == nullptr)
+    if (call == nullptr)
     {
-        alt::ICore::Instance().LogError("Could not call altEntityEnterColShapeEvent.");
-        return;
-    }
-
-    if (callLeave == nullptr)
-    {
-        alt::ICore::Instance().LogError("Could not call altEntityLeaveColShapeEvent.");
+        alt::ICore::Instance().LogError("Could not call altColShapeEvent.");
         return;
     }
 
@@ -23,11 +16,12 @@ void Go::ColShapeEvent::Call(const alt::CEvent *ev)
     auto state = event->GetState();
 
     auto colShape = event->GetTarget().Get();
-    auto entity = event->GetEntity().Get();
+    auto entity = event->GetEntity();
 
-    if(state) {
-        callEnter(colShape, entity);
-    } else {
-        callLeave(colShape, entity);
-    }
+    Entity e;
+    e.Ptr = entity.Get();
+    e.Type = static_cast<unsigned char>(entity->GetType());
+
+
+    call(colShape, e, state);
 }

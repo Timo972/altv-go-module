@@ -22,9 +22,5 @@ void Go::PlayerDamageEvent::Call(const alt::CEvent *ev)
     e.Ptr = attacker.Get();
     e.Type = static_cast<unsigned char>(attacker->GetType());
 
-    auto cancel = call(player, e, damage, weapon);
-
-    if(cancel) {
-        event->Cancel();
-    }
+    call(player, e, damage, weapon);
 }

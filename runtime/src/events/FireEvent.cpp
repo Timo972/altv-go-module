@@ -4,7 +4,7 @@ Go::FireEvent::FireEvent(ModuleLibrary *module) : IEvent(module) { }
 
 void Go::FireEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altFireEvent", void (*)(alt::IPlayer* player, Array fires));
+    static auto call = GET_FUNC(Library, "altFireEvent", bool (*)(alt::IPlayer* player, Array fires));
 
     if (call == nullptr)
     {
@@ -39,9 +39,13 @@ void Go::FireEvent::Call(const alt::CEvent *ev)
 
     cFireArr.array = args;
 
-    call(source, cFireArr);
+    auto cancel = call(source, cFireArr);
 
 #ifdef _WIN32
     delete[] args;
 #endif
+
+    if (!cancel) {
+        event->Cancel();
+    }
 }

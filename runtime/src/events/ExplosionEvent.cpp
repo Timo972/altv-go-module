@@ -30,7 +30,7 @@ void Go::ExplosionEvent::Call(const alt::CEvent *ev)
 
     auto cancel = call(source, e, cPos, static_cast<short>(expType), expFX);
 
-    if(cancel) {
+    if(!cancel) {
         event->Cancel();
     }
 }

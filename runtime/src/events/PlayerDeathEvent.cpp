@@ -21,9 +21,5 @@ void Go::PlayerDeathEvent::Call(const alt::CEvent *ev)
     e.Ptr = killer.Get();
     e.Type = static_cast<unsigned char>(killer->GetType());
 
-    auto cancel = call(player, e, weapon);
-
-    if(cancel) {
-        event->Cancel();
-    }
+    call(player, e, weapon);
 }
