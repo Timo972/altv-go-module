@@ -51,6 +51,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::SYNCED_META_CHANGE, new SyncedMetaDataChangeEvent(Module));
     RegisterEventHandler(Go::EventType::STREAM_SYNCED_META_CHANGE, new StreamSyncedMetaDataChangeEvent(Module));
     RegisterEventHandler(Go::EventType::GLOBAL_META_CHANGE, new GlobalMetaDataChangeEvent(Module));
+    RegisterEventHandler(Go::EventType::GLOBAL_SYNCED_META_CHANGE, new GlobalSyncedMetaDataChangeEvent(Module));
 
     start();
     return true;
