@@ -164,8 +164,8 @@ EXPORT Entity Core_GetEntityByID(unsigned short id)
 {
     auto entity = alt::ICore::Instance().GetEntityByID(id);
     Entity e;
-    e.ptr = entity.Get();
-    e.type = static_cast<unsigned char>(entity->GetType());
+    e.Ptr = entity.Get();
+    e.Type = static_cast<unsigned char>(entity->GetType());
     return e;
 }
 
@@ -183,8 +183,8 @@ EXPORT Array Core_GetEntities()
     for(uint64_t i = 0; i < arr.size; i++) {
         auto entity = entities[i];
         Entity e;
-        e.ptr = entity.Get();
-        e.type = static_cast<unsigned char>(entity->GetType());
+        e.Ptr = entity.Get();
+        e.Type = static_cast<unsigned char>(entity->GetType());
         entityRefs[i] = e;
     }
 

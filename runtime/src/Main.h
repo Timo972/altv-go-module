@@ -57,8 +57,8 @@ typedef struct fireInfo {
 } FireInfo;
 
 typedef struct entity {
-    unsigned char type;
-    const void *ptr;
+    unsigned char Type;
+    const void *Ptr;
 } Entity;
 
 typedef struct array {
