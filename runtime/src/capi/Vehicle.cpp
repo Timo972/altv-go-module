@@ -687,6 +687,12 @@ EXPORT unsigned long Vehicle_GetBumperDamageLevel(void *v, unsigned int bumperId
    return vehicle->GetBumperDamageLevel(bumperId);
 }
 
+EXPORT const char* Vehicle_GetDamageDataBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetDamageDataBase64().CStr();
+}
+
 EXPORT int Vehicle_IsManualEngineControl(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
