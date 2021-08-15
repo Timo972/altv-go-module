@@ -21,6 +21,7 @@
 #include "events/FireEvent.h"
 #include "events/SyncedMetaDataChangeEvent.h"
 #include "events/StreamSyncedMetaDataChangeEvent.h"
+#include "events/GlobalMetaDataChangeEvent.h"
 
 namespace Go
 {
