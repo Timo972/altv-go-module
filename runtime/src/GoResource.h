@@ -17,6 +17,7 @@
 #include "events/WeaponDamageEvent.h"
 #include "events/ExplosionEvent.h"
 #include "events/ResourceStartEvent.h"
+#include "events/ColShapeEvent.h"
 
 namespace Go
 {
