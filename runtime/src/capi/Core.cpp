@@ -129,3 +129,20 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
     auto vehicle = alt::ICore::Instance().CreateVehicle(model, position, rotation);
     return vehicle.Get();
 }
+
+EXPORT void *Core_CreateCheckpoint(unsigned short type, float x, float y, float z, float radius, float height, unsigned short r, unsigned short g, unsigned short b, unsigned short a)
+{
+    alt::RGBA rgba;
+    rgba.r = r;
+    rgba.g = g;
+    rgba.b = b;
+    rgba.a = a;
+
+    alt::Vector<float, 3, alt::PointLayout> pos;
+    pos[0] = x;
+    pos[1] = y;
+    pos[2] = z;
+
+    auto checkpoint = alt::ICore::Instance().CreateCheckpoint(type, pos, height, radius, rgba);
+    return checkpoint.Get();
+}
