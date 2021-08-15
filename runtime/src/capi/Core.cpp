@@ -130,6 +130,23 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
     return vehicle.Get();
 }
 
+EXPORT void *Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+    alt::RGBA rgba;
+    rgba.r = r;
+    rgba.g = g;
+    rgba.b = b;
+    rgba.a = a;
+
+    alt::Vector<float, 3, alt::PointLayout> pos;
+    pos[0] = x;
+    pos[1] = y;
+    pos[2] = z;
+
+    auto checkpoint = alt::ICore::Instance().CreateCheckpoint(type, pos, height, radius, rgba);
+    return checkpoint.Get();
+}
+
 EXPORT void *Core_CreateVoiceChannel(int spacial, float maxDistance)
 {
     auto voiceChannel = alt::ICore::Instance().CreateVoiceChannel(spacial, maxDistance);

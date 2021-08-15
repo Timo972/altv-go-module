@@ -24,6 +24,7 @@ extern "C"
     EXPORT const char *Core_GetMValueString(void *val);
     EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                                float rotX, float rotY, float rotZ);
+    EXPORT void *Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     EXPORT void *Core_CreateVoiceChannel(int spacial, float maxDistance);
     EXPORT const char *Core_GetVersion();
     EXPORT const char *Core_GetBranch();
