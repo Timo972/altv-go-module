@@ -384,3 +384,59 @@ EXPORT void Core_SetPassword(const char *password)
 {
     alt::ICore::Instance().SetPassword(password);
 }
+
+EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius)
+{
+    alt::Position position;
+    position.x = posX;
+    position.y = posY;
+    position.z = posZ;
+
+    auto colShape = alt::ICore::Instance().CreateColShapeSphere(position, radius);
+    return colShape.Get();
+}
+
+EXPORT void *Core_CreateColShapeCircle(float posX, float posY, float posZ, float radius)
+{
+    alt::Position position;
+    position.x = posX;
+    position.y = posY;
+    position.z = posZ;
+
+    auto colShape = alt::ICore::Instance().CreateColShapeCircle(position, radius);
+    return colShape.Get();
+}
+
+EXPORT void *Core_CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z)
+{
+
+    auto colShape = alt::ICore::Instance().CreateColShapeRectangle(x1, y1, x2, y2, z);
+    return colShape.Get();
+}
+
+EXPORT void *Core_CreateColShapeCube(float posX1, float posY1, float posZ1, float posX2, float posY2, float posZ2)
+{
+    alt::Position position;
+    position.x = posX1;
+    position.y = posY1;
+    position.z = posZ1;
+
+    alt::Position position2;
+    position.x = posX2;
+    position.y = posY2;
+    position.z = posZ2;
+
+    auto colShape = alt::ICore::Instance().CreateColShapeCube(position, position2);
+    return colShape.Get();
+}
+
+EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, float radius, float height)
+{
+    alt::Position position;
+    position.x = posX;
+    position.y = posY;
+    position.z = posZ;
+
+    auto colShape = alt::ICore::Instance().CreateColShapeCylinder(position, radius, height);
+    return colShape.Get();
+}
