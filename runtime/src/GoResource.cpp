@@ -57,6 +57,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::VEHICLE_DESTROY, new VehicleDestroyEvent(Module));
     RegisterEventHandler(Go::EventType::START_PROJECTILE_EVENT, new StartProjectileEvent(Module));
     RegisterEventHandler(Go::EventType::PLAYER_WEAPON_CHANGE, new PlayerWeaponChangeEvent(Module));
+    RegisterEventHandler(Go::EventType::VEHICLE_ATTACH, new VehicleAttachEvent(Module));
 
     start();
     return true;

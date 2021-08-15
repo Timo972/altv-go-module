@@ -28,6 +28,7 @@
 #include "events/VehicleDestroyEvent.h"
 #include "events/StartProjectileEvent.h"
 #include "events/PlayerWeaponChangeEvent.h"
+#include "events/VehicleAttachEvent.h"
 
 namespace Go
 {
