@@ -425,7 +425,7 @@ EXPORT int Vehicle_IsNeonActive(void *v)
    return vehicle->IsNeonActive();
 }
 
-EXPORT void Vehicle_GetNeonActive(void *v, int *left, int *right, int *front, int *back)
+EXPORT VehicleNeonState Vehicle_GetNeonActive(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
 
@@ -436,10 +436,13 @@ EXPORT void Vehicle_GetNeonActive(void *v, int *left, int *right, int *front, in
 
    vehicle->GetNeonActive(&leftBool, &rightBool, &frontBool, &backBool);
 
-   *left = leftBool;
-   *right = rightBool;
-   *front = frontBool;
-   *back = backBool;
+   VehicleNeonState state;
+   state.front = frontBool;
+   state.left = leftBool;
+   state.right = rightBool;
+   state.back = backBool;
+
+   return state;
 }
 
 EXPORT RGBA Vehicle_GetNeonColor(void *v)
@@ -466,6 +469,12 @@ EXPORT unsigned long Vehicle_GetRoofLivery(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetRoofLivery();
+}
+
+EXPORT const char *Vehicle_GetAppearanceDataBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetAppearanceDataBase64().CStr();
 }
 
 EXPORT int Vehicle_IsEngineOn(void *v)

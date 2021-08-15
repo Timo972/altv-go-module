@@ -56,6 +56,13 @@ typedef struct fireInfo {
     unsigned long weaponHash;
 } FireInfo;
 
+typedef struct neonState {
+    int left;
+    int right;
+    int front;
+    int back;
+} VehicleNeonState;
+
 typedef struct entity {
     unsigned char Type;
     const void *Ptr;

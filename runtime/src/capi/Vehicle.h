@@ -65,7 +65,7 @@ extern "C"
     EXPORT unsigned long Vehicle_GetDirtLevel(void *v);
     EXPORT int Vehicle_IsExtraOn(void *v, unsigned int extraID);
     EXPORT int Vehicle_IsNeonActive(void *v);
-    EXPORT void Vehicle_GetNeonActive(void *v, int *left, int *right, int *front, int *back);
+    EXPORT VehicleNeonState Vehicle_GetNeonActive(void *v);
     EXPORT RGBA Vehicle_GetNeonColor(void *v);
     EXPORT unsigned long Vehicle_GetLivery(void *v);
     EXPORT unsigned long Vehicle_GetRoofLivery(void *v);
