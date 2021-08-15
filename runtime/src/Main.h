@@ -56,6 +56,11 @@ typedef struct fireInfo {
     unsigned long weaponHash;
 } FireInfo;
 
+typedef struct entity {
+    unsigned char type;
+    const void *ptr;
+} Entity;
+
 typedef struct array {
     unsigned long long size;
     void* array;

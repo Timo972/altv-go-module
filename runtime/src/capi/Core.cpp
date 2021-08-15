@@ -160,9 +160,13 @@ EXPORT const char *Core_ReadFile(const char *path)
     return alt::ICore::Instance().FileRead(path).CStr();
 }
 
-EXPORT void *Core_GetEntityByID(unsigned short id)
+EXPORT Entity Core_GetEntityByID(unsigned short id)
 {
-    return alt::ICore::Instance().GetEntityByID(id).Get();
+    auto entity = alt::ICore::Instance().GetEntityByID(id);
+    Entity e;
+    e.ptr = entity.Get();
+    e.type = static_cast<unsigned char>(entity->GetType());
+    return e;
 }
 
 EXPORT Array Core_GetEntities()
@@ -172,12 +176,16 @@ EXPORT Array Core_GetEntities()
     arr.size = entities.GetSize();
 
 #ifdef _WIN32
-    auto entityRefs = new void* [arr.size];
+    auto entityRefs = new Entity [arr.size];
 #else
-    void *entityRefs[arr.size];
+    Entity entityRefs[arr.size];
 #endif
     for(uint64_t i = 0; i < arr.size; i++) {
-        entityRefs[i] = entities[i].Get();
+        auto entity = entities[i];
+        Entity e;
+        e.ptr = entity.Get();
+        e.type = static_cast<unsigned char>(entity->GetType());
+        entityRefs[i] = e;
     }
 
     arr.array = entityRefs;
