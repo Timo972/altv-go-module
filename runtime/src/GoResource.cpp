@@ -59,6 +59,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::PLAYER_WEAPON_CHANGE, new PlayerWeaponChangeEvent(Module));
     RegisterEventHandler(Go::EventType::VEHICLE_ATTACH, new VehicleAttachEvent(Module));
     RegisterEventHandler(Go::EventType::VEHICLE_DETACH, new VehicleDetachEvent(Module));
+    RegisterEventHandler(Go::EventType::NETOWNER_CHANGE, new NetOwnerChangeEvent(Module));
 
     start();
     return true;

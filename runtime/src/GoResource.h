@@ -30,6 +30,7 @@
 #include "events/PlayerWeaponChangeEvent.h"
 #include "events/VehicleAttachEvent.h"
 #include "events/VehicleDetachEvent.h"
+#include "events/NetOwnerChangeEvent.h"
 
 namespace Go
 {
