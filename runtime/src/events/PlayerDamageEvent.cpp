@@ -4,7 +4,7 @@ Go::PlayerDamageEvent::PlayerDamageEvent(ModuleLibrary *module) : IEvent(module)
 
 void Go::PlayerDamageEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altPlayerDamageEvent", void (*)(alt::IPlayer *playerObject, alt::IEntity *attackerObject, unsigned short damage, unsigned long weapon));
+    static auto call = GET_FUNC(Library, "altPlayerDamageEvent", bool (*)(alt::IPlayer *playerObject, Entity attackerObject, unsigned short damage, unsigned long weapon));
 
     if (call == nullptr)
     {
@@ -14,9 +14,13 @@ void Go::PlayerDamageEvent::Call(const alt::CEvent *ev)
 
     auto event = dynamic_cast<const alt::CPlayerDamageEvent *>(ev);
     auto player = event->GetTarget().Get();
-    auto attacker = event->GetAttacker().Get();
+    auto attacker = event->GetAttacker();
     auto damage = event->GetDamage();
     auto weapon = event->GetWeapon();
 
-    call(player, attacker, damage, weapon);
+    Entity e;
+    e.Ptr = attacker.Get();
+    e.Type = static_cast<unsigned char>(attacker->GetType());
+
+    call(player, e, damage, weapon);
 }

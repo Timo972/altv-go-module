@@ -4,7 +4,7 @@ Go::NetOwnerChangeEvent::NetOwnerChangeEvent(ModuleLibrary *module) : IEvent(mod
 
 void Go::NetOwnerChangeEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altNetOwnerChangeEvent", void (*)(alt::IEntity* entity, alt::IPlayer* owner, alt::IPlayer* oldOwner));
+    static auto call = GET_FUNC(Library, "altNetOwnerChangeEvent", void (*)(Entity entity, alt::IPlayer* owner, alt::IPlayer* oldOwner));
 
     if (call == nullptr)
     {
@@ -13,9 +13,13 @@ void Go::NetOwnerChangeEvent::Call(const alt::CEvent *ev)
     }
 
     auto event = dynamic_cast<const alt::CNetOwnerChangeEvent *>(ev);
-    auto entity = event->GetTarget().Get();
+    auto entity = event->GetTarget();
     auto newOwner = event->GetNewOwner().Get();
     auto oldOwner = event->GetOldOwner().Get();
 
-    call(entity, newOwner, oldOwner);
+    Entity e;
+    e.Ptr = entity.Get();
+    e.Type = static_cast<unsigned char>(entity->GetType());
+
+    call(e, newOwner, oldOwner);
 }

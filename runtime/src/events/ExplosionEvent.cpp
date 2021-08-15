@@ -4,7 +4,7 @@ Go::ExplosionEvent::ExplosionEvent(ModuleLibrary *module) : IEvent(module) { }
 
 void Go::ExplosionEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altExplosionEvent", bool (*)(alt::IPlayer* source, alt::IEntity* target, Position position, short explosionType, unsigned int explosionFX));
+    static auto call = GET_FUNC(Library, "altExplosionEvent", bool (*)(alt::IPlayer* source, Entity target, Position position, short explosionType, unsigned int explosionFX));
 
     if (call == nullptr)
     {
@@ -13,18 +13,22 @@ void Go::ExplosionEvent::Call(const alt::CEvent *ev)
     }
 
     auto event = dynamic_cast<const alt::CExplosionEvent *>(ev);
-    auto target = event->GetTarget().Get();
+    auto target = event->GetTarget();
     auto source = event->GetSource().Get();
     auto pos = event->GetPosition();
     auto expFX = event->GetExplosionFX();
     auto expType = event->GetExplosionType();
+
+    Entity e;
+    e.Ptr = target.Get();
+    e.Type = static_cast<unsigned char>(target->GetType());
 
     Position cPos;
     cPos.x = pos.x;
     cPos.y = pos.y;
     cPos.z = pos.z;
 
-    auto cancel = call(source, target, cPos, static_cast<short>(expType), expFX);
+    auto cancel = call(source, e, cPos, static_cast<short>(expType), expFX);
 
     if(!cancel) {
         event->Cancel();
