@@ -129,3 +129,247 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
     auto vehicle = alt::ICore::Instance().CreateVehicle(model, position, rotation);
     return vehicle.Get();
 }
+
+EXPORT const char *Core_GetVersion()
+{
+    return alt::ICore::Instance().GetVersion().CStr();
+}
+
+EXPORT const char *Core_GetBranch()
+{
+    return alt::ICore::Instance().GetBranch().CStr();
+}
+
+EXPORT int Core_IsDebug()
+{
+    return alt::ICore::Instance().IsDebug();
+}
+
+EXPORT unsigned long Core_Hash(const char *str)
+{
+    return alt::ICore::Instance().Hash(str);
+}
+
+EXPORT int Core_FileExists(const char *path)
+{
+    return alt::ICore::Instance().FileExists(path);
+}
+
+EXPORT const char *Core_ReadFile(const char *path)
+{
+    return alt::ICore::Instance().FileRead(path).CStr();
+}
+
+EXPORT void *Core_GetEntityByID(unsigned short id)
+{
+    return alt::ICore::Instance().GetEntityByID(id).Get();
+}
+
+EXPORT Array Core_GetEntities()
+{
+    auto entities = alt::ICore::Instance().GetEntities();
+    Array arr;
+    arr.size = entities.GetSize();
+
+#ifdef _WIN32
+    auto entityRefs = new void* [arr.size];
+#else
+    void *entityRefs[arr.size];
+#endif
+    for(uint64_t i = 0; i < arr.size; i++) {
+        entityRefs[i] = entities[i].Get();
+    }
+
+    arr.array = entityRefs;
+
+    return arr;
+}
+
+EXPORT Array Core_GetPlayers()
+{
+    auto entities = alt::ICore::Instance().GetPlayers();
+    Array arr;
+    arr.size = entities.GetSize();
+
+#ifdef _WIN32
+    auto entityRefs = new void* [arr.size];
+#else
+    void *entityRefs[arr.size];
+#endif
+    for(uint64_t i = 0; i < arr.size; i++) {
+        entityRefs[i] = entities[i].Get();
+    }
+
+    arr.array = entityRefs;
+
+    return arr;
+}
+
+
+EXPORT Array Core_GetVehicles()
+{
+    auto entities = alt::ICore::Instance().GetVehicles();
+    Array arr;
+    arr.size = entities.GetSize();
+
+#ifdef _WIN32
+    auto entityRefs = new void* [arr.size];
+#else
+    void *entityRefs[arr.size];
+#endif
+    for(uint64_t i = 0; i < arr.size; i++) {
+        entityRefs[i] = entities[i].Get();
+    }
+
+    arr.array = entityRefs;
+
+    return arr;
+}
+
+EXPORT int Core_HasMetaData(const char *key)
+{
+    return alt::ICore::Instance().HasMetaData(key);
+}
+
+EXPORT MetaData Core_GetMetaData(const char *key)
+{
+    auto meta = alt::ICore::Instance().GetMetaData(key);
+    MetaData metaData;
+    metaData.Ptr = meta.Get();
+    metaData.Type = static_cast<unsigned char>(meta->GetType());
+
+    return metaData;
+}
+
+EXPORT void Core_SetMetaData(const char *key, void *val)
+{
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+    alt::ICore::Instance().SetMetaData(key, value);
+}
+
+EXPORT void Core_DeleteMetaData(const char *key)
+{
+    alt::ICore::Instance().DeleteMetaData(key);
+}
+
+EXPORT int Core_HasSyncedMeta(const char *key)
+{
+    return alt::ICore::Instance().HasSyncedMetaData(key);
+}
+
+EXPORT MetaData Core_GetSyncedMeta(const char *key)
+{
+    auto meta = alt::ICore::Instance().GetSyncedMetaData(key);
+    MetaData metaData;
+    metaData.Ptr = meta.Get();
+    metaData.Type = static_cast<unsigned char>(meta->GetType());
+
+    return metaData;
+}
+
+EXPORT Array Core_GetRequiredPermissions()
+{
+    auto perms = alt::ICore::Instance().GetRequiredPermissions();
+    Array arr;
+    arr.size = perms.GetSize();
+
+#ifdef _WIN32
+    auto permissions = new short [arr.size];
+#else
+    short permissions[arr.size];
+#endif
+    for(uint64_t i = 0; i < arr.size; i++) {
+        permissions[i] = static_cast<short>(perms[i]);
+    }
+
+    arr.array = permissions;
+
+    return arr;
+}
+
+EXPORT Array Core_GetOptionalPermissions()
+{
+    auto perms = alt::ICore::Instance().GetRequiredPermissions();
+    Array arr;
+    arr.size = perms.GetSize();
+
+#ifdef _WIN32
+    auto permissions = new short [arr.size];
+#else
+    short permissions[arr.size];
+#endif
+    for(uint64_t i = 0; i < arr.size; i++) {
+        permissions[i] = static_cast<short>(perms[i]);
+    }
+
+    arr.array = permissions;
+
+    return arr;
+}
+
+EXPORT void Core_DestroyBaseObject(void *h)
+{
+    auto handle = reinterpret_cast<alt::IBaseObject*>(h);
+    alt::ICore::Instance().DestroyBaseObject(handle);
+}
+
+EXPORT const char *Core_GetRootDirectory()
+{
+    return alt::ICore::Instance().GetRootDirectory().CStr();
+}
+
+EXPORT void *Core_StartResource(const char *name)
+{
+    return alt::ICore::Instance().StartResource(name);
+}
+
+EXPORT void Core_StopResource(const char *name)
+{
+    alt::ICore::Instance().StopResource(name);
+}
+
+EXPORT void *Core_RestartResource(const char *name)
+{
+    return alt::ICore::Instance().RestartResource(name);
+}
+
+EXPORT void Core_SetSyncedMetaData(const char *key, void *val)
+{
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+    alt::ICore::Instance().SetSyncedMetaData(key,value);
+}
+
+EXPORT void Core_DeleteSyncedMetaData(const char *key)
+{
+    alt::ICore::Instance().DeleteSyncedMetaData(key);
+}
+
+EXPORT Array Core_GetPlayersByName(const char *name)
+{
+    auto players = alt::ICore::Instance().GetPlayersByName(name);
+    Array arr;
+    arr.size = players.GetSize();
+
+#ifdef _WIN32
+    auto playerRefs = new void* [arr.size];
+#else
+    void* playerRefs[arr.size];
+#endif
+    for(uint64_t i = 0; i < arr.size; i++) {
+        playerRefs[i] = players[i].Get();
+    }
+
+    arr.array = playerRefs;
+
+    return arr;
+}
+
+EXPORT unsigned int Core_GetNetTime()
+{
+    return alt::ICore::Instance().GetNetTime();
+}
+
+EXPORT void Core_SetPassword(const char *password)
+{
+    alt::ICore::Instance().SetPassword(password);
+}
