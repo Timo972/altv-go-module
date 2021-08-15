@@ -699,6 +699,12 @@ EXPORT int Vehicle_IsManualEngineControl(void *v)
    return vehicle->IsManualEngineControl();
 }
 
+EXPORT const char* Vehicle_GetScriptDataBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetScriptDataBase64().CStr();
+}
+
 EXPORT void Vehicle_ToggleExtra(void *v, unsigned int extraID, int state)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
