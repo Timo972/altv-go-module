@@ -19,6 +19,7 @@
 #include "events/ResourceStartEvent.h"
 #include "events/ColShapeEvent.h"
 #include "events/FireEvent.h"
+#include "events/SyncedMetaDataChangeEvent.h"
 
 namespace Go
 {
