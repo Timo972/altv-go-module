@@ -555,6 +555,12 @@ EXPORT float Vehicle_GetLightsMultiplier(void *v)
    return vehicle->GetLightsMultiplier();
 }
 
+EXPORT const char* Vehicle_GetGameStateBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetGameStateBase64().CStr();
+}
+
 EXPORT unsigned long Vehicle_GetEngineHealth(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
