@@ -627,6 +627,12 @@ EXPORT unsigned long Vehicle_GetBodyAdditionalHealth(void *v)
    return vehicle->GetBodyAdditionalHealth();
 }
 
+EXPORT const char* Vehicle_GetHealthDataBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetHealthDataBase64().CStr();
+}
+
 EXPORT unsigned long Vehicle_GetPartDamageLevel(void *v, unsigned int partId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
