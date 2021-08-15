@@ -23,6 +23,7 @@
 #include "events/StreamSyncedMetaDataChangeEvent.h"
 #include "events/GlobalMetaDataChangeEvent.h"
 #include "events/GlobalSyncedMetaDataChangeEvent.h"
+#include "events/ResourceStopEvent.h"
 
 namespace Go
 {
