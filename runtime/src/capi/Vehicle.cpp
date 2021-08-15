@@ -555,6 +555,12 @@ EXPORT float Vehicle_GetLightsMultiplier(void *v)
    return vehicle->GetLightsMultiplier();
 }
 
+EXPORT const char* Vehicle_GetGameStateBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetGameStateBase64().CStr();
+}
+
 EXPORT unsigned long Vehicle_GetEngineHealth(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
@@ -621,6 +627,12 @@ EXPORT unsigned long Vehicle_GetBodyAdditionalHealth(void *v)
    return vehicle->GetBodyAdditionalHealth();
 }
 
+EXPORT const char* Vehicle_GetHealthDataBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetHealthDataBase64().CStr();
+}
+
 EXPORT unsigned long Vehicle_GetPartDamageLevel(void *v, unsigned int partId)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
@@ -675,10 +687,22 @@ EXPORT unsigned long Vehicle_GetBumperDamageLevel(void *v, unsigned int bumperId
    return vehicle->GetBumperDamageLevel(bumperId);
 }
 
+EXPORT const char* Vehicle_GetDamageDataBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetDamageDataBase64().CStr();
+}
+
 EXPORT int Vehicle_IsManualEngineControl(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->IsManualEngineControl();
+}
+
+EXPORT const char* Vehicle_GetScriptDataBase64(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetScriptDataBase64().CStr();
 }
 
 EXPORT void Vehicle_ToggleExtra(void *v, unsigned int extraID, int state)
