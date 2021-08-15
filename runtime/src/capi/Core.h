@@ -24,6 +24,11 @@ extern "C"
     EXPORT const char *Core_GetMValueString(void *val);
     EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                                float rotX, float rotY, float rotZ);
+    EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, float radius, float height);
+    EXPORT void *Core_CreateColShapeCube(float posX1, float posY1, float posZ1, float posX2, float posY2, float posZ2);
+    EXPORT void *Core_CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
+    EXPORT void *Core_CreateColShapeCircle(float posX, float posY, float posZ, float radius);
+    EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius);
 #ifdef __cplusplus
 }
 #endif
