@@ -129,8 +129,6 @@ jobs:
           asset_name: go-module.dll
           asset_content_type: application/x-msdownload
 
-      -
-
       - name: Upload linux artifacts
         uses: actions/upload-release-asset@v1
         env:
