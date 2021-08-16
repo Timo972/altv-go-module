@@ -4,9 +4,9 @@ on:
     branches-ignore:
       - '**'
     tags:
-      - 'dev/*.*-dev*'
-      - 'rc/*.*-rc*'
-      - 'release/*.*'
+      - '*.*.*-dev.*'
+      - '*.*.*-rc.*'
+      - '*.*.*'
 
 jobs:
   build-windows:
@@ -24,8 +24,26 @@ jobs:
         shell: bash
         run: |
           TAG=${GITHUB_REF/refs\/tags\//}
-          echo ::set-output name=BRANCH::${TAG/\/*}
-          echo ::set-output name=VERSION::${TAG/*\/}
+          echo ::set-output name=TAG::${TAG}
+
+          semver=( ${TAG//./ } )
+          major="${semver[0]}"
+          minor="${semver[1]}"
+          patch="0"
+          branch=""
+          build="${semver[3]}"
+
+          if [[ "${semver[2]}" =~ "-" ]]; then
+          branch=${semver[2]/*\-}
+          patch=${semver[2]/\-*}
+          else
+          patch="${semver[2]}"
+          fi
+
+          echo ::set-output name=BRANCH::"${branch}"
+          echo ::set-output name=BUILD::"${build}"
+          echo ::set-output name=VERSION::"${major}.${minor}.${patch}"
+
       - name: Build
         shell: cmd
         run: |
@@ -34,8 +52,8 @@ jobs:
           cmake -G"Visual Studio 16" -A x64 -DGO_MODULE_VERSION=%VERSION% ..
           cmake --build . --config Release
           popd
-          mkdir dist\modules\go-module
-          copy bin\Release\go-module.dll dist\modules\go-module
+          mkdir dist\go-module
+          copy bin\Release\go-module.dll dist\go-module
         env:
           VERSION: ${{ steps.version.outputs.VERSION }}
 
@@ -58,9 +76,27 @@ jobs:
         id: version
         shell: bash
         run: |
-          TAG=${GITHUB_REF/refs\/tags\//}
-          echo ::set-output name=BRANCH::${TAG/\/*}
-          echo ::set-output name=VERSION::${TAG/*\/}
+            TAG=${GITHUB_REF/refs\/tags\//}
+            echo ::set-output name=TAG::${TAG}
+
+            semver=( ${TAG//./ } )
+            major="${semver[0]}"
+            minor="${semver[1]}"
+            patch="0"
+            branch=""
+            build="${semver[3]}"
+
+            if [[ "${semver[2]}" =~ "-" ]]; then
+            branch=${semver[2]/*\-}
+            patch=${semver[2]/\-*}
+            else
+            patch="${semver[2]}"
+            fi
+
+            echo ::set-output name=BRANCH::"${branch}"
+            echo ::set-output name=BUILD::"${build}"
+            echo ::set-output name=VERSION::"${major}.${minor}.${patch}"
+
       - name: Build
         run: |
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test
@@ -70,8 +106,8 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++-8 -DGO_MODULE_VERSION=%VERSION% ..
           cmake --build . --config Release
           cd ..
-          mkdir -p dist/modules/go-module
-          cp ./bin/libgo-module.so dist/modules/go-module
+          mkdir -p dist/go-module
+          cp ./bin/libgo-module.so dist/go-module
         env:
           VERSION: ${{ steps.version.outputs.VERSION }}
 
@@ -106,9 +142,26 @@ jobs:
         id: version
         shell: bash
         run: |
-          TAG=${GITHUB_REF/refs\/tags\//}
-          echo ::set-output name=BRANCH::${TAG/\/*}
-          echo ::set-output name=VERSION::${TAG/*\/}
+            TAG=${GITHUB_REF/refs\/tags\//}
+            echo ::set-output name=TAG::${TAG}
+
+            semver=( ${TAG//./ } )
+            major="${semver[0]}"
+            minor="${semver[1]}"
+            patch="0"
+            branch=""
+            build="${semver[3]}"
+
+            if [[ "${semver[2]}" =~ "-" ]]; then
+            branch=${semver[2]/*\-}
+            patch=${semver[2]/\-*}
+            else
+            patch="${semver[2]}"
+            fi
+
+            echo ::set-output name=BRANCH::"${branch}"
+            echo ::set-output name=BUILD::"${build}"
+            echo ::set-output name=VERSION::"${major}.${minor}.${patch}"
 
       - name: Create Release
         id: create_release
@@ -117,7 +170,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.version.outputs.VERSION }}
+          release_name: Release ${{ steps.version.outputs.VERSION }}-${{ steps.version.outputs.BRANCH }}
 
       - name: Upload windows artifacts
         uses: actions/upload-release-asset@v1
@@ -125,7 +178,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist-windows/go-module.dll
+          asset_path: ./dist-windows/go-module/go-module.dll
           asset_name: go-module.dll
           asset_content_type: application/x-msdownload
 
@@ -135,7 +188,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist-linux/libgo-module.so
+          asset_path: ./dist-linux/go-module/libgo-module.so
           asset_name: libgo-module.so
           asset_content_type: application/octet-stream
 
