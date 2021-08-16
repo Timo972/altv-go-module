@@ -561,13 +561,13 @@ EXPORT const char* Vehicle_GetGameStateBase64(void *v)
     return vehicle->GetGameStateBase64().CStr();
 }
 
-EXPORT unsigned long Vehicle_GetEngineHealth(void *v)
+EXPORT long Vehicle_GetEngineHealth(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetEngineHealth();
 }
 
-EXPORT unsigned long Vehicle_GetPetrolTankHealth(void *v)
+EXPORT long Vehicle_GetPetrolTankHealth(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
    return vehicle->GetPetrolTankHealth();

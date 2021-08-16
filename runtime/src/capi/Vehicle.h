@@ -84,8 +84,8 @@ extern "C"
     EXPORT int Vehicle_IsFlamethrowerActive(void *v);
     EXPORT float Vehicle_GetLightsMultiplier(void *v);
     EXPORT const char* Vehicle_GetGameStateBase64(void *v);
-    EXPORT unsigned long Vehicle_GetEngineHealth(void *v);
-    EXPORT unsigned long Vehicle_GetPetrolTankHealth(void *v);
+    EXPORT long Vehicle_GetEngineHealth(void *v);
+    EXPORT long Vehicle_GetPetrolTankHealth(void *v);
     EXPORT unsigned long Vehicle_GetWheelsCount(void *v);
     EXPORT int Vehicle_IsWheelBurst(void *v, unsigned int wheelId);
     EXPORT int Vehicle_DoesWheelHasTire(void *v, unsigned int wheelId);
