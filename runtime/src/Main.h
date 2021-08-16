@@ -73,4 +73,9 @@ typedef struct array {
     void* array;
 } Array;
 
+typedef struct data {
+    void* mValue;
+    unsigned int type;
+} CustomData;
+
 #include "SDK.h"

@@ -463,3 +463,15 @@ EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, flo
     auto colShape = alt::ICore::Instance().CreateColShapeCylinder(position, radius, height);
     return colShape.Get();
 }
+
+EXPORT void Core_TriggerLocalEvent(const char *ev, void **MValues)
+{
+    alt::MValueArgs args;
+
+    auto size = _msize(MValues);
+    for (int i = 0; i < size; ++i) {
+        args.Push(reinterpret_cast<alt::IMValue*>(MValues[i]));
+    }
+
+    alt::ICore::Instance().TriggerLocalEvent(ev, args);
+}
