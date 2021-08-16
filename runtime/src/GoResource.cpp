@@ -61,6 +61,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::VEHICLE_DETACH, new VehicleDetachEvent(Module));
     RegisterEventHandler(Go::EventType::NETOWNER_CHANGE, new NetOwnerChangeEvent(Module));
     RegisterEventHandler(Go::EventType::PLAYER_ENTERING_VEHICLE, new PlayerEnteringVehicleEvent(Module));
+    RegisterEventHandler(Go::EventType::SERVER_SCRIPT_EVENT, new ServerScriptEvent(Module));
 
     start();
     return true;
