@@ -230,7 +230,7 @@ EXPORT Array Player_GetCurrentWeaponComponents(void *p)
     auto comps = new unsigned int [size];
     //unsigned int comps[size];
 #else
-    unsigned int* comps[size];
+    unsigned int comps[size];
 #endif
     for(uint64_t i = 0; i < size; i++) {
         comps[i] = components[i];
