@@ -462,19 +462,8 @@ EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, flo
     return colShape.Get();
 }
 
-<<<<<<< HEAD
-EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues)
-=======
 EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned long long size)
->>>>>>> c6cfdee22479c741905f7db31364602393fd8584
 {
-    alt::ICore::Instance().LogInfo(ev);
-
-    auto size = _msize(MValues);
-
-    //alt::ICore::Instance().LogInfo(std::to_string(value->Value()));
-    //alt::ICore::Instance().LogInfo(value2->Value().CStr());
-    /*
     alt::MValueArgs args;
 
     std::cout << "TriggerLocalEvent" << std::endl;
@@ -562,9 +551,4 @@ EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned
     }
 
     alt::ICore::Instance().TriggerLocalEvent(ev, args);
-<<<<<<< HEAD
-     */
-=======
-    std::cout << "called alt::ICore::TriggerLocalEvent" << std::endl;
->>>>>>> c6cfdee22479c741905f7db31364602393fd8584
 }
