@@ -16,7 +16,7 @@ void Go::ServerScriptEvent::Call(const alt::CEvent *ev) {
 
     auto event = dynamic_cast<const alt::CServerScriptEvent*>(ev);
     auto name = event->GetName().CStr();
-    const auto args = event->GetArgs();
+    const auto& args = event->GetArgs();
     auto size = args.GetSize();
 
 #ifdef _WIN32

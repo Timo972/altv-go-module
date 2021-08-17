@@ -27,10 +27,10 @@ EXPORT void Core_LogColored(const char *message)
 
 EXPORT void *Core_CreateMValueBool(int val)
 {
-    auto value = alt::ICore::Instance().CreateMValueBool(val).Get();
+    auto value = alt::ICore::Instance().CreateMValueBool(val);
     value->AddRef();
 
-    return value;
+    return value.Get();
 }
 
 // Works, others wrong
@@ -39,33 +39,31 @@ EXPORT void *Core_CreateMValueInt(long long val)
     auto value = alt::ICore::Instance().CreateMValueInt(val);
     value->AddRef();
 
-    alt::ICore::Instance().LogError(std::to_string(reinterpret_cast<long long>(value.Get())));
-
     return value.Get();
 }
 
 EXPORT void *Core_CreateMValueUInt(unsigned long long val)
 {
-    auto value = alt::ICore::Instance().CreateMValueUInt(val).Get();
+    auto value = alt::ICore::Instance().CreateMValueUInt(val);
     value->AddRef();
 
-    return value;
+    return value.Get();
 }
 
 EXPORT void *Core_CreateMValueDouble(double val)
 {
-    auto value = alt::ICore::Instance().CreateMValueDouble(val).Get();
+    auto value = alt::ICore::Instance().CreateMValueDouble(val);
     value->AddRef();
 
-    return value;
+    return value.Get();;
 }
 
 EXPORT void *Core_CreateMValueString(const char *val)
 {
-    auto value = alt::ICore::Instance().CreateMValueString(val).Get();
+    auto value = alt::ICore::Instance().CreateMValueString(val);
     value->AddRef();
 
-    return value;
+    return value.Get();
 }
 
 EXPORT bool Core_GetMValueBool(void *val)
@@ -464,8 +462,15 @@ EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, flo
     return colShape.Get();
 }
 
-EXPORT void Core_TriggerLocalEvent(const char *ev, void **MValues)
+EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues)
 {
+    alt::ICore::Instance().LogInfo(ev);
+
+    auto size = _msize(MValues);
+
+    //alt::ICore::Instance().LogInfo(std::to_string(value->Value()));
+    //alt::ICore::Instance().LogInfo(value2->Value().CStr());
+    /*
     alt::MValueArgs args;
 
     auto size = _msize(MValues);
@@ -474,4 +479,5 @@ EXPORT void Core_TriggerLocalEvent(const char *ev, void **MValues)
     }
 
     alt::ICore::Instance().TriggerLocalEvent(ev, args);
+     */
 }
