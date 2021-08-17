@@ -462,7 +462,11 @@ EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, flo
     return colShape.Get();
 }
 
+<<<<<<< HEAD
 EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues)
+=======
+EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned long long size)
+>>>>>>> c6cfdee22479c741905f7db31364602393fd8584
 {
     alt::ICore::Instance().LogInfo(ev);
 
@@ -473,11 +477,94 @@ EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues)
     /*
     alt::MValueArgs args;
 
-    auto size = _msize(MValues);
-    for (int i = 0; i < size; ++i) {
-        args.Push(reinterpret_cast<alt::IMValue*>(MValues[i]));
+    std::cout << "TriggerLocalEvent" << std::endl;
+
+    std::cout << "Reinterpreted to CustomData array with size: " << size << " type of string: " << static_cast<unsigned int>(alt::IMValue::Type::STRING) << std::endl;
+
+    for (unsigned long long i = 0; i < size; ++i) {
+        alt::IMValue* val;
+        std::cout << "Before reinterpret of mValue with type:" << MValues[i].Type << std::endl;
+        auto type = static_cast<alt::IMValue::Type>(MValues[i].Type - 228);
+        std::cout << "Casted type to enum:" << static_cast<unsigned int>(type) << std::endl;
+        switch (type) {
+            case alt::IMValue::Type::BOOL:
+                std::cout << "reinterpret bool" << std::endl;
+                val = reinterpret_cast<alt::IMValueBool*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::BASE_OBJECT:
+                std::cout << "reinterpret base object" << std::endl;
+                val = reinterpret_cast<alt::IMValueBaseObject*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::BYTE_ARRAY:
+                std::cout << "reinterpret byte_array" << std::endl;
+                val = reinterpret_cast<alt::IMValueByteArray*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::DICT:
+                std::cout << "reinterpret dict" << std::endl;
+                val = reinterpret_cast<alt::IMValueDict*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::DOUBLE:
+                std::cout << "reinterpret double" << std::endl;
+                val = reinterpret_cast<alt::IMValueDouble*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::FUNCTION:
+                std::cout << "reinterpret func" << std::endl;
+                val = reinterpret_cast<alt::IMValueFunction*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::INT:
+                std::cout << "reinterpret int" << std::endl;
+                val = reinterpret_cast<alt::IMValueInt*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::LIST:
+                std::cout << "reinterpret list" << std::endl;
+                val = reinterpret_cast<alt::IMValueList*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::NIL:
+                std::cout << "reinterpret nil" << std::endl;
+                val = reinterpret_cast<alt::IMValueNil*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::NONE:
+                std::cout << "reinterpret none" << std::endl;
+                val = reinterpret_cast<alt::IMValueNone*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::RGBA:
+                std::cout << "reinterpret rgba" << std::endl;
+                val = reinterpret_cast<alt::IMValueRGBA*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::STRING:
+                std::cout << "before reinterpret of string ptr: " << MValues[i].mValue << std::endl;
+                val = reinterpret_cast<alt::IMValueString*>(MValues[i].mValue);
+                std::cout << "after reinterpret of string" << std::endl;
+                break;
+            case alt::IMValue::Type::UINT:
+                std::cout << "reinterpret uint" << std::endl;
+                val = reinterpret_cast<alt::IMValueUInt*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::VECTOR2:
+                std::cout << "reinterpret v2" << std::endl;
+                val = reinterpret_cast<alt::IMValueVector2*>(MValues[i].mValue);
+                break;
+            case alt::IMValue::Type::VECTOR3:
+                std::cout << "reinterpret v3" << std::endl;
+                val = reinterpret_cast<alt::IMValueVector3*>(MValues[i].mValue);
+                break;
+                default:
+                    std::cout << "Can not determine type of MValue -> creating nil MValue" << std::endl;
+                    auto mVal = alt::ICore::Instance().CreateMValueNil();
+                    mVal->AddRef();
+                    val = mVal.Get();
+                    std::cout << "Create nil MValue" << std::endl;
+                    break;
+        }
+        std::cout << "Reinterpreted arg to MValue" << std::endl;
+        std::cout << "MValue value:" << val->ToString() << std::endl;
+        args.Push(val);
     }
 
     alt::ICore::Instance().TriggerLocalEvent(ev, args);
+<<<<<<< HEAD
      */
+=======
+    std::cout << "called alt::ICore::TriggerLocalEvent" << std::endl;
+>>>>>>> c6cfdee22479c741905f7db31364602393fd8584
 }

@@ -75,7 +75,7 @@ typedef struct array {
 
 typedef struct data {
     void* mValue;
-    unsigned int type;
+    unsigned int Type;
 } CustomData;
 
 #include "SDK.h"

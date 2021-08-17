@@ -59,7 +59,11 @@ extern "C"
     EXPORT void *Core_CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
     EXPORT void *Core_CreateColShapeCircle(float posX, float posY, float posZ, float radius);
     EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius);
+<<<<<<< HEAD
     EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues);
+=======
+    EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned long long mValuesSize);
+>>>>>>> c6cfdee22479c741905f7db31364602393fd8584
 #ifdef __cplusplus
 }
 #endif
