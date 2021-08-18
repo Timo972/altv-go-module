@@ -66,11 +66,37 @@ EXPORT void *Core_CreateMValueString(const char *val)
     return value.Get();
 }
 
+/*
+EXPORT void *Core_CreateMValueList()
+{
+
+}
+*/
+
+EXPORT void *Core_CreateMValueDict(Array keys, void* *values)
+{
+    auto value = alt::ICore::Instance().CreateMValueDict();
+    value->AddRef();
+
+    auto size = keys.size;
+    auto keyStrings = reinterpret_cast<const char**>(keys.array);
+    auto MValues = reinterpret_cast<alt::IMValue**>(values);
+
+    for (unsigned long long i = 0; i < size; i++) {
+        auto key = keyStrings[i];
+        auto MValue = MValues[i];
+        value->Set(key, MValue);
+    }
+
+    return value.Get();
+}
+
 EXPORT bool Core_GetMValueBool(void *val)
 {
     auto value = reinterpret_cast<alt::IMValueBool*>(val);
     return value->Value();
 }
+
 
 EXPORT long long Core_GetMValueInt(void *val)
 {
@@ -96,20 +122,6 @@ EXPORT const char *Core_GetMValueString(void *val)
     auto value = reinterpret_cast<alt::IMValueString*>(val);
     return value->Value().CStr();
 }
-
-/*
-EXPORT void *Core_CreateMValueList()
-{
-
-}
-*/
-
-/*
-EXPORT void *Core_CreateMValueDict()
-{
-
-}
-*/
 
 EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                            float rotX, float rotY, float rotZ)
