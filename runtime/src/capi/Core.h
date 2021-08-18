@@ -18,7 +18,7 @@ extern "C"
     EXPORT void *Core_CreateMValueDouble(double val);
     EXPORT void *Core_CreateMValueString(const char *val);
     EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size);
-    EXPORT void *Core_CreateMValueDict(Array keys, void* *values);
+    EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned long long size);
     EXPORT bool Core_GetMValueBool(void *val);
     EXPORT long long Core_GetMValueInt(void *val); 
     EXPORT unsigned long long Core_GetMValueUInt(void *val);

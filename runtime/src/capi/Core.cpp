@@ -81,17 +81,14 @@ EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
     return value.Get();
 }
 
-EXPORT void *Core_CreateMValueDict(Array keys, void* *values)
+EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned long long size)
 {
     auto value = alt::ICore::Instance().CreateMValueDict();
     value->AddRef();
-
-    auto size = keys.size;
-    auto keyStrings = reinterpret_cast<const char**>(keys.array);
     auto MValues = reinterpret_cast<alt::IMValue**>(values);
 
     for (unsigned long long i = 0; i < size; i++) {
-        auto key = keyStrings[i];
+        auto key = keys[i];
         auto MValue = MValues[i];
         value->Set(key, MValue);
     }
