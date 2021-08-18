@@ -66,12 +66,20 @@ EXPORT void *Core_CreateMValueString(const char *val)
     return value.Get();
 }
 
-/*
-EXPORT void *Core_CreateMValueList()
+EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
 {
+    auto value = alt::ICore::Instance().CreateMValueList(size);
+    value->AddRef();
 
+    auto MValues = reinterpret_cast<alt::IMValue**>(values);
+
+    for (unsigned long long i = 0; i < size; i++) {
+        auto val = MValues[i];
+        value->Push(val);
+    }
+
+    return value.Get();
 }
-*/
 
 EXPORT void *Core_CreateMValueDict(Array keys, void* *values)
 {
