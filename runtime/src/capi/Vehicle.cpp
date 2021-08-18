@@ -1067,3 +1067,14 @@ EXPORT void * Vehicle_GetAttachedTo(void *v)
    return vehicle->GetAttachedTo().Get();
 }
 
+EXPORT void Vehicle_Destroy(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    alt::ICore::Instance().DestroyBaseObject(vehicle);
+}
+
+EXPORT int Vehicle_IsValid(void *p)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(p);
+    return vehicle ? 1 : 0;
+}

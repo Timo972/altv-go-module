@@ -185,12 +185,14 @@ EXPORT Entity Core_GetEntityByID(unsigned short id)
 {
     auto entity = alt::ICore::Instance().GetEntityByID(id);
 
+    Entity e;
+    e.Ptr = entity.Get();
+
     if (!entity.IsEmpty()) {
-        Entity e;
-        e.Ptr = entity.Get();
         e.Type = static_cast<unsigned char>(entity->GetType());
-        return e;
     }
+
+    return e;
 }
 
 EXPORT Array Core_GetEntities()

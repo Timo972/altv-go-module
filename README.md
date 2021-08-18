@@ -5,11 +5,12 @@ Go package for creating custom game-modes can be found [here](https://github.com
 Module is still under heavy development, and it's not suitable for production usage.
 
 ## TODO
-### Capi:
+- [ ] Fix timers
+#### Capi:
 - [ ] Fix Core_TriggerLocalEvent
 - [ ] Add Core_TriggerClientEvent
 - [ ] Add Runtime_SetExport
 - [ ] Add Core_CreateMValueDict
-### Events:
+#### Events:
 - [ ] Fix ServerScriptEvent
 - [ ] Add ClientScriptEvent

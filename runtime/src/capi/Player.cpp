@@ -648,3 +648,15 @@ EXPORT void Player_SetNetworkOwner(void *p, void *o, int disableMigration){
     auto owner = reinterpret_cast<alt::IPlayer*>(o);
     player->SetNetworkOwner(owner, disableMigration);
 }
+
+EXPORT void Player_Destroy(void *b)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(b);
+    alt::ICore::Instance().DestroyBaseObject(player);
+}
+
+EXPORT int Player_IsValid(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player ? 1 : 0;
+}

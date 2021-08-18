@@ -6,12 +6,14 @@
 extern "C"
 {
 #endif
+    EXPORT int VoiceChannel_IsValid(void *p);
     // BaseObject inherited
     EXPORT int VoiceChannel_GetType(void *c);
     EXPORT int VoiceChannel_HasMetaData(void* base, const char *key);
     EXPORT MetaData VoiceChannel_GetMetaData(void* base, const char *key);
     EXPORT void VoiceChannel_SetMetaData(void *base, const char *key, void *val);
     EXPORT void VoiceChannel_DeleteMetaData(void *base, const char *key);
+    EXPORT void VoiceChannel_Destroy(void *b);
 
     // VoiceChannel methods
     EXPORT int VoiceChannel_IsSpatial(void *v);

@@ -13,6 +13,8 @@ extern "C"
     EXPORT MetaData ColShape_GetMetaData(void* base, const char *key);
     EXPORT void ColShape_SetMetaData(void *base, const char *key, void *val);
     EXPORT void ColShape_DeleteMetaData(void *base, const char *key);
+    EXPORT void ColShape_Destroy(void *b);
+    EXPORT int ColShape_IsValid(void *p);
 
     // WorldObject inherited
     EXPORT Position ColShape_GetPosition(void *p);

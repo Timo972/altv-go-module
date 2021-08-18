@@ -13,6 +13,8 @@ extern "C"
     EXPORT MetaData Checkpoint_GetMetaData(void* base, const char *key);
     EXPORT void Checkpoint_SetMetaData(void *base, const char *key, void *val);
     EXPORT void Checkpoint_DeleteMetaData(void *base, const char *key);
+    EXPORT void Checkpoint_Destroy(void *b);
+    EXPORT int Checkpoint_IsValid(void *p);
 
     // WorldObject inherited
     EXPORT Position Checkpoint_GetPosition(void *p);
