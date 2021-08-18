@@ -408,6 +408,11 @@ EXPORT void Core_SetPassword(const char *password)
     alt::ICore::Instance().SetPassword(password);
 }
 
+EXPORT unsigned int Core_GetSDKVersion()
+{
+    return alt::ICore::SDK_VERSION;
+}
+
 EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius)
 {
     alt::Position position;
