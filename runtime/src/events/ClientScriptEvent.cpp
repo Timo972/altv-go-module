@@ -1,19 +1,20 @@
-#include "ServerScriptEvent.h"
+#include "ClientScriptEvent.h"
 
-Go::ServerScriptEvent::ServerScriptEvent(ModuleLibrary *module) : IEvent(module) {}
+Go::ClientScriptEvent::ClientScriptEvent(ModuleLibrary *module) : IEvent(module) {}
 
-void Go::ServerScriptEvent::Call(const alt::CEvent *ev) {
-    alt::ICore::Instance().LogInfo("Go::ServerScriptEvent::Call");
-    static auto call = GET_FUNC(Library, "altServerScriptEvent", bool (*)(const char *name,
+void Go::ClientScriptEvent::Call(const alt::CEvent *ev) {
+    alt::ICore::Instance().LogInfo("Go::ClientScriptEvent::Call");
+    static auto call = GET_FUNC(Library, "altClientScriptEvent", bool (*)(alt::IPlayer* player, const char *name,
             Array args));
 
     if (call == nullptr)
     {
-        alt::ICore::Instance().LogError("Couldn't not call ServerScriptEvent.");
+        alt::ICore::Instance().LogError("Couldn't call ClientScriptEvent.");
         return;
     }
 
-    auto event = dynamic_cast<const alt::CServerScriptEvent*>(ev);
+    auto event = dynamic_cast<const alt::CClientScriptEvent*>(ev);
+    auto player = event->GetTarget().Get();
     auto name = event->GetName().CStr();
     const auto& args = event->GetArgs();
     auto size = args.GetSize();
@@ -37,7 +38,7 @@ void Go::ServerScriptEvent::Call(const alt::CEvent *ev) {
 
     arr.array = constArgs;
 
-    call(name, arr);
+    call(player, name, arr);
 
 #ifdef _WIN32
     delete[] constArgs;
