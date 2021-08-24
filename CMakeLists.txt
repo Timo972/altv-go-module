@@ -17,12 +17,10 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 include_directories(
         "runtime/src"
         "runtime/vendors/cpp-sdk"
+        "runtime/vendors/rapidjson/include"
 )
 
 add_library(
         ${PROJECT_MODULE_NAME} SHARED
         ${PROJECT_SOURCE_FILES}
 )
-
-add_subdirectory(runtime/vendors/rapidjson)
-target_include_directories(${PROJECT_MODULE_NAME} PUBLIC runtime/vendors/rapidjson/include)

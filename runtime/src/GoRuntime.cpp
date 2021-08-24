@@ -59,3 +59,28 @@ alt::MValueArgs Go::Runtime::CreateMValueArgs(CustomData *MValues, unsigned long
 
     return args;
 }
+
+alt::RefBase<alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue(rapidjson::Value &value) {
+    switch(value.GetType())
+    {
+        case rapidjson::kNullType:
+            return alt::ICore::Instance().CreateMValueNone();
+        case rapidjson::kFalseType: case rapidjson::kTrueType:
+            return alt::ICore::Instance().CreateMValueBool(value.GetBool());
+        case rapidjson::kObjectType:
+            break;
+        case rapidjson::kArrayType: {
+            alt::RefBase<alt::RefStore<alt::IMValueList>> list = alt::ICore::Instance().CreateMValueList(
+                    value.GetArray().Size());
+            list->Push(CreateMValueFromJSONValue(value));
+
+            return list;
+        }
+        case rapidjson::kStringType:
+            return alt::ICore::Instance().CreateMValueString(value.GetString());
+        case rapidjson::kNumberType:
+            return alt::ICore::Instance().CreateMValueInt(value.GetInt());
+    }
+}
+
+

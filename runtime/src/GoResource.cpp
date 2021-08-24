@@ -70,6 +70,14 @@ bool Go::Resource::Start()
 
 bool Go::Resource::Stop()
 {
+    auto stop = GET_FUNC(Module, "OnStop", void (*)());
+    if (stop == nullptr)
+    {
+        alt::ICore::Instance().LogError("Couldn't call OnStop.");
+        return false;
+    }
+
+    stop();
     return true;
 }
 

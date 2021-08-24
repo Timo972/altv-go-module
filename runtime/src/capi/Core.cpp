@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "Runtime.h"
+#include "rapidjson/document.h"
 
 EXPORT void Core_LogInfo(const char *message)
 {
@@ -72,6 +73,32 @@ EXPORT void *Core_CreateMValueString(const char *val)
     return defaultMVal.Get();
 }
 
+EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size)
+{
+    auto value = alt::ICore::Instance().CreateMValueList(size);
+
+    rapidjson::Document document;
+    document.Parse(val);
+
+    if(!document.IsArray()) {
+        value->Push(alt::ICore::Instance().CreateMValueNone());
+        return value.Get();
+    }
+
+    for (auto &member : document.GetArray()) {
+        if(member.IsObject()) {
+            value->Push(alt::ICore::Instance().CreateMValueNone());
+            continue;
+        }
+
+        auto MValue = Go::Runtime::GetInstance()->CreateMValueFromJSONValue(member);
+        value->Push(MValue);
+    }
+
+    return value.Get();
+}
+
+/*
 EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
 {
     auto value = alt::ICore::Instance().CreateMValueList(size);
@@ -88,6 +115,7 @@ EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
 
     return defaultMVal.Get();
 }
+*/
 
 EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned long long size)
 {
