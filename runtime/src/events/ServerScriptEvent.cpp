@@ -29,10 +29,7 @@ void Go::ServerScriptEvent::Call(const alt::CEvent *ev) {
         data.Type = static_cast<unsigned char>(args[i]->GetType());
 
         constArgs[i] = data;
-        std::cout << "MValue type (in data struct): " << static_cast<unsigned>(data.Type) << std::endl;
     }
-
-    std::cout << "Size in cpp is: " << size << std::endl;
 
     call(name, constArgs, size);
 
