@@ -505,12 +505,22 @@ EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned
     alt::MValueArgs args;
 
     for (unsigned long long i = 0; i < size; ++i) {
-        if(static_cast<alt::IMValue::Type>(MValues[i].Type) == alt::IMValue::Type::STRING) {
-            args.Push(reinterpret_cast<alt::IMValueString*>(MValues[i].mValue));
-        }
-
-        if(static_cast<alt::IMValue::Type>(MValues[i].Type) == alt::IMValue::Type::INT) {
-            args.Push(reinterpret_cast<alt::IMValueInt*>(MValues[i].mValue));
+        switch (static_cast<alt::IMValue::Type>(MValues[i].Type)) {
+            case alt::IMValue::Type::STRING:
+                args.Push(reinterpret_cast<alt::IMValueString*>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::INT:
+                args.Push(reinterpret_cast<alt::IMValueInt*>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::UINT:
+                args.Push(reinterpret_cast<alt::IMValueUInt*>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::DOUBLE:
+                args.Push(reinterpret_cast<alt::IMValueDouble*>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::BOOL:
+                args.Push(reinterpret_cast<alt::IMValueBool*>(MValues[i].mValue));
+                break;
         }
 
         std::cout << "mValue ptr: " << MValues[i].mValue << std::endl;
