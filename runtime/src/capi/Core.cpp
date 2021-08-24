@@ -522,8 +522,6 @@ EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned
                 args.Push(reinterpret_cast<alt::IMValueBool*>(MValues[i].mValue));
                 break;
         }
-
-        std::cout << "mValue ptr: " << MValues[i].mValue << std::endl;
     }
 
     // call event
