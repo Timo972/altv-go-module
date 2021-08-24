@@ -1,4 +1,5 @@
 #include "Core.h"
+#include "Runtime.h"
 
 EXPORT void Core_LogInfo(const char *message)
 {
@@ -502,28 +503,38 @@ EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, flo
 
 EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned long long size)
 {
-    alt::MValueArgs args;
-
-    for (unsigned long long i = 0; i < size; ++i) {
-        switch (static_cast<alt::IMValue::Type>(MValues[i].Type)) {
-            case alt::IMValue::Type::STRING:
-                args.Push(reinterpret_cast<alt::IMValueString*>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::INT:
-                args.Push(reinterpret_cast<alt::IMValueInt*>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::UINT:
-                args.Push(reinterpret_cast<alt::IMValueUInt*>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::DOUBLE:
-                args.Push(reinterpret_cast<alt::IMValueDouble*>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::BOOL:
-                args.Push(reinterpret_cast<alt::IMValueBool*>(MValues[i].mValue));
-                break;
-        }
-    }
-
+    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
     // call event
     alt::ICore::Instance().TriggerLocalEvent(ev, args);
+}
+
+EXPORT void Core_TriggerClientEvent(void *p, const char *ev, CustomData *MValues, unsigned long long size)
+{
+
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
+    // call event
+    alt::ICore::Instance().TriggerClientEvent(alt::Ref<alt::IPlayer>(player), ev, args);
+}
+
+EXPORT void Core_TriggerClientEventFor(void **p, unsigned long long clientSize, const char *ev, CustomData *MValues, unsigned long long size)
+{
+    alt::Array<alt::Ref<alt::IPlayer>> players;
+
+    for (unsigned long long i = 0; i < clientSize; i++) {
+        auto player = reinterpret_cast<alt::IPlayer*>(p[i]);
+        alt::Ref<alt::IPlayer> playerRef(player);
+        players[i] = playerRef;
+    }
+
+    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
+
+    alt::ICore::Instance().TriggerClientEvent(players, ev, args);
+}
+
+EXPORT void Core_TriggerClientEventForAll(const char *ev, CustomData *MValues, unsigned long long size)
+{
+    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
+
+    alt::ICore::Instance().TriggerClientEventForAll(ev, args);
 }

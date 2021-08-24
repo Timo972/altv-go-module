@@ -19,6 +19,7 @@ namespace Go
         alt::IResource::Impl *CreateImpl(alt::IResource *resource) override;
         void DestroyImpl(alt::IResource::Impl *impl) override;
         alt::IResource::Impl *GetResource(const std::string &name);
+        alt::MValueArgs CreateMValueArgs(CustomData *MValues, unsigned long long size);
         static Go::Runtime *GetInstance();
     };
 }
