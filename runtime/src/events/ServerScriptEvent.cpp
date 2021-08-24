@@ -3,9 +3,8 @@
 Go::ServerScriptEvent::ServerScriptEvent(ModuleLibrary *module) : IEvent(module) {}
 
 void Go::ServerScriptEvent::Call(const alt::CEvent *ev) {
-    return;
     static auto call = GET_FUNC(Library, "altServerScriptEvent", bool (*)(const char *name,
-            Array args));
+            void *args, unsigned long long size));
 
     if (call == nullptr)
     {
@@ -24,20 +23,18 @@ void Go::ServerScriptEvent::Call(const alt::CEvent *ev) {
     MetaData constArgs[size];
 #endif
 
-    Array arr;
-    arr.size = size;
-
     for (unsigned long long i = 0; i < size; ++i) {
         MetaData data;
         data.Ptr = args[i].Get();
         data.Type = static_cast<unsigned char>(args[i]->GetType());
+
         constArgs[i] = data;
         std::cout << "MValue type (in data struct): " << static_cast<unsigned>(data.Type) << std::endl;
     }
 
-    arr.array = constArgs;
+    std::cout << "Size in cpp is: " << size << std::endl;
 
-    call(name, arr);
+    call(name, constArgs, size);
 
 #ifdef _WIN32
     delete[] constArgs;
