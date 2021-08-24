@@ -524,7 +524,8 @@ EXPORT void Core_TriggerClientEventFor(void **p, unsigned long long clientSize, 
     for (unsigned long long i = 0; i < clientSize; i++) {
         auto player = reinterpret_cast<alt::IPlayer*>(p[i]);
         alt::Ref<alt::IPlayer> playerRef(player);
-        players[i] = playerRef;
+
+        players.Push(playerRef);
     }
 
     auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
