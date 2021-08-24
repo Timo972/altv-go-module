@@ -7,10 +7,10 @@ Module is still under heavy development, and it's not suitable for production us
 ## TODO
 - [ ] Fix timers
 #### Capi:
-- [ ] Fix Core_TriggerLocalEvent
-- [ ] Add Core_TriggerClientEvent
+- [x] Fix Core_TriggerLocalEvent
+- [x] Add Core_TriggerClientEvent
 - [ ] Add Runtime_SetExport
 - [ ] Add Core_CreateMValueDict
 #### Events:
-- [ ] Fix ServerScriptEvent
-- [ ] Add ClientScriptEvent
+- [x] Fix ServerScriptEvent
+- [x] Add ClientScriptEvent
