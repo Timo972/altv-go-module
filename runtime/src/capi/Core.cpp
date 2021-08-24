@@ -28,48 +28,52 @@ EXPORT void Core_LogColored(const char *message)
 EXPORT void *Core_CreateMValueBool(int val)
 {
     auto value = alt::ICore::Instance().CreateMValueBool(val);
-    value->AddRef();
+    auto defaultMVal = value->Clone();
+    defaultMVal->AddRef();
 
-    return value.Get();
+    return defaultMVal.Get();
 }
 
 // Works, others wrong
 EXPORT void *Core_CreateMValueInt(long long val)
 {
     auto value = alt::ICore::Instance().CreateMValueInt(val);
-    value->AddRef();
+    auto defaultMVal = value->Clone();
+    defaultMVal->AddRef();
 
-    return value.Get();
+    return defaultMVal.Get();
 }
 
 EXPORT void *Core_CreateMValueUInt(unsigned long long val)
 {
     auto value = alt::ICore::Instance().CreateMValueUInt(val);
-    value->AddRef();
+    auto defaultMVal = value->Clone();
+    defaultMVal->AddRef();
 
-    return value.Get();
+    return defaultMVal.Get();
 }
 
 EXPORT void *Core_CreateMValueDouble(double val)
 {
     auto value = alt::ICore::Instance().CreateMValueDouble(val);
-    value->AddRef();
+    auto defaultMVal = value->Clone();
+    defaultMVal->AddRef();
 
-    return value.Get();;
+    return defaultMVal.Get();;
 }
 
 EXPORT void *Core_CreateMValueString(const char *val)
 {
     auto value = alt::ICore::Instance().CreateMValueString(val);
-    value->AddRef();
+    auto defaultMVal = value->Clone();
+    defaultMVal->AddRef();
 
-    return value.Get();
+    return defaultMVal.Get();
 }
 
 EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
 {
     auto value = alt::ICore::Instance().CreateMValueList(size);
-    value->AddRef();
 
     auto MValues = reinterpret_cast<alt::IMValue**>(values);
 
@@ -78,13 +82,15 @@ EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
         value->Push(val);
     }
 
-    return value.Get();
+    auto defaultMVal = value->Clone();
+    defaultMVal->AddRef();
+
+    return defaultMVal.Get();
 }
 
 EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned long long size)
 {
     auto value = alt::ICore::Instance().CreateMValueDict();
-    value->AddRef();
     auto MValues = reinterpret_cast<alt::IMValue**>(values);
 
     for (unsigned long long i = 0; i < size; i++) {
@@ -93,39 +99,47 @@ EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned l
         value->Set(key, MValue);
     }
 
-    return value.Get();
+    auto defaultMVal = value->Clone();
+    defaultMVal->AddRef();
+
+    return defaultMVal.Get();
 }
 
 EXPORT bool Core_GetMValueBool(void *val)
 {
-    auto value = reinterpret_cast<alt::IMValueBool*>(val);
-    return value->Value();
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+    auto boolValue = dynamic_cast<alt::IMValueBool*>(value);
+    return boolValue->Value();
 }
 
 
 EXPORT long long Core_GetMValueInt(void *val)
 {
-    auto value = reinterpret_cast<alt::IMValueInt*>(val);
-    return value->Value();
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+    auto intValue = dynamic_cast<alt::IMValueInt*>(value);
+    return intValue->Value();
 }
 
 EXPORT unsigned long long Core_GetMValueUInt(void *val)
 {
     auto value = reinterpret_cast<alt::IMValueUInt*>(val);
-    return value->Value();
+    auto uintValue = dynamic_cast<alt::IMValueUInt*>(value);
+    return uintValue->Value();
 }
 
 EXPORT double Core_GetMValueDouble(void *val)
 {
-    auto value = reinterpret_cast<alt::IMValueDouble*>(val);
-    return value->Value();
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+    auto doubleValue = dynamic_cast<alt::IMValueDouble*>(value);
+    return doubleValue->Value();
 }
 
 EXPORT const char *Core_GetMValueString(void *val)
 {
-    auto value = reinterpret_cast<alt::IMValueString*>(val);
-    alt::ICore::Instance().LogWarning(value->Value());
-    return value->Value().CStr();
+    auto value = reinterpret_cast<alt::IMValue*>(val);
+    auto stringValue = dynamic_cast<alt::IMValueString*>(value);
+
+    return stringValue->Value().CStr();
 }
 
 EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
