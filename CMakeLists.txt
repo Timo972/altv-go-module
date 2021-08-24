@@ -23,3 +23,6 @@ add_library(
         ${PROJECT_MODULE_NAME} SHARED
         ${PROJECT_SOURCE_FILES}
 )
+
+add_subdirectory(runtime/vendors/rapidjson)
+target_include_directories(${PROJECT_MODULE_NAME} PUBLIC runtime/vendors/rapidjson/include)
