@@ -3,9 +3,8 @@
 Go::ClientScriptEvent::ClientScriptEvent(ModuleLibrary *module) : IEvent(module) {}
 
 void Go::ClientScriptEvent::Call(const alt::CEvent *ev) {
-    alt::ICore::Instance().LogInfo("Go::ClientScriptEvent::Call");
     static auto call = GET_FUNC(Library, "altClientScriptEvent", bool (*)(alt::IPlayer* player, const char *name,
-            Array args));
+            void *args, unsigned long long size));
 
     if (call == nullptr)
     {
@@ -25,9 +24,6 @@ void Go::ClientScriptEvent::Call(const alt::CEvent *ev) {
     MetaData constArgs[size];
 #endif
 
-    Array arr;
-    arr.size = size;
-
     for (unsigned long long i = 0; i < size; ++i) {
         MetaData data;
         data.Ptr = args[i].Get();
@@ -36,9 +32,7 @@ void Go::ClientScriptEvent::Call(const alt::CEvent *ev) {
         std::cout << "MValue type (in data struct): " << static_cast<unsigned>(data.Type) << std::endl;
     }
 
-    arr.array = constArgs;
-
-    call(player, name, arr);
+    call(player, name, constArgs, size);
 
 #ifdef _WIN32
     delete[] constArgs;
