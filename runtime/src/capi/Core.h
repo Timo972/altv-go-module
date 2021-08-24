@@ -17,6 +17,8 @@ extern "C"
     EXPORT void *Core_CreateMValueUInt(unsigned long long val);
     EXPORT void *Core_CreateMValueDouble(double val);
     EXPORT void *Core_CreateMValueString(const char *val);
+    EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size);
+    EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned long long size);
     EXPORT bool Core_GetMValueBool(void *val);
     EXPORT long long Core_GetMValueInt(void *val); 
     EXPORT unsigned long long Core_GetMValueUInt(void *val);
@@ -54,6 +56,7 @@ extern "C"
     EXPORT Array Core_GetPlayersByName(const char *name);
     EXPORT unsigned int Core_GetNetTime();
     EXPORT void Core_SetPassword(const char *password);
+    EXPORT unsigned int Core_GetSDKVersion();
     EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, float radius, float height);
     EXPORT void *Core_CreateColShapeCube(float posX1, float posY1, float posZ1, float posX2, float posY2, float posZ2);
     EXPORT void *Core_CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);

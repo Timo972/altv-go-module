@@ -40,6 +40,18 @@ EXPORT void ColShape_DeleteMetaData(void *base, const char *key)
     baseObject->RemoveRef();
 }
 
+EXPORT void ColShape_Destroy(void *b)
+{
+    auto colShape = reinterpret_cast<alt::IColShape*>(b);
+    alt::ICore::Instance().DestroyBaseObject(colShape);
+}
+
+EXPORT int ColShape_IsValid(void *p)
+{
+    auto cs = reinterpret_cast<alt::IColShape*>(p);
+    return cs ? 1 : 0;
+}
+
 // WorldObject inherited
 EXPORT Position ColShape_GetPosition(void *p)
 {

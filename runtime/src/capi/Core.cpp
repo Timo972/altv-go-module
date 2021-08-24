@@ -66,11 +66,42 @@ EXPORT void *Core_CreateMValueString(const char *val)
     return value.Get();
 }
 
+EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
+{
+    auto value = alt::ICore::Instance().CreateMValueList(size);
+    value->AddRef();
+
+    auto MValues = reinterpret_cast<alt::IMValue**>(values);
+
+    for (unsigned long long i = 0; i < size; i++) {
+        auto val = MValues[i];
+        value->Push(val);
+    }
+
+    return value.Get();
+}
+
+EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned long long size)
+{
+    auto value = alt::ICore::Instance().CreateMValueDict();
+    value->AddRef();
+    auto MValues = reinterpret_cast<alt::IMValue**>(values);
+
+    for (unsigned long long i = 0; i < size; i++) {
+        auto key = keys[i];
+        auto MValue = MValues[i];
+        value->Set(key, MValue);
+    }
+
+    return value.Get();
+}
+
 EXPORT bool Core_GetMValueBool(void *val)
 {
     auto value = reinterpret_cast<alt::IMValueBool*>(val);
     return value->Value();
 }
+
 
 EXPORT long long Core_GetMValueInt(void *val)
 {
@@ -96,20 +127,6 @@ EXPORT const char *Core_GetMValueString(void *val)
     alt::ICore::Instance().LogWarning(value->Value());
     return value->Value().CStr();
 }
-
-/*
-EXPORT void *Core_CreateMValueList()
-{
-
-}
-*/
-
-/*
-EXPORT void *Core_CreateMValueDict()
-{
-
-}
-*/
 
 EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                            float rotX, float rotY, float rotZ)
@@ -185,12 +202,14 @@ EXPORT Entity Core_GetEntityByID(unsigned short id)
 {
     auto entity = alt::ICore::Instance().GetEntityByID(id);
 
+    Entity e;
+    e.Ptr = entity.Get();
+
     if (!entity.IsEmpty()) {
-        Entity e;
-        e.Ptr = entity.Get();
         e.Type = static_cast<unsigned char>(entity->GetType());
-        return e;
     }
+
+    return e;
 }
 
 EXPORT Array Core_GetEntities()
@@ -404,6 +423,11 @@ EXPORT unsigned int Core_GetNetTime()
 EXPORT void Core_SetPassword(const char *password)
 {
     alt::ICore::Instance().SetPassword(password);
+}
+
+EXPORT unsigned int Core_GetSDKVersion()
+{
+    return alt::ICore::SDK_VERSION;
 }
 
 EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius)

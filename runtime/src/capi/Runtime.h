@@ -8,7 +8,8 @@
 extern "C"
 {
 #endif
-    EXPORT bool RegisterAltEvent(const char *resourceName, unsigned short eventType);
+    EXPORT int RegisterAltEvent(const char *resourceName, unsigned short eventType);
+    EXPORT int UnregisterAltEvent(const char *resourceName, unsigned short eventType);
 #ifdef __cplusplus
 }
 #endif

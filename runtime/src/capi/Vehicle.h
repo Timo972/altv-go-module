@@ -169,6 +169,8 @@ extern "C"
     EXPORT void Vehicle_LoadHealthDataFromBase64(void *v, const char* base64);
     EXPORT void * Vehicle_GetAttached(void *v);
     EXPORT void * Vehicle_GetAttachedTo(void *v);
+    EXPORT void Vehicle_Destroy(void *v);
+    EXPORT int Vehicle_IsValid(void *p);
 
 #ifdef __cplusplus
 }

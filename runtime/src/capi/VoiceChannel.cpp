@@ -43,6 +43,18 @@ EXPORT void VoiceChannel_DeleteMetaData(void *base, const char *key)
     channel->RemoveRef();
 }
 
+EXPORT void VoiceChannel_Destroy(void *b)
+{
+    auto channel = reinterpret_cast<alt::IVoiceChannel*>(b);
+    alt::ICore::Instance().DestroyBaseObject(channel);
+}
+
+EXPORT int VoiceChannel_IsValid(void *p)
+{
+    auto vc = reinterpret_cast<alt::IVoiceChannel*>(p);
+    return vc ? 1 : 0;
+}
+
 EXPORT int VoiceChannel_IsSpatial(void *v)
 {
    auto channel = reinterpret_cast<alt::IVoiceChannel*>(v);

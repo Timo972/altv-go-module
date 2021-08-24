@@ -41,6 +41,12 @@ EXPORT void Checkpoint_DeleteMetaData(void *base, const char *key)
     baseObject->RemoveRef();
 }
 
+EXPORT void Checkpoint_Destroy(void *b)
+{
+    auto checkpoint = reinterpret_cast<alt::ICheckpoint*>(b);
+    alt::ICore::Instance().DestroyBaseObject(checkpoint);
+}
+
 // WorldObject inherited
 EXPORT Position Checkpoint_GetPosition(void *p)
 {
@@ -204,4 +210,10 @@ EXPORT void Checkpoint_SetNextPosition(void *c, float x, float y, float z)
     pos.z = z;
 
     checkpoint->SetNextPosition(pos);
+}
+
+EXPORT int Checkpoint_IsValid(void *p)
+{
+    auto cp = reinterpret_cast<alt::ICheckpoint*>(p);
+    return cp ? 1 : 0;
 }
