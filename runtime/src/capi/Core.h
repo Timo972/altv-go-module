@@ -19,11 +19,21 @@ extern "C"
     EXPORT void *Core_CreateMValueString(const char *val);
     EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size);
     EXPORT void *Core_CreateMValueDict(const char * *keys, void* *values, unsigned long long size);
+    EXPORT void *Core_CreateMValueBaseObject(unsigned char type, void *o);
+    EXPORT void *Core_CreateMValueVector2(float x, float y);
+    EXPORT void *Core_CreateMValueVector3(float x, float y, float z);
+    EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+    EXPORT void *Core_CreateMValueByteArray(unsigned char *data, unsigned long long size);
     EXPORT bool Core_GetMValueBool(void *val);
     EXPORT long long Core_GetMValueInt(void *val); 
     EXPORT unsigned long long Core_GetMValueUInt(void *val);
     EXPORT double Core_GetMValueDouble(void *val);
     EXPORT const char *Core_GetMValueString(void *val);
+    EXPORT Entity Core_GetMValueBaseObject(void *val);
+    EXPORT Position Core_GetMValueVector2(void *val);
+    EXPORT Position Core_GetMValueVector3(void *val);
+    EXPORT RGBA Core_GetMValueRGBA(void *val);
+    EXPORT Array Core_GetMValueByteArray(void *val);
     EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                                float rotX, float rotY, float rotZ);
     EXPORT void *Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
