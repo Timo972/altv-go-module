@@ -29,7 +29,6 @@ void Go::ClientScriptEvent::Call(const alt::CEvent *ev) {
         data.Ptr = args[i].Get();
         data.Type = static_cast<unsigned char>(args[i]->GetType());
         constArgs[i] = data;
-        std::cout << "MValue type (in data struct): " << static_cast<unsigned>(data.Type) << std::endl;
     }
 
     call(player, name, constArgs, size);
