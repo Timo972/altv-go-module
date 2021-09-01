@@ -24,7 +24,7 @@ EXPORT void Core_LogColored(const char *message) {
 
 EXPORT void *Core_CreateMValueBool(int val) {
     auto value = alt::ICore::Instance().CreateMValueBool(val);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(value);
+    auto defaultMVal = value.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
@@ -33,7 +33,7 @@ EXPORT void *Core_CreateMValueBool(int val) {
 // Works, others wrong
 EXPORT void *Core_CreateMValueInt(long long val) {
     auto value = alt::ICore::Instance().CreateMValueInt(val);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(value);
+    auto defaultMVal = value.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
@@ -41,7 +41,7 @@ EXPORT void *Core_CreateMValueInt(long long val) {
 
 EXPORT void *Core_CreateMValueUInt(unsigned long long val) {
     auto value = alt::ICore::Instance().CreateMValueUInt(val);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(value);
+    auto defaultMVal = value.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
@@ -49,7 +49,7 @@ EXPORT void *Core_CreateMValueUInt(unsigned long long val) {
 
 EXPORT void *Core_CreateMValueDouble(double val) {
     auto value = alt::ICore::Instance().CreateMValueDouble(val);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(value);
+    auto defaultMVal = value.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();;
@@ -57,7 +57,7 @@ EXPORT void *Core_CreateMValueDouble(double val) {
 
 EXPORT void *Core_CreateMValueString(const char *val) {
     auto value = alt::ICore::Instance().CreateMValueString(val);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(value);
+    auto defaultMVal = value.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
@@ -116,7 +116,7 @@ EXPORT void *Core_CreateMValueDict(const char **keys, void **values, unsigned lo
         value->Set(key, MValue);
     }
 
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(value);
+    auto defaultMVal = value.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
@@ -128,35 +128,35 @@ EXPORT void *Core_CreateMValueBaseObject(unsigned char type, void *o) {
         auto player = reinterpret_cast<alt::IPlayer *>(o);
         auto ref = alt::Ref<alt::IPlayer>(player);
         auto mVal = alt::ICore::Instance().CreateMValueBaseObject(ref);
-        auto defaultVal = static_cast<alt::Ref<alt::IMValue>>(mVal);
+        auto defaultVal = mVal.As<alt::IMValue>();
         defaultVal->AddRef();
         return defaultVal.Get();
     } else if (objectType == alt::IBaseObject::Type::VEHICLE) {
         auto veh = reinterpret_cast<alt::IVehicle *>(o);
         auto ref = alt::Ref<alt::IVehicle>(veh);
         auto mVal = alt::ICore::Instance().CreateMValueBaseObject(ref);
-        auto defaultVal = static_cast<alt::Ref<alt::IMValue>>(mVal);
+        auto defaultVal = mVal.As<alt::IMValue>();
         defaultVal->AddRef();
         return defaultVal.Get();
     } else if (objectType == alt::IBaseObject::Type::CHECKPOINT) {
         auto cp = reinterpret_cast<alt::ICheckpoint *>(o);
         auto ref = alt::Ref<alt::ICheckpoint>(cp);
         auto mVal = alt::ICore::Instance().CreateMValueBaseObject(ref);
-        auto defaultVal = static_cast<alt::Ref<alt::IMValue>>(mVal);
+        auto defaultVal = mVal.As<alt::IMValue>();
         defaultVal->AddRef();
         return defaultVal.Get();
     } else if (objectType == alt::IBaseObject::Type::COLSHAPE) {
         auto cs = reinterpret_cast<alt::IColShape *>(o);
         auto ref = alt::Ref<alt::IColShape>(cs);
         auto mVal = alt::ICore::Instance().CreateMValueBaseObject(ref);
-        auto defaultVal = static_cast<alt::Ref<alt::IMValue>>(mVal);
+        auto defaultVal = mVal.As<alt::IMValue>();
         defaultVal->AddRef();
         return defaultVal.Get();
     } else if (objectType == alt::IBaseObject::Type::VOICE_CHANNEL) {
         auto vc = reinterpret_cast<alt::IVoiceChannel *>(o);
         auto ref = alt::Ref<alt::IVoiceChannel>(vc);
         auto mVal = alt::ICore::Instance().CreateMValueBaseObject(ref);
-        auto defaultVal = static_cast<alt::Ref<alt::IMValue>>(mVal);
+        auto defaultVal = mVal.As<alt::IMValue>();
         defaultVal->AddRef();
         return defaultVal.Get();
     } else
@@ -170,7 +170,7 @@ EXPORT void *Core_CreateMValueVector2(float x, float y)
     v2[1] = y;
 
     auto val = alt::ICore::Instance().CreateMValueVector2(v2);
-    auto value = static_cast<alt::Ref<alt::IMValue>>(val);
+    auto value = val.As<alt::IMValue>();
     value->AddRef();
 
     return value.Get();
@@ -184,7 +184,7 @@ EXPORT void *Core_CreateMValueVector3(float x, float y, float z)
     v3[2] = z;
 
     auto value = alt::ICore::Instance().CreateMValueVector3(v3);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(value);
+    auto defaultMVal = value.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
@@ -199,7 +199,7 @@ EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned ch
     color.a = a;
 
     auto mValue = alt::ICore::Instance().CreateMValueRGBA(color);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(mValue);
+    auto defaultMVal = mValue.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
@@ -208,7 +208,7 @@ EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned ch
 EXPORT void *Core_CreateMValueByteArray(unsigned char *data, unsigned long long size)
 {
     auto mValue = alt::ICore::Instance().CreateMValueByteArray(data, size);
-    auto defaultMVal = static_cast<alt::Ref<alt::IMValue>>(mValue);
+    auto defaultMVal = mValue.As<alt::IMValue>();
     defaultMVal->AddRef();
 
     return defaultMVal.Get();
