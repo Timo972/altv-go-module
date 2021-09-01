@@ -20,7 +20,7 @@ namespace Go
         void DestroyImpl(alt::IResource::Impl *impl) override;
         alt::IResource::Impl *GetResource(const std::string &name);
         alt::MValueArgs CreateMValueArgs(CustomData *MValues, unsigned long long size);
-        alt::RefBase<alt::RefStore<alt::IMValue>> CreateMValueFromJSONValue(rapidjson::Value &value);
+        alt::MValue CreateMValueFromJSONValue(rapidjson::Value &value);
         static Go::Runtime *GetInstance();
     };
 }

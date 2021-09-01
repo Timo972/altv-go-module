@@ -4,6 +4,7 @@
 #include "Library.h"
 #include "GoRuntime.h"
 #include "GoEventManager.h"
+#include "GoExportManager.h"
 
 #include "events/PlayerConnectEvent.h"
 #include "events/PlayerDisconnectEvent.h"
@@ -37,7 +38,7 @@
 
 namespace Go
 {
-    class Resource : public alt::IResource::Impl, public Go::EventsManager
+class Resource : public alt::IResource::Impl, public Go::EventsManager, public Go::ExportsManager
     {
     private:
         Go::Runtime *_runtime;

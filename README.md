@@ -9,7 +9,7 @@ Module is still under heavy development, and it's not suitable for production us
 #### Capi:
 - [x] Fix Core_TriggerLocalEvent
 - [x] Add Core_TriggerClientEvent
-- [ ] Add Runtime_SetExport
+- [x] Add Runtime_SetExport
 - [ ] Add Core_CreateMValueDict
 #### Events:
 - [x] Fix ServerScriptEvent

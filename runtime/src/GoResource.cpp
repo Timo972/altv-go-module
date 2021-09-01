@@ -65,6 +65,9 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::CLIENT_SCRIPT_EVENT, new ClientScriptEvent(Module));
 
     start();
+
+    _resource->SetExports(_registeredExports);
+
     return true;
 }
 

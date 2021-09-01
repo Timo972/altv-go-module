@@ -54,6 +54,30 @@ alt::MValueArgs Go::Runtime::CreateMValueArgs(CustomData *MValues, unsigned long
             case alt::IMValue::Type::BOOL:
                 args.Push(reinterpret_cast<alt::IMValueBool *>(MValues[i].mValue));
                 break;
+            case alt::IMValue::Type::RGBA:
+                args.Push(reinterpret_cast<alt::IMValueRGBA *>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::VECTOR2:
+                args.Push(reinterpret_cast<alt::IMValueVector2 *>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::VECTOR3:
+                args.Push(reinterpret_cast<alt::IMValueVector3 *>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::BYTE_ARRAY:
+                args.Push(reinterpret_cast<alt::IMValueByteArray *>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::BASE_OBJECT:
+                args.Push(reinterpret_cast<alt::IMValueBaseObject *>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::FUNCTION:
+                args.Push(reinterpret_cast<alt::IMValueBool *>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::LIST:
+                args.Push(reinterpret_cast<alt::IMValueList *>(MValues[i].mValue));
+                break;
+            case alt::IMValue::Type::DICT:
+                args.Push(reinterpret_cast<alt::IMValueDict *>(MValues[i].mValue));
+                break;
         }
     }
 
@@ -61,11 +85,11 @@ alt::MValueArgs Go::Runtime::CreateMValueArgs(CustomData *MValues, unsigned long
 }
 
 alt::RefBase<alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue(rapidjson::Value &value) {
-    switch(value.GetType())
-    {
+    switch (value.GetType()) {
         case rapidjson::kNullType:
             return alt::ICore::Instance().CreateMValueNone();
-        case rapidjson::kFalseType: case rapidjson::kTrueType:
+        case rapidjson::kFalseType:
+        case rapidjson::kTrueType:
             return alt::ICore::Instance().CreateMValueBool(value.GetBool());
         case rapidjson::kObjectType:
             break;
