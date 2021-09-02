@@ -6,6 +6,7 @@ Module is still under heavy development, and it's not suitable for production us
 
 ## TODO
 - [ ] Fix timers
+- [ ] Update to sdk v57
 #### Capi:
 - [x] Fix Core_TriggerLocalEvent
 - [x] Add Core_TriggerClientEvent
