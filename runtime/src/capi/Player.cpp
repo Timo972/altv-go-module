@@ -660,3 +660,15 @@ EXPORT int Player_IsValid(void *p)
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     return player ? 1 : 0;
 }
+
+EXPORT int Player_GetStreamed(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetStreamed();
+}
+
+EXPORT void Player_SetStreamed(void *p, int toggle)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->SetStreamed(toggle);
+}

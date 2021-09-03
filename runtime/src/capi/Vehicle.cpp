@@ -1078,3 +1078,15 @@ EXPORT int Vehicle_IsValid(void *p)
     auto vehicle = reinterpret_cast<alt::IVehicle*>(p);
     return vehicle ? 1 : 0;
 }
+
+EXPORT int Vehicle_GetStreamed(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetStreamed();
+}
+
+EXPORT void Vehicle_SetStreamed(void *v, int toggle)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetStreamed(toggle);
+}

@@ -171,7 +171,8 @@ extern "C"
     EXPORT void * Vehicle_GetAttachedTo(void *v);
     EXPORT void Vehicle_Destroy(void *v);
     EXPORT int Vehicle_IsValid(void *p);
-
+    EXPORT int Vehicle_GetStreamed(void *v);
+    EXPORT void Vehicle_SetStreamed(void *v, int toggle);
 #ifdef __cplusplus
 }
 #endif

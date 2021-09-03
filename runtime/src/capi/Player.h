@@ -94,6 +94,8 @@ extern "C"
     EXPORT void Player_SetNetworkOwner(void *p, void *owner, int disableMigration);
     EXPORT void Player_Destroy(void *p);
     EXPORT int Player_IsValid(void *p);
+    EXPORT int Player_GetStreamed(void *p);
+    EXPORT void Player_SetStreamed(void *p, int toggle);
 
 #ifdef __cplusplus
 }
