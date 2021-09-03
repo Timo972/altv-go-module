@@ -63,6 +63,7 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::PLAYER_ENTERING_VEHICLE, new PlayerEnteringVehicleEvent(Module));
     RegisterEventHandler(Go::EventType::SERVER_SCRIPT_EVENT, new ServerScriptEvent(Module));
     RegisterEventHandler(Go::EventType::CLIENT_SCRIPT_EVENT, new ClientScriptEvent(Module));
+    RegisterEventHandler(Go::EventType::VEHICLE_DAMAGE, new VehicleDamageEvent(Module));
 
     start();
 

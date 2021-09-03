@@ -35,6 +35,7 @@
 #include "events/PlayerEnteringVehicleEvent.h"
 #include "events/ServerScriptEvent.h"
 #include "events/ClientScriptEvent.h"
+#include "events/VehicleDamageEvent.h"
 
 namespace Go
 {
