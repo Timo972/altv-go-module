@@ -672,3 +672,15 @@ EXPORT void Player_SetStreamed(void *p, int toggle)
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetStreamed(toggle);
 }
+
+EXPORT int Player_GetInvincible(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->GetInvincible();
+}
+
+EXPORT void Player_SetInvincible(void *p, int toggle)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->SetInvincible(toggle);
+}

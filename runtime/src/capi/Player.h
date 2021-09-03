@@ -96,7 +96,8 @@ extern "C"
     EXPORT int Player_IsValid(void *p);
     EXPORT int Player_GetStreamed(void *p);
     EXPORT void Player_SetStreamed(void *p, int toggle);
-
+    EXPORT int Player_GetInvincible(void *p);
+    EXPORT void Player_SetInvincible(void *p, int toggle);
 #ifdef __cplusplus
 }
 #endif
