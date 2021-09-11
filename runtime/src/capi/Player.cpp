@@ -684,3 +684,11 @@ EXPORT void Player_SetInvincible(void *p, int toggle)
     auto player = reinterpret_cast<alt::IPlayer*>(p);
     player->SetInvincible(toggle);
 }
+
+EXPORT void Player_SetIntoVehicle(void *p, void *v, unsigned char seat)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+
+    player->SetIntoVehicle(alt::Ref<alt::IVehicle>(vehicle), seat);
+}

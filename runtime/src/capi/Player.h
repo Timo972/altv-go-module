@@ -98,6 +98,7 @@ extern "C"
     EXPORT void Player_SetStreamed(void *p, int toggle);
     EXPORT int Player_GetInvincible(void *p);
     EXPORT void Player_SetInvincible(void *p, int toggle);
+    EXPORT void Player_SetIntoVehicle(void *p, void *v, unsigned char seat);
 #ifdef __cplusplus
 }
 #endif
