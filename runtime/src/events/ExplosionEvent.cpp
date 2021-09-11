@@ -19,9 +19,7 @@ void Go::ExplosionEvent::Call(const alt::CEvent *ev)
     auto expFX = event->GetExplosionFX();
     auto expType = event->GetExplosionType();
 
-    Entity e;
-    e.Ptr = target.Get();
-    e.Type = static_cast<unsigned char>(target->GetType());
+    Entity e = Go::Runtime::GetInstance()->GetEntity(target);
 
     Position cPos;
     cPos.x = pos.x;

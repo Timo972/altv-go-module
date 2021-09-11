@@ -19,9 +19,7 @@ void Go::PlayerDamageEvent::Call(const alt::CEvent *ev)
     auto armourDamage = event->GetArmourDamage();
     auto weapon = event->GetWeapon();
 
-    Entity e;
-    e.Ptr = attacker.Get();
-    e.Type = static_cast<unsigned char>(attacker->GetType());
+    Entity e = Go::Runtime::GetInstance()->GetEntity(attacker);
 
     call(player, e, healthDamage, armourDamage, weapon);
 }

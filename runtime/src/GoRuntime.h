@@ -21,6 +21,7 @@ namespace Go
         alt::IResource::Impl *GetResource(const std::string &name);
         alt::MValueArgs CreateMValueArgs(CustomData *MValues, unsigned long long size);
         alt::MValue CreateMValueFromJSONValue(rapidjson::Value &value);
+        Entity GetEntity(alt::Ref<alt::IEntity> entity);
         static Go::Runtime *GetInstance();
     };
 }

@@ -25,7 +25,7 @@ void Go::Runtime::DestroyImpl(alt::IResource::Impl *impl) {
 }
 
 alt::IResource::Impl *Go::Runtime::GetResource(const std::string &name) {
-    for (auto &resource : _resources) {
+    for (auto &resource: _resources) {
         if (resource.find(name) != resource.end()) {
             return resource[name];
         }
@@ -107,4 +107,24 @@ alt::RefBase<alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue
     }
 }
 
+Entity Go::Runtime::GetEntity(alt::Ref<alt::IEntity> entity) {
+    Entity e;
 
+    if (!entity.IsEmpty()) {
+        auto entityType = entity->GetType();
+        e.Type = static_cast<unsigned char>(entityType);
+
+        switch (entityType) {
+            case alt::IEntity::Type::PLAYER:
+                e.Ptr = entity.As<alt::IPlayer>().Get();
+                break;
+            case alt::IEntity::Type::VEHICLE:
+                e.Ptr = entity.As<alt::IVehicle>().Get();
+                break;
+        }
+    } else {
+        e.Ptr = nullptr;
+    }
+
+    return e;
+}

@@ -21,14 +21,7 @@ void Go::VehicleDamageEvent::Call(const alt::CEvent *ev)
     auto petrolTankHealthDamage = event->GetPetrolTankHealthDamage();
     auto damageWidth = event->GetDamagedWith();
 
-    Entity e;
-    switch (attacker->GetType()) {
-        case alt::IEntity::Type::PLAYER:
-            e.Ptr = attacker.As<alt::IPlayer>().Get();
-        case alt::IEntity::Type::VEHICLE:
-            e.Ptr = attacker.As<alt::IVehicle>().Get();
-    }
-    e.Type = static_cast<unsigned char>(attacker->GetType());
+    Entity e = Go::Runtime::GetInstance()->GetEntity(attacker);
 
     call(vehicle, e, bodyHealthDamage, bodyAdditionalHealthDamage, engineHealthDamage, petrolTankHealthDamage, damageWidth);
 }

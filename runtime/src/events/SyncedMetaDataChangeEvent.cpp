@@ -18,9 +18,7 @@ void Go::SyncedMetaDataChangeEvent::Call(const alt::CEvent *ev)
     auto newValueMeta = event->GetVal();
     auto oldValueMeta = event->GetOldVal();
 
-    Entity e;
-    e.Ptr = entity.Get();
-    e.Type = static_cast<unsigned char>(entity->GetType());
+    Entity e = Go::Runtime::GetInstance()->GetEntity(entity);
 
     // Temporary
     MetaData newValue;

@@ -17,9 +17,7 @@ void Go::NetOwnerChangeEvent::Call(const alt::CEvent *ev)
     auto newOwner = event->GetNewOwner().Get();
     auto oldOwner = event->GetOldOwner().Get();
 
-    Entity e;
-    e.Ptr = entity.Get();
-    e.Type = static_cast<unsigned char>(entity->GetType());
+    Entity e = Go::Runtime::GetInstance()->GetEntity(entity);
 
     call(e, newOwner, oldOwner);
 }

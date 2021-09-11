@@ -20,9 +20,10 @@ void Go::WeaponDamageEvent::Call(const alt::CEvent *ev)
     auto weapon = event->GetWeaponHash();
     auto offset = event->GetShotOffset();
 
+    auto runtime = Go::Runtime::GetInstance();
+
     Entity e;
-    e.Ptr = target.Get();
-    e.Type = static_cast<unsigned char>(target->GetType());
+    /*auto e =*/ runtime->GetEntity(target);
 
     Position cOffset;
     cOffset.x = offset[0];

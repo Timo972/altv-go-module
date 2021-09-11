@@ -396,14 +396,7 @@ EXPORT const char *Core_ReadFile(const char *path) {
 EXPORT Entity Core_GetEntityByID(unsigned short id) {
     auto entity = alt::ICore::Instance().GetEntityByID(id);
 
-    Entity e;
-    e.Ptr = entity.Get();
-
-    if (!entity.IsEmpty()) {
-        e.Type = static_cast<unsigned char>(entity->GetType());
-    }
-
-    return e;
+    return Go::Runtime::GetInstance()->GetEntity(entity);
 }
 
 EXPORT Array Core_GetEntities() {
@@ -416,12 +409,13 @@ EXPORT Array Core_GetEntities() {
 #else
     Entity entityRefs[arr.size];
 #endif
+
+    auto runtime = Go::Runtime::GetInstance();
+
     for (uint64_t i = 0; i < arr.size; i++) {
         auto entity = entities[i];
-        Entity e;
-        e.Ptr = entity.Get();
-        e.Type = static_cast<unsigned char>(entity->GetType());
-        entityRefs[i] = e;
+
+        entityRefs[i] = runtime->GetEntity(entity);
     }
 
     arr.array = entityRefs;
