@@ -4,7 +4,7 @@ Go::PlayerWeaponChangeEvent::PlayerWeaponChangeEvent(ModuleLibrary *module) : IE
 
 void Go::PlayerWeaponChangeEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altPlayerWeaponChangeEvent", void (*)(alt::IPlayer* player, unsigned long oldWeapon, unsigned long newWeapon));
+    static auto call = GET_FUNC(Library, "altPlayerWeaponChangeEvent", bool (*)(alt::IPlayer* player, unsigned long oldWeapon, unsigned long newWeapon));
 
     if (call == nullptr)
     {
@@ -17,5 +17,9 @@ void Go::PlayerWeaponChangeEvent::Call(const alt::CEvent *ev)
     auto oldWeapon = event->GetOldWeapon();
     auto newWeapon = event->GetNewWeapon();
 
-    call(player, oldWeapon, newWeapon);
+    auto cont = call(player, oldWeapon, newWeapon);
+
+    if (!cont) {
+        event->Cancel();
+    }
 }
