@@ -4,7 +4,7 @@ Go::WeaponDamageEvent::WeaponDamageEvent(ModuleLibrary *module) : IEvent(module)
 
 void Go::WeaponDamageEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altWeaponDamageEvent", bool (*)(alt::IPlayer* source, Entity target, unsigned long weapon, unsigned short damage, Position offset, short bodyPart));
+    static auto call = GET_FUNC(Library, "altWeaponDamageEvent", int (*)(alt::IPlayer* source, Entity target, unsigned long weapon, unsigned short damage, Position offset, short bodyPart));
 
     if (call == nullptr)
     {
@@ -32,7 +32,7 @@ void Go::WeaponDamageEvent::Call(const alt::CEvent *ev)
 
     auto cancel = call(source, e, weapon, damage, cOffset, static_cast<short>(bodyPart));
 
-    if(!cancel) {
+    if(cancel == 0) {
         event->Cancel();
     }
 }

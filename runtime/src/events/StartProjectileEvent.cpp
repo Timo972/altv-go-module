@@ -4,7 +4,7 @@ Go::StartProjectileEvent::StartProjectileEvent(ModuleLibrary *module) : IEvent(m
 
 void Go::StartProjectileEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altStartProjectileEvent", bool (*)(alt::IPlayer* player, Position pos, Position dir, unsigned int ammoHash, unsigned long weaponHash));
+    static auto call = GET_FUNC(Library, "altStartProjectileEvent", int (*)(alt::IPlayer* player, Position pos, Position dir, unsigned int ammoHash, unsigned long weaponHash));
 
     if (call == nullptr)
     {
@@ -31,7 +31,7 @@ void Go::StartProjectileEvent::Call(const alt::CEvent *ev)
 
     auto cancel = call(player, position, direction, ammo, weapon);
 
-    if(!cancel) {
+    if(cancel == 0) {
         event->Cancel();
     }
 }
