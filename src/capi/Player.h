@@ -110,6 +110,38 @@ EXPORT int Player_IsFrozen(void *p);
 EXPORT void Player_SetFrozen(void *p, int state);
 EXPORT int Player_HasCollision(void *p);
 EXPORT void Player_SetCollision(void *p, int state);
+
+EXPORT void
+Player_PlayAmbientSpeech(void *p, const char *speechName, const char *speechParam, unsigned int speechDictHash);
+EXPORT int Player_SetHeadOverlay(void *p, unsigned char overlayID, unsigned char index, float opacity);
+EXPORT int Player_RemoveHeadOverlay(void *p, unsigned char overlayID);
+EXPORT int
+Player_SetHeadOverlayColor(void *p, unsigned char overlayID, unsigned char colorType, unsigned char colorIndex,
+                           unsigned char secondColorIndex);
+EXPORT HeadOverlay Player_GetHeadOverlay(void *p, unsigned char overlayID);
+EXPORT int Player_SetFaceFeature(void *p, unsigned char index, float scale);
+EXPORT float Player_GetFaceFeatureScale(void *p, unsigned char index);
+EXPORT int Player_RemoveFaceFeature(void *p, unsigned char index);
+EXPORT int
+Player_SetHeadBlendPaletteColor(void *p, unsigned char id, unsigned char red, unsigned char green, unsigned char blue);
+EXPORT RGBA Player_GetHeadBlendPaletteColor(void *p, unsigned char id);
+EXPORT void
+Player_SetHeadBlendData(void *p, unsigned int shapeFirstID, unsigned int shapeSecondID, unsigned int shapeThirdID,
+                        unsigned int skinFirstID, unsigned int skinSecondID, unsigned int skinThirdID,
+                        float shapeMix, float skinMix, float thirdMix);
+EXPORT HeadBlendData Player_GetHeadBlendData(void *p);
+EXPORT int Player_SetEyeColor(void *p, short eyeColor);
+EXPORT short Player_GetEyeColor(void *p);
+EXPORT void Player_SetHairColor(void *p, unsigned char hairColor);
+EXPORT unsigned char Player_GetHairColor(void *p);
+EXPORT void Player_SetHairHighlightColor(void *p, unsigned char hairHighlightColor);
+EXPORT unsigned char Player_GetHairHighlightColor(void *p);
+EXPORT Array Player_GetWeapons(void *p);
+
+EXPORT int Player_HasLocalMetaData(void *p, const char *key);
+EXPORT void Player_SetLocalMetaData(void *p, const char *key, void *val);
+EXPORT MetaData Player_GetLocalMetaData(void *p, const char *key);
+EXPORT void Player_DeleteLocalMetaData(void *p, const char *key);
 #ifdef __cplusplus
 }
 #endif

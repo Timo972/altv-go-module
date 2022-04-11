@@ -93,4 +93,30 @@ typedef struct connectionInfo {
     const char *discordUserID;
 } ConnectionInfo;
 
+typedef struct weapon {
+    unsigned int hash;
+    unsigned char tintIndex;
+    Array components;
+} Weapon;
+
+typedef struct headBlendData {
+    unsigned int shapeFirstID;
+    unsigned int shapeSecondID;
+    unsigned int shapeThirdID;
+    unsigned int skinFirstID;
+    unsigned int skinSecondID;
+    unsigned int skinThirdID;
+    float shapeMix;
+    float skinMix;
+    float thirdMix;
+} HeadBlendData;
+
+typedef struct headOverlay {
+    unsigned char index = 0;
+    float opacity = 0;
+    unsigned char colorType;
+    unsigned char colorIndex = 0;
+    unsigned char secondColorIndex = 0;
+} HeadOverlay;
+
 #include "SDK.h"
