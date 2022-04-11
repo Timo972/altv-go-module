@@ -66,6 +66,7 @@ bool Go::Resource::Start() {
     RegisterEventHandler(Go::EventType::CONNECTION_QUEUE_REMOVE, new ConnectionQueueRemoveEvent(Module));
     RegisterEventHandler(Go::EventType::SERVER_STARTED, new ServerStartedEvent(Module));
     RegisterEventHandler(Go::EventType::LOCAL_SYNCED_META_CHANGE, new LocalSyncedMetaDataChangeEvent(Module));
+    RegisterEventHandler(Go::EventType::META_CHANGE, new MetaDataChangeEvent(Module));
 
     start();
 
