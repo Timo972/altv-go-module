@@ -39,6 +39,7 @@
 #include "events/PlayerBeforeConnectEvent.h"
 #include "events/ConnectionQueueAddEvent.h"
 #include "events/ConnectionQueueRemoveEvent.h"
+#include "events/ServerStartedEvent.h"
 
 namespace Go
 {
