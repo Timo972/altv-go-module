@@ -7,10 +7,10 @@
 
 namespace Go
 {
-    class PlayerBeforeConnectEvent : public Go::IEvent
+    class ConnectionQueueRemoveEvent : public Go::IEvent
     {
     public:
-        explicit PlayerBeforeConnectEvent(ModuleLibrary *module);
+        explicit ConnectionQueueRemoveEvent(ModuleLibrary *module);
         void Call(const alt::CEvent *ev) override;
     };
 }

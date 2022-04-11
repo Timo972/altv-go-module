@@ -36,6 +36,9 @@
 #include "events/ServerScriptEvent.h"
 #include "events/ClientScriptEvent.h"
 #include "events/VehicleDamageEvent.h"
+#include "events/PlayerBeforeConnectEvent.h"
+#include "events/ConnectionQueueAddEvent.h"
+#include "events/ConnectionQueueRemoveEvent.h"
 
 namespace Go
 {

@@ -128,3 +128,21 @@ Entity Go::Runtime::GetEntity(alt::Ref<alt::IEntity> entity) {
 
     return e;
 }
+
+ConnectionInfo Go::Runtime::GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info) {
+    connectionInfo conn;
+    conn.authToken = info->GetAuthToken().c_str();
+    conn.branch = info->GetBranch().c_str();
+    conn.build = info->GetBuild();
+    conn.cdnUrl = info->GetCdnUrl().c_str();
+    conn.discordUserID = info->GetDiscordUserID().c_str();
+    conn.hwidExHash = info->GetHwIdExHash();
+    conn.hwidHash = info->GetHwIdHash();
+    conn.ip = info->GetIp().c_str();
+    conn.isDebug = info->GetIsDebug();
+    conn.name = info->GetName().c_str();
+    conn.passwordHash = info->GetPasswordHash();
+    conn.socialID = info->GetSocialId();
+
+    return conn;
+}

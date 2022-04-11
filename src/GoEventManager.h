@@ -8,8 +8,6 @@
 #include "Library.h"
 #include "GoEventFactory.h"
 
-#include "./events/PlayerConnectEvent.h"
-
 namespace Go
 {
 class EventsManager : public Go::EventFactory

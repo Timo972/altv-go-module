@@ -6,22 +6,34 @@
 #include "Library.h"
 
 namespace Go {
-    enum class EventType : uint16_t
-    {
+    enum class EventType : uint16_t {
         NONE,
+
+        // Server
+        SERVER_STARTED,
+
         // Shared
         PLAYER_CONNECT,
+        PLAYER_BEFORE_CONNECT,
         PLAYER_DISCONNECT,
+
+        CONNECTION_QUEUE_ADD,
+        CONNECTION_QUEUE_REMOVE,
+
         RESOURCE_START,
         RESOURCE_STOP,
         RESOURCE_ERROR,
+
         SERVER_SCRIPT_EVENT,
         CLIENT_SCRIPT_EVENT,
+
         META_CHANGE,
         SYNCED_META_CHANGE,
         STREAM_SYNCED_META_CHANGE,
         GLOBAL_META_CHANGE,
         GLOBAL_SYNCED_META_CHANGE,
+        LOCAL_SYNCED_META_CHANGE,
+
         PLAYER_DAMAGE,
         PLAYER_DEATH,
         FIRE_EVENT,
@@ -30,6 +42,7 @@ namespace Go {
         WEAPON_DAMAGE_EVENT,
         VEHICLE_DESTROY,
         VEHICLE_DAMAGE,
+
         CHECKPOINT_EVENT,
         COLSHAPE_EVENT,
         PLAYER_ENTER_VEHICLE,
@@ -37,14 +50,20 @@ namespace Go {
         PLAYER_LEAVE_VEHICLE,
         PLAYER_CHANGE_VEHICLE_SEAT,
         PLAYER_WEAPON_CHANGE,
+        PLAYER_REQUEST_CONTROL,
+
         VEHICLE_ATTACH,
         VEHICLE_DETACH,
         NETOWNER_CHANGE,
+
         REMOVE_ENTITY_EVENT,
         CREATE_BASE_OBJECT_EVENT,
         REMOVE_BASE_OBJECT_EVENT,
+
         DATA_NODE_RECEIVED_EVENT,
+
         CONSOLE_COMMAND_EVENT,
+
         // Client
         CONNECTION_COMPLETE,
         DISCONNECT_EVENT,
@@ -52,10 +71,14 @@ namespace Go {
         KEYBOARD_EVENT,
         GAME_ENTITY_CREATE,
         GAME_ENTITY_DESTROY,
-        RENDER,
         WEB_SOCKET_CLIENT_EVENT,
         AUDIO_EVENT,
         TASK_CHANGE,
+        SPAWNED,
+        RMLUI_EVENT,
+        WINDOW_FOCUS_CHANGE,
+        WINDOW_RESOLUTION_CHANGE,
+
         ALL,
         SIZE
     };
@@ -63,16 +86,19 @@ namespace Go {
     class IEvent {
     public:
         explicit IEvent(ModuleLibrary *module);
+
         virtual void Call(const alt::CEvent *ev) = 0;
+
     protected:
         ModuleLibrary *Library;
     };
 
     class EventFactory {
     private:
-        std::unordered_map<Go::EventType, IEvent*> EventsMap;
+        std::unordered_map<Go::EventType, IEvent *> EventsMap;
     public:
         void RegisterEventHandler(Go::EventType type, IEvent *handler);
+
         void CallEvent(const alt::CEvent *ev);
     };
 }

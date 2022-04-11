@@ -2,24 +2,22 @@
 
 Go::Resource::Resource(Go::Runtime *runtime, alt::IResource *resource) : _runtime(runtime), _resource(resource) {}
 
-bool Go::Resource::Start()
-{
+bool Go::Resource::Start() {
     Module = LOAD_LIB((_resource->GetPath() + SEPARATOR + _resource->GetMain()).c_str());
-    if (Module == nullptr)
-    {
+    if (Module == nullptr) {
         alt::ICore::Instance()
-            .LogError("Failed to open main file");
+                .LogError("Failed to open main file");
 
         return false;
     }
 
     auto resourceName = _resource->GetName().c_str();
     auto resourcePath = _resource->GetPath().c_str();
-    auto go = GET_FUNC(Module, "initGoResource", void (*)(alt::IResource * resourcePtr, const char *resourceName, const char *ResourcePath));
-    if (go == nullptr)
-    {
+    auto go = GET_FUNC(Module, "initGoResource",
+                       void(*)(alt::IResource * resourcePtr, const char *resourceName, const char *ResourcePath));
+    if (go == nullptr) {
         alt::ICore::Instance()
-            .LogError("Error while initializing Go Resource");
+                .LogError("Error while initializing Go Resource");
 
         return false;
     }
@@ -27,9 +25,8 @@ bool Go::Resource::Start()
     go(_resource, resourceName, resourcePath);
 
 
-    auto start = GET_FUNC(Module, "OnStart", void (*)());
-    if (start == nullptr)
-    {
+    auto start = GET_FUNC(Module, "OnStart", void(*)());
+    if (start == nullptr) {
         alt::ICore::Instance().LogError("Main entrypoint not found");
         return false;
     }
@@ -64,6 +61,9 @@ bool Go::Resource::Start()
     RegisterEventHandler(Go::EventType::SERVER_SCRIPT_EVENT, new ServerScriptEvent(Module));
     RegisterEventHandler(Go::EventType::CLIENT_SCRIPT_EVENT, new ClientScriptEvent(Module));
     RegisterEventHandler(Go::EventType::VEHICLE_DAMAGE, new VehicleDamageEvent(Module));
+    RegisterEventHandler(Go::EventType::PLAYER_BEFORE_CONNECT, new PlayerBeforeConnectEvent(Module));
+    RegisterEventHandler(Go::EventType::CONNECTION_QUEUE_ADD, new ConnectionQueueAddEvent(Module));
+    RegisterEventHandler(Go::EventType::CONNECTION_QUEUE_REMOVE, new ConnectionQueueRemoveEvent(Module));
 
     start();
 
@@ -72,11 +72,9 @@ bool Go::Resource::Start()
     return true;
 }
 
-bool Go::Resource::Stop()
-{
-    auto stop = GET_FUNC(Module, "OnStop", void (*)());
-    if (stop == nullptr)
-    {
+bool Go::Resource::Stop() {
+    auto stop = GET_FUNC(Module, "OnStop", void(*)());
+    if (stop == nullptr) {
         alt::ICore::Instance().LogError("Couldn't call OnStop.");
         return false;
     }
@@ -85,12 +83,10 @@ bool Go::Resource::Stop()
     return true;
 }
 
-bool Go::Resource::OnEvent(const alt::CEvent *ev)
-{
+bool Go::Resource::OnEvent(const alt::CEvent *ev) {
     auto type = ev->GetType();
 
-    if (!IsEventRegistered(type))
-    {
+    if (!IsEventRegistered(type)) {
         return false;
     }
 

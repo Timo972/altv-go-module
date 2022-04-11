@@ -22,6 +22,7 @@ namespace Go
         alt::MValueArgs CreateMValueArgs(CustomData *MValues, unsigned long long size);
         alt::MValue CreateMValueFromJSONValue(rapidjson::Value &value);
         Entity GetEntity(alt::Ref<alt::IEntity> entity);
+        ConnectionInfo GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info);
         static Go::Runtime *GetInstance();
     };
 }
