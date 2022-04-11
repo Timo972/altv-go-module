@@ -74,7 +74,7 @@ EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size) {
         return value.Get();
     }
 
-    for (auto &member : document.GetArray()) {
+    for (auto &member: document.GetArray()) {
         if (member.IsObject()) {
             value->Push(alt::ICore::Instance().CreateMValueNone());
             continue;
@@ -163,8 +163,7 @@ EXPORT void *Core_CreateMValueBaseObject(unsigned char type, void *o) {
         return alt::ICore::Instance().CreateMValueNone().Get();
 }
 
-EXPORT void *Core_CreateMValueVector2(float x, float y)
-{
+EXPORT void *Core_CreateMValueVector2(float x, float y) {
     alt::Vector2f v2;
     v2[0] = x;
     v2[1] = y;
@@ -176,8 +175,7 @@ EXPORT void *Core_CreateMValueVector2(float x, float y)
     return value.Get();
 }
 
-EXPORT void *Core_CreateMValueVector3(float x, float y, float z)
-{
+EXPORT void *Core_CreateMValueVector3(float x, float y, float z) {
     alt::Vector3f v3;
     v3[0] = x;
     v3[1] = y;
@@ -190,8 +188,7 @@ EXPORT void *Core_CreateMValueVector3(float x, float y, float z)
     return defaultMVal.Get();
 }
 
-EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
-{
+EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
     alt::RGBA color;
     color.r = r;
     color.g = g;
@@ -205,8 +202,7 @@ EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned ch
     return defaultMVal.Get();
 }
 
-EXPORT void *Core_CreateMValueByteArray(unsigned char *data, unsigned long long size)
-{
+EXPORT void *Core_CreateMValueByteArray(unsigned char *data, unsigned long long size) {
     auto mValue = alt::ICore::Instance().CreateMValueByteArray(data, size);
     auto defaultMVal = mValue.As<alt::IMValue>();
     defaultMVal->AddRef();
@@ -276,10 +272,9 @@ EXPORT Entity Core_GetMValueBaseObject(void *val) {
     return e;
 }
 
-EXPORT Position Core_GetMValueVector2(void *val)
-{
-    auto mValue = reinterpret_cast<alt::IMValue*>(val);
-    auto v2MValue = dynamic_cast<alt::IMValueVector2*>(mValue);
+EXPORT Position Core_GetMValueVector2(void *val) {
+    auto mValue = reinterpret_cast<alt::IMValue *>(val);
+    auto v2MValue = dynamic_cast<alt::IMValueVector2 *>(mValue);
     auto value = v2MValue->Value();
 
     Position pos;
@@ -289,10 +284,9 @@ EXPORT Position Core_GetMValueVector2(void *val)
     return pos;
 }
 
-EXPORT Position Core_GetMValueVector3(void *val)
-{
-    auto mValue = reinterpret_cast<alt::IMValue*>(val);
-    auto v3MValue = dynamic_cast<alt::IMValueVector3*>(mValue);
+EXPORT Position Core_GetMValueVector3(void *val) {
+    auto mValue = reinterpret_cast<alt::IMValue *>(val);
+    auto v3MValue = dynamic_cast<alt::IMValueVector3 *>(mValue);
     auto value = v3MValue->Value();
 
     Position pos;
@@ -303,10 +297,9 @@ EXPORT Position Core_GetMValueVector3(void *val)
     return pos;
 }
 
-EXPORT RGBA Core_GetMValueRGBA(void *val)
-{
-    auto mValue = reinterpret_cast<alt::IMValue*>(val);
-    auto rgbaMValue = dynamic_cast<alt::IMValueRGBA*>(mValue);
+EXPORT RGBA Core_GetMValueRGBA(void *val) {
+    auto mValue = reinterpret_cast<alt::IMValue *>(val);
+    auto rgbaMValue = dynamic_cast<alt::IMValueRGBA *>(mValue);
     auto value = rgbaMValue->Value();
 
     RGBA color;
@@ -318,10 +311,9 @@ EXPORT RGBA Core_GetMValueRGBA(void *val)
     return color;
 }
 
-EXPORT Array Core_GetMValueByteArray(void *val)
-{
-    auto mValue = reinterpret_cast<alt::IMValue*>(val);
-    auto byteMValue = dynamic_cast<alt::IMValueByteArray*>(mValue);
+EXPORT Array Core_GetMValueByteArray(void *val) {
+    auto mValue = reinterpret_cast<alt::IMValue *>(val);
+    auto byteMValue = dynamic_cast<alt::IMValueByteArray *>(mValue);
 
     Array byteArray;
     byteArray.array = byteMValue->GetData();
@@ -681,4 +673,29 @@ EXPORT void Core_TriggerClientEventForAll(const char *ev, CustomData *MValues, u
     auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
 
     alt::ICore::Instance().TriggerClientEventForAll(ev, args);
+}
+
+EXPORT void *Core_CreatePointBlipPosition(float x, float y, float z) {
+    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION,alt::Position(x, y, z));
+    return blip.Get();
+}
+
+EXPORT void *Core_CreatePointBlipEntity(Entity entity) {
+    // FIXME: Entity struct to alt::IEntity and pass then
+    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, nullptr);
+    return blip.Get();
+}
+
+EXPORT void *Core_CreateAreaBlip(float x, float y, float z, float width, float height) {
+    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::AREA, alt::Position(x, y, z));
+    blip->SetScaleXY({width, height});
+
+    return blip.Get();
+}
+
+EXPORT void *Core_CreateRadiusBlip(float x, float y, float z, float radius) {
+    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::RADIUS, alt::Position(x, y, z));
+    blip->SetScaleXY({radius, radius});
+
+    return blip.Get();
 }
