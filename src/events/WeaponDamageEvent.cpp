@@ -22,8 +22,7 @@ void Go::WeaponDamageEvent::Call(const alt::CEvent *ev)
 
     auto runtime = Go::Runtime::GetInstance();
 
-    Entity e;
-    /*auto e =*/ runtime->GetEntity(target);
+    Entity e = runtime->GetEntity(target);
 
     Position cOffset;
     cOffset.x = offset[0];
