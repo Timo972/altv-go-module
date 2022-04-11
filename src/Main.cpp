@@ -1,3 +1,4 @@
+#include "version/version.h"
 #include "Main.h"
 #include "GoRuntime.h"
 
@@ -12,6 +13,6 @@ EXPORT bool altMain(alt::ICore* core) {
     return true;
 }
 
-EXPORT int GetSDKVersion() {
-    return alt::ICore::SDK_VERSION;
+EXPORT const char* GetSDKHash() {
+    return ALT_SDK_VERSION;
 }

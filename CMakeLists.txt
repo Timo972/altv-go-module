@@ -14,6 +14,7 @@ file(GLOB_RECURSE PROJECT_SOURCE_FILES "src/*.h" "src/*.hpp" "src/*.cpp"
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
+include("vendors/cpp-sdk/CMakeLists.txt")
 include_directories(
         "src"
         "vendors/cpp-sdk"
@@ -24,3 +25,5 @@ add_library(
         ${PROJECT_MODULE_NAME} SHARED
         ${PROJECT_SOURCE_FILES}
 )
+
+add_dependencies(${PROJECT_NAME} alt-sdk)
