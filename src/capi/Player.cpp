@@ -692,3 +692,27 @@ EXPORT void Player_SetIntoVehicle(void *p, void *v, unsigned char seat)
 
     player->SetIntoVehicle(alt::Ref<alt::IVehicle>(vehicle), seat);
 }
+
+EXPORT int Player_IsFrozen(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->IsFrozen();
+}
+
+EXPORT void Player_SetFrozen(void *p, int state)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->SetFrozen(state);
+}
+
+EXPORT int Player_HasCollision(void *p)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    return player->HasCollision();
+}
+
+EXPORT void Player_SetCollision(void *p, int state)
+{
+    auto player = reinterpret_cast<alt::IPlayer*>(p);
+    player->SetCollision(state);
+}

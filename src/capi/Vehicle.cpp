@@ -1090,3 +1090,27 @@ EXPORT void Vehicle_SetStreamed(void *v, int toggle)
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
     vehicle->SetStreamed(toggle);
 }
+
+EXPORT int Vehicle_IsFrozen(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->IsFrozen();
+}
+
+EXPORT void Vehicle_SetFrozen(void *v, int state)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetFrozen(state);
+}
+
+EXPORT int Vehicle_HasCollision(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->HasCollision();
+}
+
+EXPORT void Vehicle_SetCollision(void *v, int state)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetCollision(state);
+}
