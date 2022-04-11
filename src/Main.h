@@ -112,11 +112,11 @@ typedef struct headBlendData {
 } HeadBlendData;
 
 typedef struct headOverlay {
-    unsigned char index = 0;
-    float opacity = 0;
+    unsigned char index;
+    float opacity;
     unsigned char colorType;
-    unsigned char colorIndex = 0;
-    unsigned char secondColorIndex = 0;
+    unsigned char colorIndex;
+    unsigned char secondColorIndex;
 } HeadOverlay;
 
 typedef struct vector2 {
