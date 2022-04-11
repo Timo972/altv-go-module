@@ -4,7 +4,7 @@
 
 // Temporary
 typedef struct meta {
-    const void* Ptr;
+    const void *Ptr;
     unsigned char Type;
 } MetaData;
 
@@ -57,10 +57,10 @@ typedef struct fireInfo {
 } FireInfo;
 
 typedef struct neonState {
-    int left;
-    int right;
-    int front;
-    int back;
+    unsigned char left;
+    unsigned char right;
+    unsigned char front;
+    unsigned char back;
 } VehicleNeonState;
 
 typedef struct entity {
@@ -70,12 +70,27 @@ typedef struct entity {
 
 typedef struct array {
     unsigned long long size;
-    void* array;
+    void *array;
 } Array;
 
 typedef struct data {
-    void* mValue;
+    void *mValue;
     unsigned int Type;
 } CustomData;
+
+typedef struct connectionInfo {
+    const char *name;
+    unsigned long long socialID;
+    unsigned long long hwidHash;
+    unsigned long long hwidExHash;
+    const char *authToken;
+    unsigned char isDebug;
+    const char *branch;
+    unsigned int build;
+    const char *cdnUrl;
+    unsigned long long passwordHash;
+    const char *ip;
+    const char *discordUserID;
+} ConnectionInfo;
 
 #include "SDK.h"
