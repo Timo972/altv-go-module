@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Main.h"
+#include "version/version.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -60,13 +61,13 @@ extern "C"
     EXPORT const char *Core_GetRootDirectory();
     EXPORT int Core_StartResource(const char *name);
     EXPORT void Core_StopResource(const char *name);
-    EXPORT int Core_RestartResource(const char *name);
+    EXPORT void Core_RestartResource(const char *name);
     EXPORT void Core_SetSyncedMetaData(const char *key, void *val);
     EXPORT void Core_DeleteSyncedMetaData(const char *key);
     EXPORT Array Core_GetPlayersByName(const char *name);
     EXPORT unsigned int Core_GetNetTime();
     EXPORT void Core_SetPassword(const char *password);
-    EXPORT unsigned int Core_GetSDKVersion();
+    EXPORT const char *Core_GetSDKHash();
     EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, float radius, float height);
     EXPORT void *Core_CreateColShapeCube(float posX1, float posY1, float posZ1, float posX2, float posY2, float posZ2);
     EXPORT void *Core_CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);

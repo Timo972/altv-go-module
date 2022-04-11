@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Main.h"
+#include "rapidjson/document.h"
 
 namespace Go
 {

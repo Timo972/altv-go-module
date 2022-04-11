@@ -243,7 +243,7 @@ EXPORT const char *Core_GetMValueString(void *val) {
     auto value = reinterpret_cast<alt::IMValue *>(val);
     auto stringValue = dynamic_cast<alt::IMValueString *>(value);
 
-    return stringValue->Value().CStr();
+    return stringValue->Value().c_str();
 }
 
 EXPORT Entity Core_GetMValueBaseObject(void *val) {
@@ -370,11 +370,11 @@ EXPORT void *Core_CreateVoiceChannel(int spacial, float maxDistance) {
 }
 
 EXPORT const char *Core_GetVersion() {
-    return alt::ICore::Instance().GetVersion().CStr();
+    return alt::ICore::Instance().GetVersion().c_str();
 }
 
 EXPORT const char *Core_GetBranch() {
-    return alt::ICore::Instance().GetBranch().CStr();
+    return alt::ICore::Instance().GetBranch().c_str();
 }
 
 EXPORT int Core_IsDebug() {
@@ -390,7 +390,7 @@ EXPORT int Core_FileExists(const char *path) {
 }
 
 EXPORT const char *Core_ReadFile(const char *path) {
-    return alt::ICore::Instance().FileRead(path).CStr();
+    return alt::ICore::Instance().FileRead(path).c_str();
 }
 
 EXPORT Entity Core_GetEntityByID(unsigned short id) {
@@ -541,7 +541,7 @@ EXPORT void Core_DestroyBaseObject(void *h) {
 }
 
 EXPORT const char *Core_GetRootDirectory() {
-    return alt::ICore::Instance().GetRootDirectory().CStr();
+    return alt::ICore::Instance().GetRootDirectory().c_str();
 }
 
 EXPORT int Core_StartResource(const char *name) {
@@ -552,8 +552,8 @@ EXPORT void Core_StopResource(const char *name) {
     alt::ICore::Instance().StopResource(name);
 }
 
-EXPORT int Core_RestartResource(const char *name) {
-    return alt::ICore::Instance().RestartResource(name)->IsStarted();
+EXPORT void Core_RestartResource(const char *name) {
+    alt::ICore::Instance().RestartResource(name);
 }
 
 EXPORT void Core_SetSyncedMetaData(const char *key, void *val) {
@@ -592,8 +592,8 @@ EXPORT void Core_SetPassword(const char *password) {
     alt::ICore::Instance().SetPassword(password);
 }
 
-EXPORT unsigned int Core_GetSDKVersion() {
-    return alt::ICore::SDK_VERSION;
+EXPORT const char *Core_GetSDKHash() {
+    return ALT_SDK_VERSION;
 }
 
 EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius) {
