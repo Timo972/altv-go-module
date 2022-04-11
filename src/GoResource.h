@@ -40,6 +40,7 @@
 #include "events/ConnectionQueueAddEvent.h"
 #include "events/ConnectionQueueRemoveEvent.h"
 #include "events/ServerStartedEvent.h"
+#include "events/LocalSyncedMetaDataChangeEvent.h"
 
 namespace Go
 {
