@@ -159,7 +159,7 @@ EXPORT RGBA Checkpoint_GetColor(void *c)
 EXPORT Position Checkpoint_GetNextPosition(void *c)
 {
     auto checkpoint = reinterpret_cast<alt::ICheckpoint*>(c);
-    auto pos = checkpoint->GetPosition();
+    auto pos = checkpoint->GetNextPosition();
 
     Position position;
     position.x = pos.x;

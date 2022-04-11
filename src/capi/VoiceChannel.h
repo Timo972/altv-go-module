@@ -24,6 +24,9 @@ extern "C"
     EXPORT int VoiceChannel_IsPlayerMuted(void *v, void *p);
     EXPORT void VoiceChannel_MutePlayer(void *v, void *p);
     EXPORT void VoiceChannel_UnmutePlayer(void *v, void *p);
+
+    EXPORT unsigned long long VoiceChannel_GetPlayerCount(void *v);
+    EXPORT Array VoiceChannel_GetPlayers(void *v);
 #ifdef __cplusplus
 }
 #endif
