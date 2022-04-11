@@ -12,7 +12,7 @@ Go::Runtime *Go::Runtime::GetInstance() {
 
 alt::IResource::Impl *Go::Runtime::CreateImpl(alt::IResource *impl) {
     auto resource = new Go::Resource(this, impl);
-    _resources.push_back({{impl->GetName().CStr(), resource}});
+    _resources.push_back({{impl->GetName().c_str(), resource}});
 
     return resource;
 }

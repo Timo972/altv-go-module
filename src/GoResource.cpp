@@ -4,7 +4,7 @@ Go::Resource::Resource(Go::Runtime *runtime, alt::IResource *resource) : _runtim
 
 bool Go::Resource::Start()
 {
-    Module = LOAD_LIB((_resource->GetPath().ToString() + SEPARATOR + _resource->GetMain().ToString()).c_str());
+    Module = LOAD_LIB((_resource->GetPath() + SEPARATOR + _resource->GetMain()).c_str());
     if (Module == nullptr)
     {
         alt::ICore::Instance()
@@ -13,8 +13,8 @@ bool Go::Resource::Start()
         return false;
     }
 
-    auto resourceName = _resource->GetName().CStr();
-    auto resourcePath = _resource->GetPath().CStr();
+    auto resourceName = _resource->GetName().c_str();
+    auto resourcePath = _resource->GetPath().c_str();
     auto go = GET_FUNC(Module, "initGoResource", void (*)(alt::IResource * resourcePtr, const char *resourceName, const char *ResourcePath));
     if (go == nullptr)
     {
@@ -94,7 +94,7 @@ bool Go::Resource::OnEvent(const alt::CEvent *ev)
         return false;
     }
 
-    NotifyEvent(ev, _resource->GetName().CStr());
+    NotifyEvent(ev, _resource->GetName().c_str());
     return true;
 }
 
