@@ -179,6 +179,55 @@ EXPORT int Vehicle_IsFrozen(void *v);
 EXPORT void Vehicle_SetFrozen(void *v, int state);
 EXPORT int Vehicle_HasCollision(void *v);
 EXPORT void Vehicle_SetCollision(void *v, int state);
+
+EXPORT void Vehicle_LoadDamageDataFromBase64(void *v, const char *base64);
+EXPORT void Vehicle_LoadScriptDataFromBase64(void *v, const char *base64);
+EXPORT void Vehicle_LoadGameStateFromBase64(void *v, const char *base64);
+EXPORT void Vehicle_LoadHealthDataFromBase64(void *v, const char *base64);
+EXPORT int Vehicle_IsDriftMode(void *v);
+EXPORT void Vehicle_SetDriftMode(void *v, int state);
+
+EXTERN int Vehicle_IsTrainMissionTrain(void *v);
+EXTERN void Vehicle_SetTrainMissionTrain(void *v, int value);
+EXTERN char Vehicle_GetTrainTrackId(void *v);
+EXTERN void Vehicle_SetTrainTrackId(void *v, char trackId);
+EXTERN void *Vehicle_GetTrainEngineId(void *v);
+EXTERN void Vehicle_SetTrainEngineId(void *v, void *e);
+EXTERN char Vehicle_GetTrainConfigIndex(void *v);
+EXTERN void Vehicle_SetTrainConfigIndex(void *v, char trainConfigIndex);
+EXTERN float Vehicle_GetTrainDistanceFromEngine(void *v);
+EXTERN void Vehicle_SetTrainDistanceFromEngine(void *v, float distanceFromEngine);
+EXTERN int Vehicle_IsTrainEngine(void *v);
+EXTERN void Vehicle_SetTrainIsEngine(void *v, int isEngine);
+EXTERN int Vehicle_IsTrainCaboose(void *v);
+EXTERN void Vehicle_SetTrainIsCaboose(void *v, int isCaboose);
+EXTERN int Vehicle_GetTrainDirection(void *v);
+EXTERN void Vehicle_SetTrainDirection(void *v, int direction);
+EXTERN int Vehicle_HasTrainPassengerCarriages(void *v);
+EXTERN void Vehicle_SetTrainHasPassengerCarriages(void *v, int hasPassengerCarriages);
+EXTERN int Vehicle_GetTrainRenderDerailed(void *v);
+EXTERN void Vehicle_SetTrainRenderDerailed(void *v, int renderDerailed);
+EXTERN int Vehicle_GetTrainForceDoorsOpen(void *v);
+EXTERN void Vehicle_SetTrainForceDoorsOpen(void *v, int forceDoorsOpen);
+EXTERN float Vehicle_GetTrainCruiseSpeed(void *v);
+EXTERN void Vehicle_SetTrainCruiseSpeed(void *v, float cruiseSpeed);
+EXTERN char Vehicle_GetTrainCarriageConfigIndex(void *v);
+EXTERN void Vehicle_SetTrainCarriageConfigIndex(void *v, char carriageConfigIndex);
+EXTERN void *Vehicle_GetTrainLinkedToBackwardId(void *v);
+EXTERN void Vehicle_SetTrainLinkedToBackwardId(void *v, void *e);
+EXTERN void *Vehicle_GetTrainLinkedToForwardId(void *v);
+EXTERN void Vehicle_SetTrainLinkedToForwardId(void *v, void *e);
+EXTERN void Vehicle_SetTrainUnk1(void *v, int unk1);
+EXTERN int Vehicle_GetTrainUnk1(void *v);
+EXTERN void Vehicle_SetTrainUnk2(void *v, int unk2);
+EXTERN int Vehicle_GetTrainUnk2(void *v);
+EXTERN void Vehicle_SetTrainUnk3(void *v, int unk3);
+EXTERN int Vehicle_GetTrainUnk3(void *v);
+
+EXTERN int Vehicle_IsBoatAnchorActive(void *v);
+EXTERN void Vehicle_SetBoatAnchorActive(void *v, int state);
+
+EXTERN int Vehicle_SetSearchLight(void *v, int state, void *e);
 #ifdef __cplusplus
 }
 #endif

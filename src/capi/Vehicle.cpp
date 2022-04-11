@@ -1114,3 +1114,278 @@ EXPORT void Vehicle_SetCollision(void *v, int state)
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
     vehicle->SetCollision(state);
 }
+
+EXPORT void Vehicle_LoadDamageDataFromBase64(void *v, const char *base64)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->LoadDamageDataFromBase64(base64);
+}
+
+EXPORT void Vehicle_LoadScriptDataFromBase64(void *v, const char *base64)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->LoadScriptDataFromBase64(base64);
+}
+
+EXPORT void Vehicle_LoadGameStateFromBase64(void *v, const char *base64)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->LoadGameStateFromBase64(base64);
+}
+
+EXPORT void Vehicle_LoadHealthDataFromBase64(void *v, const char *base64)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->LoadHealthDataFromBase64(base64);
+}
+
+EXPORT int Vehicle_IsDriftMode(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->IsDriftMode();
+}
+
+EXPORT void Vehicle_SetDriftMode(void *v, int state)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetDriftMode(state);
+}
+
+EXTERN int Vehicle_IsTrainMissionTrain(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->IsTrainMissionTrain();
+}
+
+EXTERN void Vehicle_SetTrainMissionTrain(void *v, int value)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainMissionTrain(value);
+}
+
+EXTERN char Vehicle_GetTrainTrackId(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainTrackId();
+}
+
+EXTERN void Vehicle_SetTrainTrackId(void *v, char trackId)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainTrackId(trackId);
+}
+
+EXTERN void *Vehicle_GetTrainEngineId(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainEngineId().Get();
+}
+
+EXTERN void Vehicle_SetTrainEngineId(void *v, void *e)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    auto engine = reinterpret_cast<alt::IVehicle*>(e);
+    vehicle->SetTrainEngineId(engine);
+}
+
+EXTERN char Vehicle_GetTrainConfigIndex(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainConfigIndex();
+}
+
+EXTERN void Vehicle_SetTrainConfigIndex(void *v, char trainConfigIndex)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainConfigIndex(trainConfigIndex);
+}
+
+EXTERN float Vehicle_GetTrainDistanceFromEngine(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainDistanceFromEngine();
+}
+
+EXTERN void Vehicle_SetTrainDistanceFromEngine(void *v, float distanceFromEngine)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainDistanceFromEngine(distanceFromEngine);
+}
+
+EXTERN int Vehicle_IsTrainEngine(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->IsTrainEngine();
+}
+
+EXTERN void Vehicle_SetTrainIsEngine(void *v, int isEngine)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainIsEngine(isEngine);
+}
+
+EXTERN int Vehicle_IsTrainCaboose(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->IsTrainCaboose();
+}
+
+EXTERN void Vehicle_SetTrainIsCaboose(void *v, int isCaboose)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainIsCaboose(isCaboose);
+}
+
+EXTERN int Vehicle_GetTrainDirection(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainDirection();
+}
+
+EXTERN void Vehicle_SetTrainDirection(void *v, int direction)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainDirection(direction);
+}
+
+EXTERN int Vehicle_HasTrainPassengerCarriages(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->HasTrainPassengerCarriages();
+}
+
+EXTERN void Vehicle_SetTrainHasPassengerCarriages(void *v, int hasPassengerCarriages)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainHasPassengerCarriages(hasPassengerCarriages);
+}
+
+EXTERN int Vehicle_GetTrainRenderDerailed(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainRenderDerailed();
+}
+
+EXTERN void Vehicle_SetTrainRenderDerailed(void *v, int renderDerailed)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainRenderDerailed(renderDerailed);
+}
+
+EXTERN int Vehicle_GetTrainForceDoorsOpen(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainForceDoorsOpen();
+}
+
+EXTERN void Vehicle_SetTrainForceDoorsOpen(void *v, int forceDoorsOpen)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainForceDoorsOpen(forceDoorsOpen);
+}
+
+EXTERN float Vehicle_GetTrainCruiseSpeed(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainCruiseSpeed();
+}
+
+EXTERN void Vehicle_SetTrainCruiseSpeed(void *v, float cruiseSpeed)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainCruiseSpeed(cruiseSpeed);
+}
+
+EXTERN char Vehicle_GetTrainCarriageConfigIndex(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainCarriageConfigIndex();
+}
+
+EXTERN void Vehicle_SetTrainCarriageConfigIndex(void *v, char carriageConfigIndex)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainCarriageConfigIndex(carriageConfigIndex);
+}
+
+EXTERN void *Vehicle_GetTrainLinkedToBackwardId(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainLinkedToBackwardId().Get();
+}
+
+EXTERN void Vehicle_SetTrainLinkedToBackwardId(void *v, void *e)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    auto train = reinterpret_cast<alt::IVehicle*>(e);
+    vehicle->SetTrainLinkedToBackwardId(train);
+}
+
+EXTERN void *Vehicle_GetTrainLinkedToForwardId(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainLinkedToForwardId().Get();
+}
+
+EXTERN void Vehicle_SetTrainLinkedToForwardId(void *v, void *e)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    auto train = reinterpret_cast<alt::IVehicle*>(e);
+    vehicle->SetTrainLinkedToForwardId(train);
+}
+
+EXTERN void Vehicle_SetTrainUnk1(void *v, int unk1)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainUnk1(unk1);
+}
+
+EXTERN int Vehicle_GetTrainUnk1(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainUnk1();
+}
+
+EXTERN void Vehicle_SetTrainUnk2(void *v, int unk2)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainUnk2(unk2);
+}
+
+EXTERN int Vehicle_GetTrainUnk2(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainUnk2();
+}
+
+EXTERN void Vehicle_SetTrainUnk3(void *v, int unk3)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetTrainUnk3(unk3);
+}
+
+EXTERN int Vehicle_GetTrainUnk3(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->GetTrainUnk3();
+}
+
+
+EXTERN int Vehicle_IsBoatAnchorActive(void *v)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    return vehicle->IsBoatAnchorActive();
+}
+
+EXTERN void Vehicle_SetBoatAnchorActive(void *v, int state)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    vehicle->SetBoatAnchorActive(state);
+}
+
+EXTERN int Vehicle_SetSearchLight(void *v, int state, void *e)
+{
+    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
+    auto target = reinterpret_cast<alt::IVehicle*>(e);
+    return vehicle->SetSearchLight(state, target);
+}
