@@ -13,7 +13,7 @@ void Go::ServerScriptEvent::Call(const alt::CEvent *ev) {
     }
 
     auto event = dynamic_cast<const alt::CServerScriptEvent*>(ev);
-    auto name = event->GetName().CStr();
+    auto name = event->GetName().c_str();
     const auto& args = event->GetArgs();
     auto size = args.GetSize();
 

@@ -14,7 +14,7 @@ void Go::PlayerDisconnectEvent::Call(const alt::CEvent *ev)
 
     auto event = dynamic_cast<const alt::CPlayerDisconnectEvent *>(ev);
     auto player = event->GetTarget().Get();
-    auto reason = event->GetReason();
+    auto reason = event->GetReason().c_str();
 
-    call(player, reason.CStr());
+    call(player, reason);
 }

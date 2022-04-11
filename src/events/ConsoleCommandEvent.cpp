@@ -13,10 +13,10 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
     }
 
     auto event = dynamic_cast<const alt::CConsoleCommandEvent *>(ev);
-    auto name = event->GetName();
+    auto name = event->GetName().c_str();
     auto args = event->GetArgs();
 
-    auto size = args.GetSize();
+    auto size = args.size();
 
 #ifdef _WIN32
     auto constArgs = new const char* [size];
@@ -25,10 +25,10 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
 #endif
 
     for (uint64_t i = 0; i < size; i++) {
-        constArgs[i] = args[i].CStr();
+        constArgs[i] = args[i].c_str();
     }
 
-    call(name.CStr(), constArgs, size);
+    call(name, constArgs, size);
 
 #ifdef _WIN32
     delete[] constArgs;

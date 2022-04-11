@@ -398,7 +398,7 @@ EXPORT unsigned long Vehicle_GetNumberplateIndex(void *v)
 EXPORT const char* Vehicle_GetNumberplateText(void *v)
 {
    auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-   return vehicle->GetNumberplateText().CStr();
+   return vehicle->GetNumberplateText().c_str();
 }
 
 EXPORT unsigned long Vehicle_GetWindowTint(void *v)
@@ -474,7 +474,7 @@ EXPORT unsigned long Vehicle_GetRoofLivery(void *v)
 EXPORT const char *Vehicle_GetAppearanceDataBase64(void *v)
 {
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-    return vehicle->GetAppearanceDataBase64().CStr();
+    return vehicle->GetAppearanceDataBase64().c_str();
 }
 
 EXPORT int Vehicle_IsEngineOn(void *v)
@@ -558,7 +558,7 @@ EXPORT float Vehicle_GetLightsMultiplier(void *v)
 EXPORT const char* Vehicle_GetGameStateBase64(void *v)
 {
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-    return vehicle->GetGameStateBase64().CStr();
+    return vehicle->GetGameStateBase64().c_str();
 }
 
 EXPORT long Vehicle_GetEngineHealth(void *v)
@@ -630,7 +630,7 @@ EXPORT unsigned long Vehicle_GetBodyAdditionalHealth(void *v)
 EXPORT const char* Vehicle_GetHealthDataBase64(void *v)
 {
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-    return vehicle->GetHealthDataBase64().CStr();
+    return vehicle->GetHealthDataBase64().c_str();
 }
 
 EXPORT unsigned long Vehicle_GetPartDamageLevel(void *v, unsigned int partId)
@@ -690,7 +690,7 @@ EXPORT unsigned long Vehicle_GetBumperDamageLevel(void *v, unsigned int bumperId
 EXPORT const char* Vehicle_GetDamageDataBase64(void *v)
 {
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-    return vehicle->GetDamageDataBase64().CStr();
+    return vehicle->GetDamageDataBase64().c_str();
 }
 
 EXPORT int Vehicle_IsManualEngineControl(void *v)
@@ -702,7 +702,7 @@ EXPORT int Vehicle_IsManualEngineControl(void *v)
 EXPORT const char* Vehicle_GetScriptDataBase64(void *v)
 {
     auto vehicle = reinterpret_cast<alt::IVehicle*>(v);
-    return vehicle->GetScriptDataBase64().CStr();
+    return vehicle->GetScriptDataBase64().c_str();
 }
 
 EXPORT void Vehicle_ToggleExtra(void *v, unsigned int extraID, int state)

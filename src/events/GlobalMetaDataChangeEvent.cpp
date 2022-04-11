@@ -13,7 +13,7 @@ void Go::GlobalMetaDataChangeEvent::Call(const alt::CEvent *ev)
     }
 
     auto event = dynamic_cast<const alt::CGlobalMetaDataChangeEvent *>(ev);
-    auto key = event->GetKey().CStr();
+    auto key = event->GetKey().c_str();
     auto newValueMeta = event->GetVal();
     auto oldValueMeta = event->GetOldVal();
 

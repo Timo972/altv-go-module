@@ -15,7 +15,7 @@ void Go::ResourceErrorEvent::Call(const alt::CEvent *ev)
     auto event = dynamic_cast<const alt::CResourceErrorEvent *>(ev);
     auto resource = event->GetResource();
 
-    auto name = resource->GetName().CStr();
+    auto name = resource->GetName().c_str();
 
     call(name);
 }

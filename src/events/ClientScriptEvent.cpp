@@ -14,7 +14,7 @@ void Go::ClientScriptEvent::Call(const alt::CEvent *ev) {
 
     auto event = dynamic_cast<const alt::CClientScriptEvent*>(ev);
     auto player = event->GetTarget().Get();
-    auto name = event->GetName().CStr();
+    auto name = event->GetName().c_str();
     const auto& args = event->GetArgs();
     auto size = args.GetSize();
 

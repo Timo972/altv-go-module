@@ -15,7 +15,7 @@ void Go::ResourceStartEvent::Call(const alt::CEvent *ev)
     auto event = dynamic_cast<const alt::CResourceStartEvent *>(ev);
     auto resource = event->GetResource();
 
-    auto name = resource->GetName().CStr();
+    auto name = resource->GetName().c_str();
 
     call(name);
 }

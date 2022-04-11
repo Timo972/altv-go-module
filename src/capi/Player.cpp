@@ -3,7 +3,7 @@
 EXPORT const char *Player_GetName(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-    return player->GetName().CStr();
+    return player->GetName().c_str();
 }
 
 EXPORT int Player_HasMetaData(void* base, const char *key)
@@ -399,7 +399,7 @@ EXPORT unsigned long Player_GetPing(void *p)
 EXPORT const char* Player_GetIP(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
-    return player->GetIP().CStr();
+    return player->GetIP().c_str();
 }
 
 EXPORT unsigned long long Player_GetSocialID(void *p)
@@ -423,7 +423,7 @@ EXPORT unsigned long long Player_GetHwidExHash(void *p)
 EXPORT const char* Player_GetAuthToken(void *p)
 {
     auto player = reinterpret_cast<alt::IPlayer*>(p);
-    return player->GetAuthToken().CStr();
+    return player->GetAuthToken().c_str();
 }
 
 EXPORT void Player_SetMaxArmour(void *p, unsigned int armour)
