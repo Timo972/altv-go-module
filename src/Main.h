@@ -119,4 +119,8 @@ typedef struct headOverlay {
     unsigned char secondColorIndex = 0;
 } HeadOverlay;
 
+typedef struct vector2 {
+    float x;
+    float y;
+} Vector2;
 #include "SDK.h"
