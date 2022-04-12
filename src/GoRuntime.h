@@ -29,6 +29,10 @@ namespace Go {
 
         ConnectionInfo GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info);
 
+        rapidjson::Document SerializeConfigNode(alt::config::Node node);
+        const char *SerializeConfig(alt::config::Node rootNode);
+
+        // Array helper stuff
         template<class ClassInstance>
         Array CreatePointerArray(alt::Array<alt::Ref<ClassInstance>> objects) {
             Array arr;

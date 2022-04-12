@@ -1,5 +1,7 @@
 #include "GoRuntime.h"
 #include "GoResource.h"
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 Go::Runtime *Go::Runtime::Instance = nullptr;
 
@@ -145,4 +147,65 @@ ConnectionInfo Go::Runtime::GetConnectionInfo(alt::Ref<alt::IConnectionInfo> inf
     conn.socialID = info->GetSocialId();
 
     return conn;
+}
+
+rapidjson::Document Go::Runtime::SerializeConfigNode(alt::config::Node node) {
+    alt::config::Node::Type type = node.GetType();
+    rapidjson::Document doc;
+
+    if (type == alt::config::Node::Type::DICT) {
+        auto dict = node.ToDict();
+        for (auto it = dict.begin(); it != dict.end(); ++it) {
+            auto key = it->first;
+            auto value = SerializeConfigNode(it->second);
+
+            doc.AddMember(rapidjson::Value(key.c_str(), key.size()), value, doc.GetAllocator());
+        }
+    } else if (type == alt::config::Node::Type::LIST) {
+        auto list = node.ToList();
+
+        for (auto it = list.begin(); it != list.end(); ++it) {
+            auto value = SerializeConfigNode(*it);
+
+            doc.PushBack(value.Move(), doc.GetAllocator());
+        }
+    } else if (type == alt::config::Node::Type::SCALAR) {
+        for (uint8_t i = 0; i < 3; i++) {
+            try {
+                if (i == 0) {
+                    //doc.Bool(node.ToBool());
+                    doc.SetBool(node.ToBool());
+                } else if (i == 1) {
+                    //doc.Double(node.ToNumber());
+                    doc.SetDouble(node.ToNumber());
+                } else if (i == 2) {
+                    auto str = node.ToString();
+                    //doc.String(str.c_str(), str.size(), true);
+                    doc.SetString(str.c_str(), str.size());
+                }
+            } catch (...) {
+                continue;
+            }
+        }
+
+    }
+
+    return doc;
+}
+
+const char *Go::Runtime::SerializeConfig(alt::config::Node rootNode) {
+    if (!rootNode.IsDict()) {
+        return "{}";
+    }
+
+    auto root = rootNode.ToDict();
+
+    rapidjson::Document doc = SerializeConfigNode(rootNode);
+
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+
+    doc.Accept(writer);
+
+    return buffer.GetString();
 }
