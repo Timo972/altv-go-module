@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_target_properties(PROPERTIES PREFIX "")
 
+set(RAPIDJSON_HAS_STDSTRING ON)
+
 file(GLOB_RECURSE PROJECT_SOURCE_FILES "src/*.h" "src/*.hpp" "src/*.cpp"
         "src/events/*.h" "src/events/*.hpp" "src/events/*.cpp")
 

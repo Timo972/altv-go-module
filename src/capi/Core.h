@@ -31,7 +31,7 @@ EXPORT unsigned long long Core_GetMValueUInt(void *val);
 EXPORT double Core_GetMValueDouble(void *val);
 EXPORT const char *Core_GetMValueString(void *val);
 EXPORT Entity Core_GetMValueBaseObject(void *val);
-EXPORT Position Core_GetMValueVector2(void *val);
+EXPORT Vector2 Core_GetMValueVector2(void *val);
 EXPORT Position Core_GetMValueVector3(void *val);
 EXPORT RGBA Core_GetMValueRGBA(void *val);
 EXPORT Array Core_GetMValueByteArray(void *val);
@@ -80,6 +80,14 @@ EXPORT void *Core_CreatePointBlipPosition(float x, float y, float z);
 EXPORT void *Core_CreatePointBlipEntity(Entity entity);
 EXPORT void *Core_CreateAreaBlip(float x, float y, float z, float width, float height);
 EXPORT void *Core_CreateRadiusBlip(float x, float y, float z, float radius);
+EXPORT void *Core_CreateColShapePolygon(float minZ, float maxZ, Array points);
+EXPORT Array Core_GetBlips();
+EXPORT Array Core_GetAllResources();
+EXPORT const char *Core_StringToSHA256(const char *str);
+EXPORT void Core_StopServer();
+EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash);
+EXPORT const char *Core_GetServerConfig();
+EXPORT unsigned long long Core_HashServerPassword(const char *password);
 #ifdef __cplusplus
 }
 #endif

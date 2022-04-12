@@ -1,4 +1,5 @@
 #include "VoiceChannel.h"
+#include "GoRuntime.h"
 
 EXPORT int VoiceChannel_GetType(void *c) {
     auto channel = reinterpret_cast<alt::IVoiceChannel *>(c);
@@ -103,19 +104,5 @@ EXPORT Array VoiceChannel_GetPlayers(void *v) {
     auto channel = reinterpret_cast<alt::IVoiceChannel *>(v);
     auto players = channel->GetPlayers();
 
-    Array arr;
-    arr.size = players.size();
-
-#ifdef _WIN32
-    auto entityRefs = new void *[arr.size];
-#else
-    void *entityRefs[arr.size];
-#endif
-    for (uint64_t i = 0; i < arr.size; i++) {
-        entityRefs[i] = players[i].Get();
-    }
-
-    arr.array = entityRefs;
-
-    return arr;
+    return Go::Runtime::GetInstance()->CreatePointerArray(players);
 }

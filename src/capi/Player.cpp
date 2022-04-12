@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "GoRuntime.h"
 
 EXPORT const char *Player_GetName(void *p) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
@@ -197,23 +198,7 @@ EXPORT int Player_HasWeaponComponent(void *p, unsigned long weapon, unsigned lon
 EXPORT Array Player_GetCurrentWeaponComponents(void *p) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
     auto components = player->GetCurrentWeaponComponents();
-
-    auto size = components.GetSize();
-#ifdef _WIN32
-    auto comps = new unsigned int[size];
-    //unsigned int comps[size];
-#else
-    unsigned int comps[size];
-#endif
-    for (uint64_t i = 0; i < size; i++) {
-        comps[i] = components[i];
-    }
-
-    Array arr;
-    arr.size = size;
-    arr.array = comps;
-
-    return arr;
+    return Go::Runtime::GetInstance()->CreateArray<unsigned int, unsigned int>(components);
 }
 
 EXPORT unsigned int Player_GetWeaponTintIndex(void *p, unsigned long weapon) {
@@ -771,25 +756,7 @@ EXPORT Array Player_GetWeapons(void *p) {
         Weapon w;
         w.hash = weapon.hash;
         w.tintIndex = weapon.tintIndex;
-
-        // convert components to c array
-        auto compsSize = weapon.components.size();
-#ifdef _WIN32
-        auto ccomps = new unsigned int[compsSize];
-#else
-        unsigned int ccomps[compsSize];
-#endif
-        uint64_t k = 0;
-        for (const auto& comp: weapon.components) {
-            ccomps[k] = comp;
-            k++;
-        }
-
-        Array components;
-        components.size = compsSize;
-        components.array = ccomps;
-
-        w.components = components;
+        w.components = Go::Runtime::GetInstance()->CreateArray<uint32_t, unsigned int>(weapon.components);
 
         cweaps[i] = w;
     }

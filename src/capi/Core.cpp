@@ -272,12 +272,12 @@ EXPORT Entity Core_GetMValueBaseObject(void *val) {
     return e;
 }
 
-EXPORT Position Core_GetMValueVector2(void *val) {
+EXPORT Vector2 Core_GetMValueVector2(void *val) {
     auto mValue = reinterpret_cast<alt::IMValue *>(val);
     auto v2MValue = dynamic_cast<alt::IMValueVector2 *>(mValue);
     auto value = v2MValue->Value();
 
-    Position pos;
+    Vector2 pos;
     pos.x = value[0];
     pos.y = value[1];
 
@@ -338,8 +338,7 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
     return vehicle.Get();
 }
 
-EXPORT void *
-Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r,
+EXPORT void *Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r,
                       unsigned char g, unsigned char b, unsigned char a) {
     alt::RGBA rgba;
     rgba.r = r;
@@ -417,41 +416,13 @@ EXPORT Array Core_GetEntities() {
 
 EXPORT Array Core_GetPlayers() {
     auto entities = alt::ICore::Instance().GetPlayers();
-    Array arr;
-    arr.size = entities.GetSize();
-
-#ifdef _WIN32
-    auto entityRefs = new void *[arr.size];
-#else
-    void *entityRefs[arr.size];
-#endif
-    for (uint64_t i = 0; i < arr.size; i++) {
-        entityRefs[i] = entities[i].Get();
-    }
-
-    arr.array = entityRefs;
-
-    return arr;
+    return Go::Runtime::GetInstance()->CreatePointerArray(entities);
 }
 
 
 EXPORT Array Core_GetVehicles() {
     auto entities = alt::ICore::Instance().GetVehicles();
-    Array arr;
-    arr.size = entities.GetSize();
-
-#ifdef _WIN32
-    auto entityRefs = new void *[arr.size];
-#else
-    void *entityRefs[arr.size];
-#endif
-    for (uint64_t i = 0; i < arr.size; i++) {
-        entityRefs[i] = entities[i].Get();
-    }
-
-    arr.array = entityRefs;
-
-    return arr;
+    return Go::Runtime::GetInstance()->CreatePointerArray(entities);
 }
 
 EXPORT int Core_HasMetaData(const char *key) {
@@ -491,40 +462,12 @@ EXPORT MetaData Core_GetSyncedMetaData(const char *key) {
 
 EXPORT Array Core_GetRequiredPermissions() {
     auto perms = alt::ICore::Instance().GetRequiredPermissions();
-    Array arr;
-    arr.size = perms.GetSize();
-
-#ifdef _WIN32
-    auto permissions = new short[arr.size];
-#else
-    short permissions[arr.size];
-#endif
-    for (uint64_t i = 0; i < arr.size; i++) {
-        permissions[i] = static_cast<short>(perms[i]);
-    }
-
-    arr.array = permissions;
-
-    return arr;
+    return Go::Runtime::GetInstance()->CreateArray<alt::Permission, unsigned char>(perms);
 }
 
 EXPORT Array Core_GetOptionalPermissions() {
-    auto perms = alt::ICore::Instance().GetRequiredPermissions();
-    Array arr;
-    arr.size = perms.GetSize();
-
-#ifdef _WIN32
-    auto permissions = new short[arr.size];
-#else
-    short permissions[arr.size];
-#endif
-    for (uint64_t i = 0; i < arr.size; i++) {
-        permissions[i] = static_cast<short>(perms[i]);
-    }
-
-    arr.array = permissions;
-
-    return arr;
+    auto perms = alt::ICore::Instance().GetOptionalPermissions();
+    return Go::Runtime::GetInstance()->CreateArray<alt::Permission, unsigned char>(perms);
 }
 
 EXPORT void Core_DestroyBaseObject(void *h) {
@@ -559,21 +502,8 @@ EXPORT void Core_DeleteSyncedMetaData(const char *key) {
 
 EXPORT Array Core_GetPlayersByName(const char *name) {
     auto players = alt::ICore::Instance().GetPlayersByName(name);
-    Array arr;
-    arr.size = players.GetSize();
 
-#ifdef _WIN32
-    auto playerRefs = new void *[arr.size];
-#else
-    void* playerRefs[arr.size];
-#endif
-    for (uint64_t i = 0; i < arr.size; i++) {
-        playerRefs[i] = players[i].Get();
-    }
-
-    arr.array = playerRefs;
-
-    return arr;
+    return Go::Runtime::GetInstance()->CreatePointerArray(players);
 }
 
 EXPORT unsigned int Core_GetNetTime() {
@@ -655,11 +585,11 @@ EXPORT void Core_TriggerClientEvent(void *p, const char *ev, CustomData *MValues
 
 EXPORT void Core_TriggerClientEventFor(void **p, unsigned long long clientSize, const char *ev, CustomData *MValues,
                                        unsigned long long size) {
-    alt::Array<alt::Ref<alt::IPlayer>> players;
+    alt::Array <alt::Ref<alt::IPlayer>> players;
 
     for (unsigned long long i = 0; i < clientSize; i++) {
         auto player = reinterpret_cast<alt::IPlayer *>(p[i]);
-        alt::Ref<alt::IPlayer> playerRef(player);
+        alt::Ref <alt::IPlayer> playerRef(player);
 
         players.Push(playerRef);
     }
@@ -676,14 +606,18 @@ EXPORT void Core_TriggerClientEventForAll(const char *ev, CustomData *MValues, u
 }
 
 EXPORT void *Core_CreatePointBlipPosition(float x, float y, float z) {
-    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION,alt::Position(x, y, z));
+    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, alt::Position(x, y, z));
     return blip.Get();
 }
 
-EXPORT void *Core_CreatePointBlipEntity(Entity entity) {
-    // FIXME: Entity struct to alt::IEntity and pass then
-    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, nullptr);
-    return blip.Get();
+EXPORT void *Core_CreatePointBlipEntity(Entity
+entity) {
+// FIXME: Entity struct to alt::IEntity and pass then
+auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, nullptr);
+return blip.
+
+Get();
+
 }
 
 EXPORT void *Core_CreateAreaBlip(float x, float y, float z, float width, float height) {
@@ -698,4 +632,81 @@ EXPORT void *Core_CreateRadiusBlip(float x, float y, float z, float radius) {
     blip->SetScaleXY({radius, radius});
 
     return blip.Get();
+}
+
+EXPORT void *Core_CreateColShapePolygon(float minZ, float maxZ, Array points) {
+    // auto cs = alt::ICore::Instance().CreateColShapePolygon(minZ, maxZ, );
+    // return cs.Get();
+    return nullptr;
+}
+
+EXPORT Array Core_GetBlips() {
+    auto blips = alt::ICore::Instance().GetBlips();
+    return Go::Runtime::GetInstance()->CreatePointerArray(blips);
+}
+
+EXPORT Array Core_GetAllResources() {
+    auto resources = alt::ICore::Instance().GetAllResources();
+    Array arr;
+    arr.size = resources.size();
+
+#ifdef _WIN32
+    auto entityRefs = new void *[arr.size];
+#else
+    void *entityRefs[arr.size];
+#endif
+    for (uint64_t i = 0; i < arr.size; i++) {
+        entityRefs[i] = resources.at(i);
+    }
+
+    arr.array = entityRefs;
+
+    return arr;
+}
+
+EXPORT const char *Core_StringToSHA256(const char *str)
+{
+    return alt::ICore::Instance().StringToSHA256(str).c_str();
+}
+
+EXPORT void Core_StopServer()
+{
+    alt::ICore::Instance().StopServer();
+}
+
+EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash)
+{
+    auto modelInfo = alt::ICore::Instance().GetVehicleModelByHash(hash);
+
+    VehicleModelInfo m;
+
+    m.title = modelInfo.title.c_str();
+    m.modelType = static_cast<unsigned char>(modelInfo.modelType);
+    m.wheelsCount = modelInfo.wheelsCount;
+    m.hasArmoredWindows = modelInfo.hasArmoredWindows;
+    m.primaryColor = modelInfo.primaryColor;
+    m.secondaryColor = modelInfo.secondaryColor;
+    m.pearlColor = modelInfo.pearlColor;
+    m.wheelsColor = modelInfo.wheelsColor;
+    m.interiorColor = modelInfo.interiorColor;
+    m.dashboardColor = modelInfo.dashboardColor;
+
+    m.modKits[0] = modelInfo.modkits[0];
+    m.modKits[1] = modelInfo.modkits[1];
+
+    m.extras = modelInfo.extras;
+    m.defaultExtras = modelInfo.defaultExtras;
+
+    return m;
+}
+
+EXPORT const char *Core_GetServerConfig()
+{
+    auto config = alt::ICore::Instance().GetServerConfig();
+    return Go::Runtime::GetInstance()->SerializeConfig(config);
+}
+
+EXPORT unsigned long long Core_HashServerPassword(const char *password)
+{
+    return alt::ICore::Instance().HashServerPassword(password);
 }

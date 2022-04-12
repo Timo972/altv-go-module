@@ -123,4 +123,23 @@ typedef struct vector2 {
     float x;
     float y;
 } Vector2;
+
+typedef struct vehicleModelInfo {
+   const char *title;
+   unsigned char modelType;
+   unsigned char wheelsCount;
+   // bool
+   unsigned char hasArmoredWindows;
+   unsigned char primaryColor;
+   unsigned char secondaryColor;
+   unsigned char pearlColor;
+   unsigned char wheelsColor;
+   unsigned char interiorColor;
+   unsigned char dashboardColor;
+
+   unsigned short modKits[2];
+   unsigned short extras;
+   unsigned short defaultExtras;
+} VehicleModelInfo;
+
 #include "SDK.h"
