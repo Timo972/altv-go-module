@@ -4,7 +4,7 @@ Go::ConsoleCommandEvent::ConsoleCommandEvent(ModuleLibrary *module) : IEvent(mod
 
 void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altConsoleCommandEvent", void (*)(const char* name, const char* *args, unsigned long long size));
+    static auto call = GET_FUNC(Library, "altConsoleCommandEvent", void (*)(const char* name, Array arr));
 
     if (call == nullptr)
     {
@@ -28,9 +28,14 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
         constArgs[i] = args[i].c_str();
     }
 
-    call(name, constArgs, size);
+    Array arr;
+    arr.size = size;
+    arr.array = constArgs;
 
-#ifdef _WIN32
-    delete[] constArgs;
-#endif
+    call(name, arr);
+
+// freeing is done in altv-go-pkg (convertArray)
+// #ifdef _WIN32
+//     delete[] constArgs;
+// #endif
 }
