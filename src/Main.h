@@ -65,7 +65,7 @@ typedef struct neonState {
 
 typedef struct entity {
     unsigned char Type;
-    const void *Ptr;
+    void *Ptr;
 } Entity;
 
 typedef struct array {

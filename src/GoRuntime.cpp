@@ -209,3 +209,15 @@ const char *Go::Runtime::SerializeConfig(alt::config::Node rootNode) {
 
     return buffer.GetString();
 }
+
+alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
+    auto type = static_cast<alt::IEntity::Type>(entity.Type);
+
+    switch (type) {
+        case alt::IEntity::Type::PLAYER:
+            return reinterpret_cast<alt::IPlayer *>(entity.Ptr);
+
+        case alt::IEntity::Type::VEHICLE:
+            return reinterpret_cast<alt::IVehicle *>(entity.Ptr);
+    }
+}

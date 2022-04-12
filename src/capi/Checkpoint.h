@@ -24,7 +24,7 @@ extern "C"
 
     // ColShape inherited
     EXPORT int Checkpoint_GetColShapeType(void *c);
-    EXPORT int Checkpoint_IsEntityIn(void *c, void *e);
+    EXPORT int Checkpoint_IsEntityIn(void *c, Entity e);
     EXPORT int Checkpoint_IsPointIn(void *c, float x, float y, float z);
     EXPORT void Checkpoint_SetPlayersOnly(void *c, int state);
     EXPORT int Checkpoint_IsPlayersOnly(void *c);

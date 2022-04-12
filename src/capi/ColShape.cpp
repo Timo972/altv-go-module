@@ -1,4 +1,6 @@
 #include "ColShape.h"
+#include "GoRuntime.h"
+
 // BaseObject inherited
 EXPORT int ColShape_GetType(void *c)
 {
@@ -97,10 +99,10 @@ EXPORT int ColShape_GetColShapeType(void *c)
     return static_cast<int>(colShape->GetColshapeType());
 }
 
-EXPORT int ColShape_IsEntityIn(void *c, void *e)
+EXPORT int ColShape_IsEntityIn(void *c, Entity e)
 {
     auto colShape = reinterpret_cast<alt::IColShape*>(c);
-    auto entity = reinterpret_cast<alt::IEntity*>(e);
+    auto entity = Go::Runtime::GetEntityRef(e);
     return colShape->IsEntityIn(entity);
 }
 

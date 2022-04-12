@@ -387,7 +387,7 @@ EXPORT const char *Core_ReadFile(const char *path) {
 EXPORT Entity Core_GetEntityByID(unsigned short id) {
     auto entity = alt::ICore::Instance().GetEntityByID(id);
 
-    return Go::Runtime::GetInstance()->GetEntity(entity);
+    return Go::Runtime::GetEntity(entity);
 }
 
 EXPORT Array Core_GetEntities() {

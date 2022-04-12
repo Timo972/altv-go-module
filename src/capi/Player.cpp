@@ -300,9 +300,10 @@ EXPORT unsigned int Player_GetSeat(void *p) {
     return player->GetSeat();
 }
 
-EXPORT void *Player_GetEntityAimingAt(void *p) {
+EXPORT Entity Player_GetEntityAimingAt(void *p) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-    return player->GetEntityAimingAt().Get();
+    auto entity = player->GetEntityAimingAt();
+    return Go::Runtime::GetEntity(entity);
 }
 
 EXPORT Position Player_GetEntityAimOffset(void *p) {
@@ -499,9 +500,9 @@ EXPORT void Player_ClearProps(void *p, unsigned int component) {
     player->ClearProps(component);
 }
 
-EXPORT int Player_IsEntityInStreamingRange(void *p, void *e) {
+EXPORT int Player_IsEntityInStreamingRange(void *p, Entity e) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-    auto entity = reinterpret_cast<alt::IEntity *>(e);
+    auto entity = Go::Runtime::GetEntityRef(e);
     return player->IsEntityInStreamingRange(entity);
 }
 
@@ -521,10 +522,10 @@ EXPORT void Player_Detach(void *p) {
 }
 
 EXPORT void
-Player_AttachToEntity(void *p, void *e, int otherBoneIndex, int myBoneIndex, Position pos, Rotation rot, int collision,
+Player_AttachToEntity(void *p, Entity e, int otherBoneIndex, int myBoneIndex, Position pos, Rotation rot, int collision,
                       int noFixedRotation) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-    auto entity = reinterpret_cast<alt::IEntity *>(e);
+    auto entity = Go::Runtime::GetEntityRef(e);
     auto position = new alt::Position(pos.x, pos.y, pos.z);
     auto rotation = new alt::Rotation(rot.roll, rot.pitch, rot.yaw);
     player->AttachToEntity(entity, otherBoneIndex, myBoneIndex, *position, *rotation, collision, noFixedRotation);

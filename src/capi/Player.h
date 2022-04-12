@@ -50,7 +50,7 @@ EXPORT Rotation Player_GetHeadRotation(void *p);
 EXPORT int Player_IsInVehicle(void *p);
 EXPORT void *Player_GetVehicle(void *p);
 EXPORT unsigned int Player_GetSeat(void *p);
-EXPORT void *Player_GetEntityAimingAt(void *p);
+EXPORT Entity Player_GetEntityAimingAt(void *p);
 EXPORT Position Player_GetEntityAimOffset(void *p);
 EXPORT int Player_IsFlashlightActive(void *p);
 EXPORT int Player_IsConnected(void *p);
@@ -86,12 +86,12 @@ EXPORT void Player_SetProps(void *p, unsigned int component, unsigned int drawab
 EXPORT void
 Player_SetDlcProps(void *p, unsigned int component, unsigned int drawable, unsigned int texture, unsigned long dlc);
 EXPORT void Player_ClearProps(void *p, unsigned int component);
-EXPORT int Player_IsEntityInStreamingRange(void *p, void *entity);
+EXPORT int Player_IsEntityInStreamingRange(void *p, Entity entity);
 EXPORT unsigned int Player_GetMaxHealth(void *p);
 EXPORT unsigned int Player_GetMaxArmour(void *p);
 EXPORT void Player_Detach(void *p);
 EXPORT void
-Player_AttachToEntity(void *p, void *e, int otherBoneIndex, int myBoneIndex, Position position, Rotation rotation,
+Player_AttachToEntity(void *p, Entity e, int otherBoneIndex, int myBoneIndex, Position position, Rotation rotation,
                       int collision, int noFixedRotation);
 EXPORT void Player_SetVisible(void *p, int toggle);
 EXPORT int Player_GetVisible(void *p);

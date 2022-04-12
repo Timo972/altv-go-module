@@ -31,7 +31,7 @@ EXPORT unsigned long Vehicle_GetModel(void *v);
 
 EXPORT void Vehicle_Detach(void *v);
 EXPORT void
-Vehicle_AttachToEntity(void *v, void *e, int otherBoneIndex, int myBoneIndex, Position position, Rotation rotation,
+Vehicle_AttachToEntity(void *v, Entity e, int otherBoneIndex, int myBoneIndex, Position position, Rotation rotation,
                        int collision, int noFixedRotation);
 EXPORT void Vehicle_SetVisible(void *v, int toggle);
 EXPORT int Vehicle_GetVisible(void *v);
@@ -227,7 +227,7 @@ EXPORT int Vehicle_GetTrainUnk3(void *v);
 EXPORT int Vehicle_IsBoatAnchorActive(void *v);
 EXPORT void Vehicle_SetBoatAnchorActive(void *v, int state);
 
-EXPORT int Vehicle_SetSearchLight(void *v, int state, void *e);
+EXPORT int Vehicle_SetSearchLight(void *v, int state, Entity e);
 #ifdef __cplusplus
 }
 #endif

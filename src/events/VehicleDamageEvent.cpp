@@ -21,7 +21,7 @@ void Go::VehicleDamageEvent::Call(const alt::CEvent *ev)
     auto petrolTankHealthDamage = event->GetPetrolTankHealthDamage();
     auto damageWidth = event->GetDamagedWith();
 
-    Entity e = Go::Runtime::GetInstance()->GetEntity(attacker);
+    Entity e = Go::Runtime::GetEntity(attacker);
 
     call(vehicle, e, bodyHealthDamage, bodyAdditionalHealthDamage, engineHealthDamage, petrolTankHealthDamage, damageWidth);
 }

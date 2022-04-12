@@ -17,7 +17,7 @@ void Go::PlayerDeathEvent::Call(const alt::CEvent *ev)
     auto killer = event->GetKiller();
     auto weapon = event->GetWeapon();
 
-    Entity e = Go::Runtime::GetInstance()->GetEntity(killer);
+    Entity e = Go::Runtime::GetEntity(killer);
 
     call(player, e, weapon);
 }

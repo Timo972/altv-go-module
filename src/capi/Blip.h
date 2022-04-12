@@ -27,7 +27,7 @@ EXPORT int Blip_IsGlobal(void *b);
 EXPORT void *Blip_GetTarget(void *b);
 EXPORT int Blip_IsAttached(void *b);
 EXPORT Entity Blip_AttachedTo(void *b);
-EXPORT void Blip_AttachTo(void *b, void *e);
+EXPORT void Blip_AttachTo(void *b, Entity e);
 EXPORT unsigned char Blip_GetBlipType(void *b);
 
 EXPORT Vector2 Blip_GetScaleXY(void *b);

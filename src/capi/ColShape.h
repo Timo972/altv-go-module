@@ -24,7 +24,7 @@ extern "C"
 
     // ColShape inherited
     EXPORT int ColShape_GetColShapeType(void *c);
-    EXPORT int ColShape_IsEntityIn(void *c, void *e);
+    EXPORT int ColShape_IsEntityIn(void *c, Entity e);
     EXPORT int ColShape_IsPointIn(void *c, float x, float y, float z);
     EXPORT void ColShape_SetPlayersOnly(void *c, int state);
     EXPORT int ColShape_IsPlayersOnly(void *c);

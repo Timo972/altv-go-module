@@ -1,4 +1,5 @@
 #include "Blip.h"
+#include "GoRuntime.h"
 
 // BaseObject inherited
 EXPORT int Blip_GetType(void *c)
@@ -116,10 +117,10 @@ EXPORT Entity Blip_AttachedTo(void *b)
     return e;
 }
 
-EXPORT void Blip_AttachTo(void *b, void *e)
+EXPORT void Blip_AttachTo(void *b, Entity e)
 {
     auto blip = reinterpret_cast<alt::IBlip*>(b);
-    auto entity = reinterpret_cast<alt::IEntity*>(e);
+    auto entity = Go::Runtime::GetEntityRef(e);
     blip->AttachTo(entity);
 }
 

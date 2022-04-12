@@ -21,15 +21,18 @@ namespace Go {
 
         alt::IResource::Impl *GetResource(const std::string &name);
 
-        alt::MValueArgs CreateMValueArgs(CustomData *MValues, unsigned long long size);
+        static alt::MValueArgs CreateMValueArgs(CustomData *MValues, unsigned long long size);
 
         alt::MValue CreateMValueFromJSONValue(rapidjson::Value &value);
 
-        Entity GetEntity(alt::Ref<alt::IEntity> entity);
+        static Entity GetEntity(alt::Ref<alt::IEntity> entity);
 
-        ConnectionInfo GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info);
+        static alt::IEntity *GetEntityRef(Entity entity);
+
+        static ConnectionInfo GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info);
 
         rapidjson::Document SerializeConfigNode(alt::config::Node node);
+
         const char *SerializeConfig(alt::config::Node rootNode);
 
         // Array helper stuff
@@ -101,7 +104,7 @@ namespace Go {
             TargetType cset[size];
 #endif
             uint64_t i = 0;
-            for (const auto& item: set) {
+            for (const auto &item: set) {
                 cset[i] = item;
                 i++;
             }

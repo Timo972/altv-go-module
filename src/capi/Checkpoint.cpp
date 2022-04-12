@@ -1,4 +1,5 @@
 #include "Checkpoint.h"
+#include "GoRuntime.h"
 
 // BaseObject inherited
 EXPORT int Checkpoint_GetType(void *c)
@@ -92,10 +93,10 @@ EXPORT int Checkpoint_GetColShapeType(void *c)
     return static_cast<int>(checkpoint->GetColshapeType());
 }
 
-EXPORT int Checkpoint_IsEntityIn(void *c, void *e)
+EXPORT int Checkpoint_IsEntityIn(void *c, Entity e)
 {
     auto checkpoint = reinterpret_cast<alt::ICheckpoint*>(c);
-    auto entity = reinterpret_cast<alt::IEntity*>(e);
+    auto entity = Go::Runtime::GetEntityRef(e);
     return checkpoint->IsEntityIn(entity);
 }
 
