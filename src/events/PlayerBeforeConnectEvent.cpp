@@ -14,7 +14,7 @@ void Go::PlayerBeforeConnectEvent::Call(const alt::CEvent *ev) {
     auto event = dynamic_cast<const alt::CPlayerBeforeConnectEvent *>(ev);
     auto info = event->GetConnectionInfo();
     auto reason = event->GetReason().c_str();
-    auto conn = Go::Runtime::GetInstance()->GetConnectionInfo(info);
+    auto conn = Go::Runtime::GetConnectionInfo(info);
 
     auto result = std::string(call(conn, reason));
     if (result.empty())

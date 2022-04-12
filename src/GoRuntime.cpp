@@ -219,5 +219,8 @@ alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
 
         case alt::IEntity::Type::VEHICLE:
             return reinterpret_cast<alt::IVehicle *>(entity.Ptr);
+
+        default:
+            return nullptr;
     }
 }

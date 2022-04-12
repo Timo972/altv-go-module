@@ -13,7 +13,7 @@ void Go::ConnectionQueueAddEvent::Call(const alt::CEvent *ev) {
 
     auto event = dynamic_cast<const alt::CConnectionQueueAddEvent *>(ev);
     auto info = event->GetConnectionInfo();
-    auto conn = Go::Runtime::GetInstance()->GetConnectionInfo(info);
+    auto conn = Go::Runtime::GetConnectionInfo(info);
 
     auto result = std::string(call(conn));
     if (result.empty())
