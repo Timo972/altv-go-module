@@ -253,20 +253,17 @@ EXPORT Entity Core_GetMValueBaseObject(void *val) {
     e.Type = static_cast<unsigned char>(type);
 
     if (type == alt::IBaseObject::Type::PLAYER) {
-        auto player = dynamic_cast<alt::IPlayer *>(object.Get());
-        e.Ptr = player;
+        e.Ptr = dynamic_cast<alt::IPlayer *>(object.Get());
     } else if (type == alt::IBaseObject::Type::VEHICLE) {
-        auto veh = dynamic_cast<alt::IVehicle *>(object.Get());
-        e.Ptr = veh;
+        e.Ptr = dynamic_cast<alt::IVehicle *>(object.Get());
     } else if (type == alt::IBaseObject::Type::COLSHAPE) {
-        auto cs = dynamic_cast<alt::IColShape *>(object.Get());
-        e.Ptr = cs;
+        e.Ptr = dynamic_cast<alt::IColShape *>(object.Get());
     } else if (type == alt::IBaseObject::Type::VOICE_CHANNEL) {
-        auto vc = dynamic_cast<alt::IVoiceChannel *>(object.Get());
-        e.Ptr = vc;
+        e.Ptr = dynamic_cast<alt::IVoiceChannel *>(object.Get());
     } else if (type == alt::IBaseObject::Type::CHECKPOINT) {
-        auto cp = dynamic_cast<alt::ICheckpoint *>(object.Get());
-        e.Ptr = cp;
+        e.Ptr = dynamic_cast<alt::ICheckpoint *>(object.Get());
+    } else if (type == alt::IBaseObject::Type::BLIP) {
+        e.Ptr = dynamic_cast<alt::IBlip *>(object.Get());
     }
 
     return e;
