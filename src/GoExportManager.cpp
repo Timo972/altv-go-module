@@ -30,6 +30,10 @@ alt::MValue Go::Function::Call(alt::MValueArgs args) const {
     delete[] mValRefs;
 #endif
 
+    if (returnMetaData.mValue == nullptr) {
+        return alt::ICore::Instance().CreateMValueNone();
+    }
+
     auto returnMValue = reinterpret_cast<alt::IMValue *>(returnMetaData.mValue);
 
     return returnMValue;
