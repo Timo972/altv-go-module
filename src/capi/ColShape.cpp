@@ -72,10 +72,7 @@ EXPORT void ColShape_SetPosition(void *p, float x, float y, float z)
 {
     auto colShape = reinterpret_cast<alt::IColShape*>(p);
 
-    alt::Position position;
-    position.x = x;
-    position.y = y;
-    position.z = z;
+    alt::Position position(x, y, z);
 
     colShape->SetPosition(position);
 }
@@ -110,10 +107,7 @@ EXPORT int ColShape_IsPointIn(void *c, float x, float y, float z)
 {
     auto colShape = reinterpret_cast<alt::IColShape*>(c);
 
-    alt::Position pos;
-    pos.x = x;
-    pos.y = y;
-    pos.z = z;
+    alt::Position pos(x,y,z);
 
     return colShape->IsPointIn(pos);
 }

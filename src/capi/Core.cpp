@@ -189,12 +189,7 @@ EXPORT void *Core_CreateMValueVector3(float x, float y, float z) {
 }
 
 EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
-    alt::RGBA color;
-    color.r = r;
-    color.g = g;
-    color.b = b;
-    color.a = a;
-
+    alt::RGBA color(r, g, b, a);
     auto mValue = alt::ICore::Instance().CreateMValueRGBA(color);
     auto defaultMVal = mValue.As<alt::IMValue>();
     defaultMVal->AddRef();
@@ -321,15 +316,8 @@ EXPORT Array Core_GetMValueByteArray(void *val) {
 
 EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                                 float rotX, float rotY, float rotZ) {
-    alt::Position position;
-    position.x = posX;
-    position.y = posY;
-    position.z = posZ;
-
-    alt::Rotation rotation;
-    rotation.roll = rotX;
-    rotation.pitch = rotY;
-    rotation.yaw = rotZ;
+    alt::Position position(posX, posY, posZ);
+    alt::Rotation rotation(rotX, rotY, rotZ);
 
     auto vehicle = alt::ICore::Instance().CreateVehicle(model, position, rotation);
     return vehicle.Get();
@@ -337,18 +325,13 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
 
 EXPORT void *Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r,
                       unsigned char g, unsigned char b, unsigned char a) {
-    alt::RGBA rgba;
-    rgba.r = r;
-    rgba.g = g;
-    rgba.b = b;
-    rgba.a = a;
-
+    alt::RGBA rgba(r, g, b, a);
     alt::Vector<float, 3, alt::PointLayout> pos;
     pos[0] = x;
     pos[1] = y;
     pos[2] = z;
 
-    auto checkpoint = alt::ICore::Instance().CreateCheckpoint(type, pos, height, radius, rgba);
+    auto checkpoint = alt::ICore::Instance().CreateCheckpoint(type, pos, radius, height, rgba);
     return checkpoint.Get();
 }
 
@@ -516,20 +499,14 @@ EXPORT const char *Core_GetSDKHash() {
 }
 
 EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius) {
-    alt::Position position;
-    position.x = posX;
-    position.y = posY;
-    position.z = posZ;
+    alt::Position position(posX, posY, posZ);
 
     auto colShape = alt::ICore::Instance().CreateColShapeSphere(position, radius);
     return colShape.Get();
 }
 
 EXPORT void *Core_CreateColShapeCircle(float posX, float posY, float posZ, float radius) {
-    alt::Position position;
-    position.x = posX;
-    position.y = posY;
-    position.z = posZ;
+    alt::Position position(posX, posY, posZ);
 
     auto colShape = alt::ICore::Instance().CreateColShapeCircle(position, radius);
     return colShape.Get();
@@ -542,25 +519,15 @@ EXPORT void *Core_CreateColShapeRectangle(float x1, float y1, float x2, float y2
 }
 
 EXPORT void *Core_CreateColShapeCube(float posX1, float posY1, float posZ1, float posX2, float posY2, float posZ2) {
-    alt::Position position;
-    position.x = posX1;
-    position.y = posY1;
-    position.z = posZ1;
-
-    alt::Position position2;
-    position.x = posX2;
-    position.y = posY2;
-    position.z = posZ2;
+    alt::Position position(posX1, posY1, posZ1);
+    alt::Position position2(posX2, posY2, posZ2);
 
     auto colShape = alt::ICore::Instance().CreateColShapeCube(position, position2);
     return colShape.Get();
 }
 
 EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, float radius, float height) {
-    alt::Position position;
-    position.x = posX;
-    position.y = posY;
-    position.z = posZ;
+    alt::Position position(posX, posY, posZ);
 
     auto colShape = alt::ICore::Instance().CreateColShapeCylinder(position, radius, height);
     return colShape.Get();

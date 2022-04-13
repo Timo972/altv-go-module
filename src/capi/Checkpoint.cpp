@@ -66,10 +66,7 @@ EXPORT void Checkpoint_SetPosition(void *p, float x, float y, float z)
 {
     auto checkpoint = reinterpret_cast<alt::ICheckpoint*>(p);
 
-    alt::Position position;
-    position.x = x;
-    position.y = y;
-    position.z = z;
+    alt::Position position(x, y, z);
 
     checkpoint->SetPosition(position);
 }
@@ -104,10 +101,7 @@ EXPORT int Checkpoint_IsPointIn(void *c, float x, float y, float z)
 {
     auto checkpoint = reinterpret_cast<alt::ICheckpoint*>(c);
 
-    alt::Position pos;
-    pos.x = x;
-    pos.y = y;
-    pos.z = z;
+    alt::Position pos(x,y,z);
 
     return checkpoint->IsPointIn(pos);
 }
@@ -191,12 +185,7 @@ EXPORT void Checkpoint_SetRadius(void *c, float radius)
 EXPORT void Checkpoint_SetColor(void *c, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     auto checkpoint = reinterpret_cast<alt::ICheckpoint*>(c);
-
-    alt::RGBA color;
-    color.r = r;
-    color.b = b;
-    color.g = g;
-    color.a = a;
+    alt::RGBA color(r, g, b, a);
 
     checkpoint->SetColor(color);
 }
@@ -205,10 +194,7 @@ EXPORT void Checkpoint_SetNextPosition(void *c, float x, float y, float z)
 {
     auto checkpoint = reinterpret_cast<alt::ICheckpoint*>(c);
 
-    alt::Position pos;
-    pos.x = x;
-    pos.y = y;
-    pos.z = z;
+    alt::Position pos(x,y,z);
 
     checkpoint->SetNextPosition(pos);
 }

@@ -66,10 +66,7 @@ EXPORT void Blip_SetPosition(void *p, float x, float y, float z)
 {
     auto blip = reinterpret_cast<alt::IBlip*>(p);
 
-    alt::Position position;
-    position.x = x;
-    position.y = y;
-    position.z = z;
+    alt::Position position(x, y, z);
 
     blip->SetPosition(position);
 }

@@ -113,10 +113,7 @@ EXPORT Position Player_GetPosition(void *p) {
 EXPORT void Player_SetPosition(void *p, float x, float y, float z) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
 
-    alt::Position position;
-    position.x = x;
-    position.y = y;
-    position.z = z;
+    alt::Position position(x,y,z);
 
     player->SetPosition(position);
 }
@@ -136,10 +133,7 @@ EXPORT Rotation Player_GetRotation(void *p) {
 EXPORT void Player_SetRotation(void *p, float roll, float pitch, float yaw) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
 
-    alt::Rotation rotation;
-    rotation.roll = roll;
-    rotation.pitch = pitch;
-    rotation.yaw = yaw;
+    alt::Rotation rotation(roll, pitch, yaw);
 
     player->SetRotation(rotation);
 }
@@ -156,11 +150,7 @@ EXPORT void Player_SetDimension(void *p, long dimension) {
 
 EXPORT void Player_Spawn(void *p, float x, float y, float z, unsigned long delay) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-
-    alt::Position position;
-    position.x = x;
-    position.y = y;
-    position.z = z;
+    alt::Position position(x,y,z);
 
     player->Spawn(position, delay);
 }

@@ -115,10 +115,7 @@ EXPORT Position Vehicle_GetPosition(void *v) {
 EXPORT void Vehicle_SetPosition(void *v, float x, float y, float z) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(v);
 
-    alt::Position pos;
-    pos.x = x;
-    pos.y = y;
-    pos.z = z;
+    alt::Position pos(x,y,z);
 
     vehicle->SetPosition(pos);
 }
@@ -137,11 +134,7 @@ EXPORT Rotation Vehicle_GetRotation(void *v) {
 
 EXPORT void Vehicle_SetRotation(void *v, float roll, float pitch, float yaw) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(v);
-
-    alt::Rotation rot;
-    rot.roll = roll;
-    rot.pitch = pitch;
-    rot.yaw = yaw;
+    alt::Rotation rot(roll, pitch, yaw);
 
     vehicle->SetRotation(rot);
 }
@@ -636,13 +629,7 @@ EXPORT void Vehicle_SetPrimaryColor(void *v, unsigned int color) {
 
 EXPORT void Vehicle_SetPrimaryColorRGB(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(v);
-
-    alt::RGBA rgba;
-
-    rgba.r = r;
-    rgba.g = g;
-    rgba.b = b;
-    rgba.a = a;
+    alt::RGBA rgba(r,g,b,a);
 
     vehicle->SetPrimaryColorRGB(rgba);
 }
@@ -654,13 +641,7 @@ EXPORT void Vehicle_SetSecondaryColor(void *v, unsigned int color) {
 
 EXPORT void Vehicle_SetSecondaryColorRGB(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(v);
-
-    alt::RGBA rgba;
-
-    rgba.r = r;
-    rgba.g = g;
-    rgba.b = b;
-    rgba.a = a;
+    alt::RGBA rgba(r,g,b,a);
 
     vehicle->SetSecondaryColorRGB(rgba);
 }
@@ -687,13 +668,7 @@ EXPORT void Vehicle_SetDashboardColor(void *v, unsigned int color) {
 
 EXPORT void Vehicle_SetTireSmokeColor(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(v);
-
-    alt::RGBA rgba;
-
-    rgba.r = r;
-    rgba.g = g;
-    rgba.b = b;
-    rgba.a = a;
+    alt::RGBA rgba(r,g,b,a);
 
     vehicle->SetTireSmokeColor(rgba);
 }
@@ -745,13 +720,7 @@ EXPORT void Vehicle_SetNeonActive(void *v, int left, int right, int front, int b
 
 EXPORT void Vehicle_SetNeonColor(void *v, unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(v);
-
-    alt::RGBA rgba;
-
-    rgba.r = r;
-    rgba.g = g;
-    rgba.b = b;
-    rgba.a = a;
+    alt::RGBA rgba(r,g,b,a);
 
     vehicle->SetNeonColor(rgba);
 }
