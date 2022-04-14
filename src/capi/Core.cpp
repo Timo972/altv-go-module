@@ -63,7 +63,7 @@ EXPORT void *Core_CreateMValueString(const char *val) {
     return defaultMVal.Get();
 }
 
-EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size) {
+/*EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size) {
     auto value = alt::ICore::Instance().CreateMValueList(size);
 
     rapidjson::Document document;
@@ -85,9 +85,8 @@ EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size) {
     }
 
     return value.Get();
-}
+}*/
 
-/*
 EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
 {
     auto value = alt::ICore::Instance().CreateMValueList(size);
@@ -96,7 +95,7 @@ EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
 
     for (unsigned long long i = 0; i < size; i++) {
         auto val = MValues[i];
-        value->Push(val);
+        value->Set(i, val);
     }
 
     auto defaultMVal = value->Clone();
@@ -104,7 +103,6 @@ EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
 
     return defaultMVal.Get();
 }
-*/
 
 EXPORT void *Core_CreateMValueDict(const char **keys, void **values, unsigned long long size) {
     auto value = alt::ICore::Instance().CreateMValueDict();
@@ -314,6 +312,72 @@ EXPORT Array Core_GetMValueByteArray(void *val) {
     return byteArray;
 }
 
+EXPORT Array Core_GetMValueList(void *val) {
+    auto mValue = reinterpret_cast<alt::IMValue *>(val);
+    auto listMValue = dynamic_cast<alt::IMValueList *>(mValue);
+
+    Array arr;
+    arr.size = listMValue->GetSize();
+
+#ifdef _WIN32
+    auto mValues = new MetaData[arr.size];
+#else
+    MetaData mValues[size];
+#endif
+
+    for (int i = 0; i < arr.size; i++) {
+        auto v = listMValue->Get(i);
+        MetaData data;
+        data.Type = static_cast<unsigned char>(v->GetType());
+        data.Ptr = v.Get();
+        mValues[i] = data;
+    }
+
+    arr.array = mValues;
+
+    return arr;
+}
+
+EXPORT MValueDict Core_GetMValueDict(void *val) {
+    auto mValue = reinterpret_cast<alt::IMValue *>(val);
+    auto dictMValue = dynamic_cast<alt::IMValueDict *>(mValue);
+
+    MValueDict dict;
+    dict.size = dictMValue->GetSize();
+
+#ifdef _WIN32
+    auto keys = new const char*[dict.size];
+#else
+    const char* keys[dict.size];
+#endif
+
+#ifdef _WIN32
+    auto values = new MetaData[dict.size];
+#else
+    MetaData values[dict.size];
+#endif
+
+    int64_t i = 0;
+    for (auto it = dictMValue->Begin(); it; it = dictMValue->Next()) {
+        auto v = it->GetValue();
+
+        MetaData data;
+        data.Type = static_cast<unsigned char>(v->GetType());
+        data.Ptr = v.Get();
+
+        // FIXME:
+        const char* key = it->GetKey().c_str();
+        keys[i] = key;
+        values[i] = data;
+        i++;
+    }
+
+    dict.keys = keys;
+    dict.values = values;
+
+    return dict;
+}
+
 EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                                 float rotX, float rotY, float rotZ) {
     alt::Position position(posX, posY, posZ);
@@ -341,11 +405,13 @@ EXPORT void *Core_CreateVoiceChannel(int spacial, float maxDistance) {
 }
 
 EXPORT const char *Core_GetVersion() {
-    return alt::ICore::Instance().GetVersion().c_str();
+    static std::string ver = alt::ICore::Instance().GetVersion();
+    return ver.c_str();
 }
 
 EXPORT const char *Core_GetBranch() {
-    return alt::ICore::Instance().GetBranch().c_str();
+    static std::string branch =  alt::ICore::Instance().GetBranch();
+    return branch.c_str();
 }
 
 EXPORT int Core_IsDebug() {
@@ -361,7 +427,8 @@ EXPORT int Core_FileExists(const char *path) {
 }
 
 EXPORT const char *Core_ReadFile(const char *path) {
-    return alt::ICore::Instance().FileRead(path).c_str();
+    static std::string content = alt::ICore::Instance().FileRead(path);
+    return content.c_str();
 }
 
 EXPORT Entity Core_GetEntityByID(unsigned short id) {
@@ -381,12 +448,10 @@ EXPORT Array Core_GetEntities() {
     Entity entityRefs[arr.size];
 #endif
 
-    auto runtime = Go::Runtime::GetInstance();
-
     for (uint64_t i = 0; i < arr.size; i++) {
         auto entity = entities[i];
 
-        entityRefs[i] = runtime->GetEntity(entity);
+        entityRefs[i] = Go::Runtime::GetEntity(entity);
     }
 
     arr.array = entityRefs;
@@ -630,7 +695,8 @@ EXPORT Array Core_GetAllResources() {
 
 EXPORT const char *Core_StringToSHA256(const char *str)
 {
-    return alt::ICore::Instance().StringToSHA256(str).c_str();
+    static std::string hash = alt::ICore::Instance().StringToSHA256(str);
+    return hash.c_str();
 }
 
 EXPORT void Core_StopServer()

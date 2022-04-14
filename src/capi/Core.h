@@ -18,7 +18,8 @@ EXPORT void *Core_CreateMValueInt(long long val);
 EXPORT void *Core_CreateMValueUInt(unsigned long long val);
 EXPORT void *Core_CreateMValueDouble(double val);
 EXPORT void *Core_CreateMValueString(const char *val);
-EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size);
+//EXPORT void *Core_CreateMValueList(const char *val, unsigned long long size);
+EXPORT void *Core_CreateMValueList(void* *val, unsigned long long size);
 EXPORT void *Core_CreateMValueDict(const char **keys, void **values, unsigned long long size);
 EXPORT void *Core_CreateMValueBaseObject(unsigned char type, void *o);
 EXPORT void *Core_CreateMValueVector2(float x, float y);
@@ -35,6 +36,8 @@ EXPORT Vector2 Core_GetMValueVector2(void *val);
 EXPORT Position Core_GetMValueVector3(void *val);
 EXPORT RGBA Core_GetMValueRGBA(void *val);
 EXPORT Array Core_GetMValueByteArray(void *val);
+EXPORT Array Core_GetMValueList(void *val);
+EXPORT MValueDict Core_GetMValueDict(void *val);
 EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, float posZ,
                                 float rotX, float rotY, float rotZ);
 EXPORT void *

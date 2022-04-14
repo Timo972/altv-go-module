@@ -13,7 +13,7 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
     }
 
     auto event = dynamic_cast<const alt::CConsoleCommandEvent *>(ev);
-    auto name = event->GetName().c_str();
+    auto name = event->GetName();
     auto args = event->GetArgs();
 
     auto size = args.size();
@@ -32,7 +32,7 @@ void Go::ConsoleCommandEvent::Call(const alt::CEvent *ev)
     arr.size = size;
     arr.array = constArgs;
 
-    call(name, arr);
+    call(name.c_str(), arr);
 
 // freeing is done in altv-go-pkg (convertArray)
 // #ifdef _WIN32

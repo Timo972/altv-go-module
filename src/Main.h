@@ -142,4 +142,11 @@ typedef struct vehicleModelInfo {
    unsigned short defaultExtras;
 } VehicleModelInfo;
 
+typedef struct mValueDict {
+    //const char **keys;
+    void *keys;
+    MetaData *values;
+    unsigned long long size;
+} MValueDict;
+
 #include "SDK.h"
