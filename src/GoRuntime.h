@@ -101,7 +101,7 @@ namespace Go {
 #ifdef _WIN32
             auto cset = new TargetType[arr.size];
 #else
-            TargetType cset[size];
+            TargetType cset[arr.size];
 #endif
             uint64_t i = 0;
             for (const auto &item: set) {
