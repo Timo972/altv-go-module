@@ -322,7 +322,7 @@ EXPORT Array Core_GetMValueList(void *val) {
 #ifdef _WIN32
     auto mValues = new MetaData[arr.size];
 #else
-    MetaData mValues[size];
+    MetaData mValues[arr.size];
 #endif
 
     for (int i = 0; i < arr.size; i++) {
