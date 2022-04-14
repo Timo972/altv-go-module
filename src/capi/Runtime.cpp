@@ -60,7 +60,7 @@ EXPORT MetaData CallMValueFunction(void *ptr, CustomData *mValues, unsigned long
 
     alt::MValueArgs args;
     if (mValueSize > 0) {
-        args = Go::Runtime::GetInstance()->CreateMValueArgs(mValues, mValueSize);
+        args = Go::Runtime::CreateMValueArgs(mValues, mValueSize);
     }
 
     auto retVal = func->Call(args);

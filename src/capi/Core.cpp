@@ -534,7 +534,7 @@ EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, flo
 }
 
 EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned long long size) {
-    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
+    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
     // call event
     alt::ICore::Instance().TriggerLocalEvent(ev, args);
 }
@@ -542,7 +542,7 @@ EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned
 EXPORT void Core_TriggerClientEvent(void *p, const char *ev, CustomData *MValues, unsigned long long size) {
 
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
+    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
     // call event
     alt::ICore::Instance().TriggerClientEvent(alt::Ref<alt::IPlayer>(player), ev, args);
 }
@@ -558,13 +558,13 @@ EXPORT void Core_TriggerClientEventFor(void **p, unsigned long long clientSize, 
         players.Push(playerRef);
     }
 
-    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
+    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
 
     alt::ICore::Instance().TriggerClientEvent(players, ev, args);
 }
 
 EXPORT void Core_TriggerClientEventForAll(const char *ev, CustomData *MValues, unsigned long long size) {
-    auto args = Go::Runtime::GetInstance()->CreateMValueArgs(MValues, size);
+    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
 
     alt::ICore::Instance().TriggerClientEventForAll(ev, args);
 }
