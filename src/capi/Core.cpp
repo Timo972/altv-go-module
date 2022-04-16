@@ -216,7 +216,7 @@ EXPORT long long Core_GetMValueInt(void *val) {
 }
 
 EXPORT unsigned long long Core_GetMValueUInt(void *val) {
-    auto value = reinterpret_cast<alt::IMValueUInt *>(val);
+    auto value = reinterpret_cast<alt::IMValue *>(val);
     auto uintValue = dynamic_cast<alt::IMValueUInt *>(value);
     return uintValue->Value();
 }
