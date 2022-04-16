@@ -87,11 +87,10 @@ EXPORT void *Core_CreateMValueString(const char *val) {
     return value.Get();
 }*/
 
-EXPORT void *Core_CreateMValueList(void* *values, unsigned long long size)
-{
+EXPORT void *Core_CreateMValueList(void **values, unsigned long long size) {
     auto value = alt::ICore::Instance().CreateMValueList(size);
 
-    auto MValues = reinterpret_cast<alt::IMValue**>(values);
+    auto MValues = reinterpret_cast<alt::IMValue **>(values);
 
     for (unsigned long long i = 0; i < size; i++) {
         auto val = MValues[i];
@@ -346,7 +345,7 @@ EXPORT MValueDict Core_GetMValueDict(void *val) {
     dict.size = dictMValue->GetSize();
 
 #ifdef _WIN32
-    auto keys = new const char*[dict.size];
+    auto keys = new const char *[dict.size];
 #else
     const char* keys[dict.size];
 #endif
@@ -365,9 +364,12 @@ EXPORT MValueDict Core_GetMValueDict(void *val) {
         data.Type = static_cast<unsigned char>(v->GetType());
         data.Ptr = v.Get();
 
-        // FIXME:
-        const char* key = it->GetKey().c_str();
-        keys[i] = key;
+        auto key = it->GetKey();
+        auto keySize = key.size();
+        auto keyArray = new char[keySize + 1];
+        memcpy(keyArray, key.c_str(), keySize);
+        keyArray[keySize] = '\0';
+        keys[i] = keyArray;
         values[i] = data;
         i++;
     }
@@ -387,7 +389,8 @@ EXPORT void *Core_CreateVehicle(unsigned long model, float posX, float posY, flo
     return vehicle.Get();
 }
 
-EXPORT void *Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r,
+EXPORT void *
+Core_CreateCheckpoint(unsigned char type, float x, float y, float z, float radius, float height, unsigned char r,
                       unsigned char g, unsigned char b, unsigned char a) {
     alt::RGBA rgba(r, g, b, a);
     alt::Vector<float, 3, alt::PointLayout> pos;
@@ -410,7 +413,7 @@ EXPORT const char *Core_GetVersion() {
 }
 
 EXPORT const char *Core_GetBranch() {
-    static std::string branch =  alt::ICore::Instance().GetBranch();
+    static std::string branch = alt::ICore::Instance().GetBranch();
     return branch.c_str();
 }
 
@@ -614,11 +617,11 @@ EXPORT void Core_TriggerClientEvent(void *p, const char *ev, CustomData *MValues
 
 EXPORT void Core_TriggerClientEventFor(void **p, unsigned long long clientSize, const char *ev, CustomData *MValues,
                                        unsigned long long size) {
-    alt::Array <alt::Ref<alt::IPlayer>> players;
+    alt::Array<alt::Ref<alt::IPlayer>> players;
 
     for (unsigned long long i = 0; i < clientSize; i++) {
         auto player = reinterpret_cast<alt::IPlayer *>(p[i]);
-        alt::Ref <alt::IPlayer> playerRef(player);
+        alt::Ref<alt::IPlayer> playerRef(player);
 
         players.Push(playerRef);
     }
@@ -640,12 +643,12 @@ EXPORT void *Core_CreatePointBlipPosition(float x, float y, float z) {
 }
 
 EXPORT void *Core_CreatePointBlipEntity(Entity
-entity) {
+                                        entity) {
 // FIXME: Entity struct to alt::IEntity and pass then
-auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, nullptr);
-return blip.
+    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, nullptr);
+    return blip.
 
-Get();
+            Get();
 
 }
 
@@ -693,19 +696,16 @@ EXPORT Array Core_GetAllResources() {
     return arr;
 }
 
-EXPORT const char *Core_StringToSHA256(const char *str)
-{
+EXPORT const char *Core_StringToSHA256(const char *str) {
     static std::string hash = alt::ICore::Instance().StringToSHA256(str);
     return hash.c_str();
 }
 
-EXPORT void Core_StopServer()
-{
+EXPORT void Core_StopServer() {
     alt::ICore::Instance().StopServer();
 }
 
-EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash)
-{
+EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash) {
     auto modelInfo = alt::ICore::Instance().GetVehicleModelByHash(hash);
 
     VehicleModelInfo m;
@@ -730,13 +730,11 @@ EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash)
     return m;
 }
 
-EXPORT const char *Core_GetServerConfig()
-{
+EXPORT const char *Core_GetServerConfig() {
     auto config = alt::ICore::Instance().GetServerConfig();
     return Go::Runtime::GetInstance()->SerializeConfig(config);
 }
 
-EXPORT unsigned long long Core_HashServerPassword(const char *password)
-{
+EXPORT unsigned long long Core_HashServerPassword(const char *password) {
     return alt::ICore::Instance().HashServerPassword(password);
 }
