@@ -9,6 +9,7 @@ set_target_properties(PROPERTIES PREFIX "")
 
 # rapidjson config
 set(RAPIDJSON_HAS_STDSTRING ON)
+set(Protobuf_USE_STATIC_LIBS ON)
 
 file(GLOB_RECURSE PROJECT_SOURCE_FILES "src/*.h" "src/*.hpp" "src/*.cpp"
         "src/events/*.h" "src/events/*.hpp" "src/events/*.cpp")

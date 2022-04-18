@@ -18,7 +18,3 @@ modules: [
 ]
 ```
 Thats it!
-
-## TODO
-- [ ] Fix timers
-- [ ] performance improvement for MValueList and Dict using serialization
