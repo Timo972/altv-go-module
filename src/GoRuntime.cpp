@@ -2,6 +2,7 @@
 #include "GoResource.h"
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
+#include <google/protobuf/text_format.h>
 
 Go::Runtime *Go::Runtime::Instance = nullptr;
 
@@ -24,6 +25,11 @@ void Go::Runtime::DestroyImpl(alt::IResource::Impl *impl) {
 
     if (resource != nullptr)
         delete resource;
+}
+
+void Go::Runtime::OnDispose() {
+    // Delete all global objects allocated by libprotobuf.
+    google::protobuf::ShutdownProtobufLibrary();
 }
 
 alt::IResource::Impl *Go::Runtime::GetResource(const std::string &name) {
@@ -223,4 +229,163 @@ alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
         default:
             return nullptr;
     }
+}
+
+alt::MValue Go::Runtime::ToMValue(unsigned char *data, unsigned long long size)
+{
+    MValue::MValue mValue;
+    mValue.ParseFromArray(data, size);
+    return ToMValue(mValue);
+}
+
+alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue)
+{
+    if (mValue.has_boolvalue()) {
+        return alt::ICore::Instance().CreateMValueBool(mValue.boolvalue());
+    } else if (mValue.has_uintvalue()) {
+        return alt::ICore::Instance().CreateMValueUInt(mValue.uintvalue());
+    } else if (mValue.has_intvalue()) {
+        return alt::ICore::Instance().CreateMValueInt(mValue.intvalue());
+    } else if (mValue.has_doublevalue()) {
+        return alt::ICore::Instance().CreateMValueDouble(mValue.doublevalue());
+    } else if (mValue.has_stringvalue()) {
+        return alt::ICore::Instance().CreateMValueString(mValue.stringvalue());
+    } else if (mValue.has_baseobjectvalue()) {
+        const auto& baseObject = mValue.baseobjectvalue();
+        Entity e;
+        sscanf_s(baseObject.ptr().c_str(), "%p", &e.Ptr);
+        e.Type = baseObject.type();
+        // FIXME: only works for player and vehicle currently
+        auto altBaseObject = GetEntityRef(e);
+        return alt::ICore::Instance().CreateMValueBaseObject(altBaseObject);
+    } else if (mValue.has_bytesvalue()) {
+        auto bytes = mValue.bytesvalue();
+        return alt::ICore::Instance().CreateMValueByteArray(reinterpret_cast<const uint8_t *>(bytes.data()), bytes.size());
+    } else if (mValue.has_rgbavalue()) {
+        const auto& rgba = mValue.rgbavalue();
+        return alt::ICore::Instance().CreateMValueRGBA(alt::RGBA(rgba.r(), rgba.g(), rgba.b(), rgba.a()));
+    } else if (mValue.has_vector2value()) {
+        const auto& vector2 = mValue.vector2value();
+        auto v2 = alt::Vector2f();
+        v2[0] = vector2.x();
+        v2[1] = vector2.y();
+        return alt::ICore::Instance().CreateMValueVector2(v2);
+    } else if (mValue.has_vector3value()) {
+        const auto& vector3 = mValue.vector3value();
+        auto v3 = alt::Vector3f();
+        v3[0] = vector3.x();
+        v3[1] = vector3.y();
+        v3[2] = vector3.z();
+        return alt::ICore::Instance().CreateMValueVector3(v3);
+    } else if (mValue.has_functionvalue()) {
+        const auto& func = mValue.functionvalue();
+        auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(func.resourcename()));
+        if (resource == nullptr) {
+            return alt::ICore::Instance().CreateMValueNil();
+        }
+
+        auto goFunc = new Go::Function(resource->Module, func.id());
+        return alt::ICore::Instance().CreateMValueFunction(goFunc);
+    } else if (mValue.dict_size() > 0) {
+        auto dictSize = mValue.dict_size();
+        auto dict = alt::ICore::Instance().CreateMValueDict();
+
+        for (auto i = 0; i < dictSize; i++) {
+            const auto& key = mValue.dict(i);
+            const auto& value = mValue.list(i);
+
+            auto val = ToMValue(value);
+
+            dict->Set(key, val);
+        }
+
+        return dict;
+    } else if (mValue.list_size() > 0) {
+        auto listSize = mValue.list_size();
+        auto list = alt::ICore::Instance().CreateMValueList(listSize);
+
+        for (auto i = 0; i < listSize; i++) {
+            const auto& value = mValue.list(i);
+
+            auto val = ToMValue(value);
+
+            list->Set(i, val);
+        }
+
+        return list;
+    } else if (mValue.has_nonevalue()) {
+        return alt::ICore::Instance().CreateMValueNone();
+    } else {
+        return alt::ICore::Instance().CreateMValueNil();
+    }
+}
+
+Array Go::Runtime::ToProtoMessage(alt::MValue mValue)
+{
+    MValue::MValue value;
+
+    switch (mValue->GetType()) {
+    case alt::IMValue::Type::BOOL:
+        value.set_boolvalue(static_cast<alt::MValueBool>(mValue)->Value());
+        break;
+    case alt::IMValue::Type::UINT:
+        auto mValueUint = static_cast<alt::MValueUInt>(mValue);
+        value.set_uintvalue(mValueUint->Value());
+        break;
+    case alt::IMValue::Type::INT:
+        auto mValueInt = static_cast<alt::MValueInt>(mValue);
+        value.set_intvalue(mValueInt->Value());
+        break;
+    case alt::IMValue::Type::DOUBLE:
+        auto mValueDouble = static_cast<alt::MValueDouble>(mValue);
+        value.set_doublevalue(mValueDouble->Value());
+        break;
+    case alt::IMValue::Type::STRING:
+        auto mValueString = static_cast<alt::MValueString>(mValue);
+        value.set_stringvalue(mValueString->Value());
+        break;
+    case alt::IMValue::Type::BASE_OBJECT:
+        auto mValueBaseObject = static_cast<alt::MValueBaseObject>(mValue);
+        break;
+    case alt::IMValue::Type::BYTE_ARRAY:
+        auto mValueByteArray = static_cast<alt::MValueByteArray>(mValue);
+        break;
+    case alt::IMValue::Type::RGBA:
+        auto mValueRGBA = static_cast<alt::MValueRGBA>(mValue);
+        break;
+    case alt::IMValue::Type::VECTOR2:
+        auto mValueV2 = static_cast<alt::MValueVector2>(mValue);
+        break;
+    case alt::IMValue::Type::VECTOR3:
+        auto mValueV3 = static_cast<alt::MValueVector3>(mValue);
+        break;
+    case alt::IMValue::Type::FUNCTION:
+        auto mValueFunc = static_cast<alt::MValueFunction>(mValue);
+        break;
+    case alt::IMValue::Type::DICT:
+        auto mValueDict = static_cast<alt::MValueDict>(mValue);
+        break;
+    case alt::IMValue::Type::LIST:
+        auto mValueList = static_cast<alt::MValueList>(mValue);
+        break;
+    case alt::IMValue::Type::NONE:
+        value.set_nonevalue(true);
+        break;
+    default:
+        value.set_nilvalue(true);
+    }
+
+    Array arr;
+    arr.size = value.ByteSize();
+
+    unsigned char* byteArray = new unsigned char[arr.size];
+    value.SerializeToArray(byteArray, arr.size);
+    arr.array = byteArray;
+
+    return arr;
+}
+
+Array Go::Runtime::ToProtoMessage(alt::MValueConst mValue)
+{
+
 }

@@ -6,6 +6,7 @@
 
 #include "Main.h"
 #include "rapidjson/document.h"
+#include "mvalue.pb.h"
 
 namespace Go {
     class Runtime : public alt::IScriptRuntime {
@@ -18,6 +19,8 @@ namespace Go {
         alt::IResource::Impl *CreateImpl(alt::IResource *resource) override;
 
         void DestroyImpl(alt::IResource::Impl *impl) override;
+
+        void OnDispose() override;
 
         alt::IResource::Impl *GetResource(const std::string &name);
 
@@ -133,6 +136,13 @@ namespace Go {
 
             return arr;
         }*/
+
+        // Protobuf MValue stuff
+        static alt::MValue ToMValue(unsigned char *data, unsigned long long size);
+        static alt::MValue ToMValue(MValue::MValue mValue);
+
+        static Array ToProtoMessage(alt::MValue mValue);
+        static Array ToProtoMessage(alt::MValueConst mValue);
 
         static Go::Runtime *GetInstance();
     };
