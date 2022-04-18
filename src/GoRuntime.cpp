@@ -3,6 +3,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 #include <google/protobuf/text_format.h>
+#include <cstdio>
 
 Go::Runtime *Go::Runtime::Instance = nullptr;
 
@@ -92,7 +93,7 @@ alt::MValueArgs Go::Runtime::CreateMValueArgs(CustomData *MValues, unsigned long
     return args;
 }
 
-alt::RefBase<alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue(rapidjson::Value &value) {
+alt::RefBase <alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue(rapidjson::Value &value) {
     switch (value.GetType()) {
         case rapidjson::kNullType:
             return alt::ICore::Instance().CreateMValueNone();
@@ -102,7 +103,7 @@ alt::RefBase<alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue
         case rapidjson::kObjectType:
             break;
         case rapidjson::kArrayType: {
-            alt::RefBase<alt::RefStore<alt::IMValueList>> list = alt::ICore::Instance().CreateMValueList(
+            alt::RefBase <alt::RefStore<alt::IMValueList>> list = alt::ICore::Instance().CreateMValueList(
                     value.GetArray().Size());
             list->Push(CreateMValueFromJSONValue(value));
 
@@ -115,7 +116,7 @@ alt::RefBase<alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue
     }
 }
 
-Entity Go::Runtime::GetEntity(alt::Ref<alt::IEntity> entity) {
+Entity Go::Runtime::GetEntity(alt::Ref <alt::IEntity> entity) {
     Entity e;
 
     if (!entity.IsEmpty()) {
@@ -137,7 +138,7 @@ Entity Go::Runtime::GetEntity(alt::Ref<alt::IEntity> entity) {
     return e;
 }
 
-ConnectionInfo Go::Runtime::GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info) {
+ConnectionInfo Go::Runtime::GetConnectionInfo(alt::Ref <alt::IConnectionInfo> info) {
     connectionInfo conn;
     conn.authToken = info->GetAuthToken().c_str();
     conn.branch = info->GetBranch().c_str();
@@ -209,7 +210,7 @@ const char *Go::Runtime::SerializeConfig(alt::config::Node rootNode) {
     rapidjson::Document doc = SerializeConfigNode(rootNode);
 
     rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    rapidjson::Writer <rapidjson::StringBuffer> writer(buffer);
 
     doc.Accept(writer);
 
@@ -231,54 +232,53 @@ alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
     }
 }
 
-alt::MValue Go::Runtime::ToMValue(unsigned char *data, unsigned long long size)
-{
+alt::MValue Go::Runtime::ToMValue(unsigned char *data, unsigned long long size) {
     MValue::MValue mValue;
     mValue.ParseFromArray(data, size);
     return ToMValue(mValue);
 }
 
-alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue)
-{
-    if (mValue.has_boolvalue()) {
+alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
+    if (mValue.boolvalue()) {
         return alt::ICore::Instance().CreateMValueBool(mValue.boolvalue());
-    } else if (mValue.has_uintvalue()) {
+    } else if (mValue.uintvalue()) {
         return alt::ICore::Instance().CreateMValueUInt(mValue.uintvalue());
-    } else if (mValue.has_intvalue()) {
+    } else if (mValue.intvalue()) {
         return alt::ICore::Instance().CreateMValueInt(mValue.intvalue());
-    } else if (mValue.has_doublevalue()) {
+    } else if (mValue.doublevalue()) {
         return alt::ICore::Instance().CreateMValueDouble(mValue.doublevalue());
-    } else if (mValue.has_stringvalue()) {
+    } else if (!mValue.stringvalue().empty()) {
         return alt::ICore::Instance().CreateMValueString(mValue.stringvalue());
     } else if (mValue.has_baseobjectvalue()) {
-        const auto& baseObject = mValue.baseobjectvalue();
+        const auto &baseObject = mValue.baseobjectvalue();
         Entity e;
-        sscanf_s(baseObject.ptr().c_str(), "%p", &e.Ptr);
+        sscanf(baseObject.ptr().c_str(), "%p", &e.Ptr);
         e.Type = baseObject.type();
         // FIXME: only works for player and vehicle currently
         auto altBaseObject = GetEntityRef(e);
         return alt::ICore::Instance().CreateMValueBaseObject(altBaseObject);
-    } else if (mValue.has_bytesvalue()) {
+    } else if (!mValue.bytesvalue().empty()) {
         auto bytes = mValue.bytesvalue();
-        return alt::ICore::Instance().CreateMValueByteArray(reinterpret_cast<const uint8_t *>(bytes.data()), bytes.size());
+        return alt::ICore::Instance().CreateMValueByteArray(reinterpret_cast<const uint8_t *>(bytes.data()),
+                                                            bytes.size());
     } else if (mValue.has_rgbavalue()) {
-        const auto& rgba = mValue.rgbavalue();
+        const auto &rgba = mValue.rgbavalue();
         return alt::ICore::Instance().CreateMValueRGBA(alt::RGBA(rgba.r(), rgba.g(), rgba.b(), rgba.a()));
     } else if (mValue.has_vector2value()) {
-        const auto& vector2 = mValue.vector2value();
+        const auto &vector2 = mValue.vector2value();
         auto v2 = alt::Vector2f();
         v2[0] = vector2.x();
         v2[1] = vector2.y();
         return alt::ICore::Instance().CreateMValueVector2(v2);
     } else if (mValue.has_vector3value()) {
-        const auto& vector3 = mValue.vector3value();
+        const auto &vector3 = mValue.vector3value();
         auto v3 = alt::Vector3f();
         v3[0] = vector3.x();
         v3[1] = vector3.y();
         v3[2] = vector3.z();
         return alt::ICore::Instance().CreateMValueVector3(v3);
     } else if (mValue.has_functionvalue()) {
-        const auto& func = mValue.functionvalue();
+        const auto &func = mValue.functionvalue();
         auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(func.resourcename()));
         if (resource == nullptr) {
             return alt::ICore::Instance().CreateMValueNil();
@@ -291,8 +291,8 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue)
         auto dict = alt::ICore::Instance().CreateMValueDict();
 
         for (auto i = 0; i < dictSize; i++) {
-            const auto& key = mValue.dict(i);
-            const auto& value = mValue.list(i);
+            const auto &key = mValue.dict(i);
+            const auto &value = mValue.list(i);
 
             auto val = ToMValue(value);
 
@@ -305,7 +305,7 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue)
         auto list = alt::ICore::Instance().CreateMValueList(listSize);
 
         for (auto i = 0; i < listSize; i++) {
-            const auto& value = mValue.list(i);
+            const auto &value = mValue.list(i);
 
             auto val = ToMValue(value);
 
@@ -313,79 +313,91 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue)
         }
 
         return list;
-    } else if (mValue.has_nonevalue()) {
+    } else if (mValue.nonevalue()) {
         return alt::ICore::Instance().CreateMValueNone();
     } else {
         return alt::ICore::Instance().CreateMValueNil();
     }
 }
 
-Array Go::Runtime::ToProtoMessage(alt::MValue mValue)
-{
+Array Go::Runtime::ToProtoMessage(alt::MValue mValue) {
     MValue::MValue value;
 
     switch (mValue->GetType()) {
-    case alt::IMValue::Type::BOOL:
-        value.set_boolvalue(static_cast<alt::MValueBool>(mValue)->Value());
-        break;
-    case alt::IMValue::Type::UINT:
-        auto mValueUint = static_cast<alt::MValueUInt>(mValue);
-        value.set_uintvalue(mValueUint->Value());
-        break;
-    case alt::IMValue::Type::INT:
-        auto mValueInt = static_cast<alt::MValueInt>(mValue);
-        value.set_intvalue(mValueInt->Value());
-        break;
-    case alt::IMValue::Type::DOUBLE:
-        auto mValueDouble = static_cast<alt::MValueDouble>(mValue);
-        value.set_doublevalue(mValueDouble->Value());
-        break;
-    case alt::IMValue::Type::STRING:
-        auto mValueString = static_cast<alt::MValueString>(mValue);
-        value.set_stringvalue(mValueString->Value());
-        break;
-    case alt::IMValue::Type::BASE_OBJECT:
-        auto mValueBaseObject = static_cast<alt::MValueBaseObject>(mValue);
-        break;
-    case alt::IMValue::Type::BYTE_ARRAY:
-        auto mValueByteArray = static_cast<alt::MValueByteArray>(mValue);
-        break;
-    case alt::IMValue::Type::RGBA:
-        auto mValueRGBA = static_cast<alt::MValueRGBA>(mValue);
-        break;
-    case alt::IMValue::Type::VECTOR2:
-        auto mValueV2 = static_cast<alt::MValueVector2>(mValue);
-        break;
-    case alt::IMValue::Type::VECTOR3:
-        auto mValueV3 = static_cast<alt::MValueVector3>(mValue);
-        break;
-    case alt::IMValue::Type::FUNCTION:
-        auto mValueFunc = static_cast<alt::MValueFunction>(mValue);
-        break;
-    case alt::IMValue::Type::DICT:
-        auto mValueDict = static_cast<alt::MValueDict>(mValue);
-        break;
-    case alt::IMValue::Type::LIST:
-        auto mValueList = static_cast<alt::MValueList>(mValue);
-        break;
-    case alt::IMValue::Type::NONE:
-        value.set_nonevalue(true);
-        break;
-    default:
-        value.set_nilvalue(true);
+        case alt::IMValue::Type::BOOL:
+            value.set_boolvalue(static_cast<alt::MValueBool>(mValue)->Value());
+            break;
+        case alt::IMValue::Type::UINT: {
+            auto mValueUint = static_cast<alt::MValueUInt>(mValue);
+            value.set_uintvalue(mValueUint->Value());
+            break;
+        }
+        case alt::IMValue::Type::INT: {
+            auto mValueInt = static_cast<alt::MValueInt>(mValue);
+            value.set_intvalue(mValueInt->Value());
+            break;
+        }
+        case alt::IMValue::Type::DOUBLE: {
+            auto mValueDouble = static_cast<alt::MValueDouble>(mValue);
+            value.set_doublevalue(mValueDouble->Value());
+            break;
+        }
+        case alt::IMValue::Type::STRING: {
+            auto mValueString = static_cast<alt::MValueString>(mValue);
+            value.set_stringvalue(mValueString->Value());
+            break;
+        }
+        case alt::IMValue::Type::BASE_OBJECT: {
+            auto mValueBaseObject = static_cast<alt::MValueBaseObject>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::BYTE_ARRAY: {
+            auto mValueByteArray = static_cast<alt::MValueByteArray>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::RGBA: {
+            auto mValueRGBA = static_cast<alt::MValueRGBA>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::VECTOR2: {
+            auto mValueV2 = static_cast<alt::MValueVector2>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::VECTOR3: {
+            auto mValueV3 = static_cast<alt::MValueVector3>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::FUNCTION: {
+            auto mValueFunc = static_cast<alt::MValueFunction>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::DICT: {
+            auto mValueDict = static_cast<alt::MValueDict>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::LIST: {
+            auto mValueList = static_cast<alt::MValueList>(mValue);
+            break;
+        }
+        case alt::IMValue::Type::NONE: {
+            value.set_nonevalue(true);
+            break;
+        }
+        default:
+            value.set_nilvalue(true);
+            break;
     }
 
     Array arr;
     arr.size = value.ByteSize();
 
-    unsigned char* byteArray = new unsigned char[arr.size];
+    unsigned char *byteArray = new unsigned char[arr.size];
     value.SerializeToArray(byteArray, arr.size);
     arr.array = byteArray;
 
     return arr;
 }
 
-Array Go::Runtime::ToProtoMessage(alt::MValueConst mValue)
-{
-
+Array Go::Runtime::ToProtoMessage(alt::MValueConst mValue) {
+    return Array{};
 }

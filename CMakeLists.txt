@@ -45,4 +45,4 @@ add_library(
 
 add_dependencies(${PROJECT_NAME} alt-sdk)
 # target_include_directories(${PROJECT_NAME} PRIVATE ${PROTO_HDRS})
-target_link_libraries(${PROJECT_NAME}  ${Protobuf_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${Protobuf_LIBRARIES})
