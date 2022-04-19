@@ -49,7 +49,7 @@ jobs:
         run: |
           mkdir build
           pushd build
-          cmake -G"Visual Studio 16" -A x64 -DGO_MODULE_VERSION=%VERSION% ..
+          cmake -G"Visual Studio 17" -A x64 -DGO_MODULE_VERSION=%VERSION% ..
           cmake --build . --config Release
           popd
           mkdir dist\go-module
@@ -102,8 +102,6 @@ jobs:
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test
           sudo apt-get update
           sudo apt-get install gcc-8 g++-8
-          sudo apt-get remove protobuf-compiler
-          sudo apt-get install libprotobuf-dev protobuf-compiler
           mkdir build && cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++-8 -DGO_MODULE_VERSION=%VERSION% ..
           cmake --build . --config Release
