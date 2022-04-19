@@ -239,15 +239,15 @@ alt::MValue Go::Runtime::ToMValue(unsigned char *data, unsigned long long size) 
 }
 
 alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
-    if (mValue.boolvalue()) {
+    if (mValue.has_boolvalue()) {
         return alt::ICore::Instance().CreateMValueBool(mValue.boolvalue());
-    } else if (mValue.uintvalue()) {
+    } else if (mValue.has_uintvalue()) {
         return alt::ICore::Instance().CreateMValueUInt(mValue.uintvalue());
-    } else if (mValue.intvalue()) {
+    } else if (mValue.has_intvalue()) {
         return alt::ICore::Instance().CreateMValueInt(mValue.intvalue());
-    } else if (mValue.doublevalue()) {
+    } else if (mValue.has_doublevalue()) {
         return alt::ICore::Instance().CreateMValueDouble(mValue.doublevalue());
-    } else if (!mValue.stringvalue().empty()) {
+    } else if (mValue.has_stringvalue()) {
         return alt::ICore::Instance().CreateMValueString(mValue.stringvalue());
     } else if (mValue.has_baseobjectvalue()) {
         const auto &baseObject = mValue.baseobjectvalue();
@@ -257,7 +257,7 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
         // FIXME: only works for player and vehicle currently
         auto altBaseObject = GetEntityRef(e);
         return alt::ICore::Instance().CreateMValueBaseObject(altBaseObject);
-    } else if (!mValue.bytesvalue().empty()) {
+    } else if (mValue.has_bytesvalue()) {
         auto bytes = mValue.bytesvalue();
         return alt::ICore::Instance().CreateMValueByteArray(reinterpret_cast<const uint8_t *>(bytes.data()),
                                                             bytes.size());
@@ -313,7 +313,7 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
         }
 
         return list;
-    } else if (mValue.nonevalue()) {
+    } else if (mValue.has_nonevalue()) {
         return alt::ICore::Instance().CreateMValueNone();
     } else {
         return alt::ICore::Instance().CreateMValueNil();
