@@ -1,4 +1,5 @@
 #pragma once
+#include "mvalue.pb.h"
 
 #define ALT_SERVER_API
 

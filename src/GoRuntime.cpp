@@ -232,7 +232,7 @@ alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
     }
 }
 
-alt::MValue Go::Runtime::ToMValue(unsigned char *data, unsigned long long size) {
+/*alt::MValue Go::Runtime::ToMValue(unsigned char *data, unsigned long long size) {
     MValue::MValue mValue;
     mValue.ParseFromArray(data, size);
     return ToMValue(mValue);
@@ -400,4 +400,4 @@ Array Go::Runtime::ToProtoMessage(alt::MValue mValue) {
 
 Array Go::Runtime::ToProtoMessage(alt::MValueConst mValue) {
     return Array{};
-}
+}*/

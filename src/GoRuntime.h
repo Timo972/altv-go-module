@@ -6,7 +6,6 @@
 
 #include "Main.h"
 #include "rapidjson/document.h"
-#include "mvalue.pb.h"
 
 namespace Go {
     class Runtime : public alt::IScriptRuntime {
@@ -138,11 +137,11 @@ namespace Go {
         }*/
 
         // Protobuf MValue stuff
-        static alt::MValue ToMValue(unsigned char *data, unsigned long long size);
-        static alt::MValue ToMValue(MValue::MValue mValue);
+        // static alt::MValue ToMValue(unsigned char *data, unsigned long long size);
+        // static alt::MValue ToMValue(MValue::MValue mValue);
 
-        static Array ToProtoMessage(alt::MValue mValue);
-        static Array ToProtoMessage(alt::MValueConst mValue);
+        // static Array ToProtoMessage(alt::MValue mValue);
+        // static Array ToProtoMessage(alt::MValueConst mValue);
 
         static Go::Runtime *GetInstance();
     };
