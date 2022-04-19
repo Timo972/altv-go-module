@@ -20,7 +20,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
 # protobuf dependency
-list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/vendors/protobuf/win")
+# if(UNIX)
+#     list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/vendors/protobuf/x64_linux")
+# else()
+#     list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/vendors/protobuf/x64_win32")
+# endif()
 find_package(Protobuf REQUIRED)
 include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -45,5 +49,4 @@ add_library(
 )
 
 add_dependencies(${PROJECT_NAME} alt-sdk)
-# target_include_directories(${PROJECT_NAME} PRIVATE ${PROTO_HDRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Protobuf_LIBRARIES})
