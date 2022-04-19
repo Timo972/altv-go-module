@@ -470,7 +470,7 @@ Array Go::Runtime::MValueToProtoBytes(alt::MValue mValue) {
     auto value = MValueToProto(mValue);
 
     Array arr;
-    arr.size = value.ByteSize();
+    arr.size = value.ByteSizeLong();
 
     unsigned char *byteArray = new unsigned char[arr.size];
     value.SerializeToArray(byteArray, arr.size);
@@ -483,7 +483,7 @@ Array Go::Runtime::MValueToProtoBytes(alt::MValueConst mValue) {
     auto value = MValueToProto(mValue);
 
     Array arr;
-    arr.size = value.ByteSize();
+    arr.size = value.ByteSizeLong();
 
     unsigned char* byteArray = new unsigned char[arr.size];
     value.SerializeToArray(byteArray, arr.size);
