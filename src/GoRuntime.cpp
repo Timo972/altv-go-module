@@ -232,13 +232,13 @@ alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
     }
 }
 
-/*alt::MValue Go::Runtime::ToMValue(unsigned char *data, unsigned long long size) {
+alt::MValue Go::Runtime::ProtoToMValue(unsigned char *data, unsigned long long size) {
     MValue::MValue mValue;
     mValue.ParseFromArray(data, size);
-    return ToMValue(mValue);
+    return ProtoToMValue(mValue);
 }
 
-alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
+alt::MValue Go::Runtime::ProtoToMValue(MValue::MValue mValue) {
     if (mValue.has_boolvalue()) {
         return alt::ICore::Instance().CreateMValueBool(mValue.boolvalue());
     } else if (mValue.has_uintvalue()) {
@@ -294,7 +294,7 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
             const auto &key = mValue.dict(i);
             const auto &value = mValue.list(i);
 
-            auto val = ToMValue(value);
+            auto val = ProtoToMValue(value);
 
             dict->Set(key, val);
         }
@@ -307,7 +307,7 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
         for (auto i = 0; i < listSize; i++) {
             const auto &value = mValue.list(i);
 
-            auto val = ToMValue(value);
+            auto val = ProtoToMValue(value);
 
             list->Set(i, val);
         }
@@ -320,73 +320,154 @@ alt::MValue Go::Runtime::ToMValue(MValue::MValue mValue) {
     }
 }
 
-Array Go::Runtime::ToProtoMessage(alt::MValue mValue) {
+MValue::MValue Go::Runtime::MValueToProto(alt::MValue mValue) {
     MValue::MValue value;
 
     switch (mValue->GetType()) {
-        case alt::IMValue::Type::BOOL:
-            value.set_boolvalue(static_cast<alt::MValueBool>(mValue)->Value());
-            break;
-        case alt::IMValue::Type::UINT: {
-            auto mValueUint = static_cast<alt::MValueUInt>(mValue);
-            value.set_uintvalue(mValueUint->Value());
-            break;
-        }
-        case alt::IMValue::Type::INT: {
-            auto mValueInt = static_cast<alt::MValueInt>(mValue);
-            value.set_intvalue(mValueInt->Value());
-            break;
-        }
-        case alt::IMValue::Type::DOUBLE: {
-            auto mValueDouble = static_cast<alt::MValueDouble>(mValue);
-            value.set_doublevalue(mValueDouble->Value());
-            break;
-        }
-        case alt::IMValue::Type::STRING: {
-            auto mValueString = static_cast<alt::MValueString>(mValue);
-            value.set_stringvalue(mValueString->Value());
-            break;
-        }
-        case alt::IMValue::Type::BASE_OBJECT: {
-            auto mValueBaseObject = static_cast<alt::MValueBaseObject>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::BYTE_ARRAY: {
-            auto mValueByteArray = static_cast<alt::MValueByteArray>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::RGBA: {
-            auto mValueRGBA = static_cast<alt::MValueRGBA>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::VECTOR2: {
-            auto mValueV2 = static_cast<alt::MValueVector2>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::VECTOR3: {
-            auto mValueV3 = static_cast<alt::MValueVector3>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::FUNCTION: {
-            auto mValueFunc = static_cast<alt::MValueFunction>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::DICT: {
-            auto mValueDict = static_cast<alt::MValueDict>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::LIST: {
-            auto mValueList = static_cast<alt::MValueList>(mValue);
-            break;
-        }
-        case alt::IMValue::Type::NONE: {
-            value.set_nonevalue(true);
-            break;
-        }
-        default:
-            value.set_nilvalue(true);
-            break;
+    case alt::IMValue::Type::BOOL: {
+        auto b = mValue.As<alt::IMValueBool>();
+        value.set_boolvalue(b->Value());
+        break;
     }
+    case alt::IMValue::Type::UINT: {
+        auto mValueUint = mValue.As<alt::IMValueUInt>();
+        value.set_uintvalue(mValueUint->Value());
+        break;
+    }
+    case alt::IMValue::Type::INT: {
+        auto mValueInt = mValue.As<alt::IMValueInt>();
+        value.set_intvalue(mValueInt->Value());
+        break;
+    }
+    case alt::IMValue::Type::DOUBLE: {
+        auto mValueDouble = mValue.As<alt::IMValueDouble>();
+        value.set_doublevalue(mValueDouble->Value());
+        break;
+    }
+    case alt::IMValue::Type::STRING: {
+        auto mValueString = mValue.As<alt::IMValueString>();
+        value.set_stringvalue(mValueString->Value());
+        break;
+    }
+    case alt::IMValue::Type::BASE_OBJECT: {
+        auto mValueBaseObject = mValue.As<alt::IMValueBaseObject>();
+        break;
+    }
+    case alt::IMValue::Type::BYTE_ARRAY: {
+        auto mValueByteArray = mValue.As<alt::IMValueByteArray>();
+        break;
+    }
+    case alt::IMValue::Type::RGBA: {
+        auto mValueRGBA = mValue.As<alt::IMValueRGBA>();
+        break;
+    }
+    case alt::IMValue::Type::VECTOR2: {
+        auto mValueV2 = mValue.As<alt::IMValueVector2>();
+        break;
+    }
+    case alt::IMValue::Type::VECTOR3: {
+        auto mValueV3 = mValue.As<alt::IMValueVector3>();
+        break;
+    }
+    case alt::IMValue::Type::FUNCTION: {
+        auto mValueFunc = mValue.As<alt::IMValueFunction>();
+        break;
+    }
+    case alt::IMValue::Type::DICT: {
+        auto mValueDict = mValue.As<alt::IMValueDict>();
+        break;
+    }
+    case alt::IMValue::Type::LIST: {
+        auto mValueList = mValue.As<alt::IMValueList>();
+        break;
+    }
+    case alt::IMValue::Type::NIL: {
+        value.set_nilvalue(true);
+        break;
+    }
+    default:
+        value.set_nonevalue(true);
+        break;
+    }
+
+    return value;
+}
+
+MValue::MValue Go::Runtime::MValueToProto(alt::MValueConst mValue) {
+    MValue::MValue value;
+
+    switch (mValue->GetType()) {
+    case alt::IMValue::Type::BOOL: {
+        auto b = mValue.As<const alt::IMValueBool>();
+        value.set_boolvalue(b->Value());
+        break;
+    }
+    case alt::IMValue::Type::UINT: {
+        auto mValueUint = mValue.As<const alt::IMValueUInt>();
+        value.set_uintvalue(mValueUint->Value());
+        break;
+    }
+    case alt::IMValue::Type::INT: {
+        auto mValueInt = mValue.As<const alt::IMValueInt>();
+        value.set_intvalue(mValueInt->Value());
+        break;
+    }
+    case alt::IMValue::Type::DOUBLE: {
+        auto mValueDouble = mValue.As<const alt::IMValueDouble>();
+        value.set_doublevalue(mValueDouble->Value());
+        break;
+    }
+    case alt::IMValue::Type::STRING: {
+        auto mValueString = mValue.As<const alt::IMValueString>();
+        value.set_stringvalue(mValueString->Value());
+        break;
+    }
+    case alt::IMValue::Type::BASE_OBJECT: {
+        auto mValueBaseObject = mValue.As<const alt::IMValueBaseObject>();
+        break;
+    }
+    case alt::IMValue::Type::BYTE_ARRAY: {
+        auto mValueByteArray = mValue.As<const alt::IMValueByteArray>();
+        break;
+    }
+    case alt::IMValue::Type::RGBA: {
+        auto mValueRGBA = mValue.As<const alt::IMValueRGBA>();
+        break;
+    }
+    case alt::IMValue::Type::VECTOR2: {
+        auto mValueV2 = mValue.As<const alt::IMValueVector2>();
+        break;
+    }
+    case alt::IMValue::Type::VECTOR3: {
+        auto mValueV3 = mValue.As<const alt::IMValueVector3>();
+        break;
+    }
+    case alt::IMValue::Type::FUNCTION: {
+        auto mValueFunc = mValue.As<const alt::IMValueFunction>();
+        break;
+    }
+    case alt::IMValue::Type::DICT: {
+        auto mValueDict = mValue.As<const alt::IMValueDict>();
+        break;
+    }
+    case alt::IMValue::Type::LIST: {
+        auto mValueList = mValue.As<const alt::IMValueList>();
+        break;
+    }
+    case alt::IMValue::Type::NIL: {
+        value.set_nilvalue(true);
+        break;
+    }
+    default:
+        value.set_nonevalue(true);
+        break;
+    }
+
+    return value;
+}
+
+Array Go::Runtime::MValueToProtoBytes(alt::MValue mValue) {
+    auto value = MValueToProto(mValue);
 
     Array arr;
     arr.size = value.ByteSize();
@@ -398,6 +479,15 @@ Array Go::Runtime::ToProtoMessage(alt::MValue mValue) {
     return arr;
 }
 
-Array Go::Runtime::ToProtoMessage(alt::MValueConst mValue) {
-    return Array{};
-}*/
+Array Go::Runtime::MValueToProtoBytes(alt::MValueConst mValue) {
+    auto value = MValueToProto(mValue);
+
+    Array arr;
+    arr.size = value.ByteSize();
+
+    unsigned char* byteArray = new unsigned char[arr.size];
+    value.SerializeToArray(byteArray, arr.size);
+    arr.array = byteArray;
+
+    return arr;
+}

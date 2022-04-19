@@ -137,11 +137,13 @@ namespace Go {
         }*/
 
         // Protobuf MValue stuff
-        // static alt::MValue ToMValue(unsigned char *data, unsigned long long size);
-        // static alt::MValue ToMValue(MValue::MValue mValue);
+        static alt::MValue ProtoToMValue(unsigned char *data, unsigned long long size);
+        static alt::MValue ProtoToMValue(MValue::MValue mValue);
 
-        // static Array ToProtoMessage(alt::MValue mValue);
-        // static Array ToProtoMessage(alt::MValueConst mValue);
+        static Array MValueToProtoBytes(alt::MValue mValue);
+        static Array MValueToProtoBytes(alt::MValueConst mValue);
+        static MValue::MValue MValueToProto(alt::MValue mValue);
+        static MValue::MValue MValueToProto(alt::MValueConst mValue);
 
         static Go::Runtime *GetInstance();
     };
