@@ -20,11 +20,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
 # protobuf dependency
-# if(UNIX)
-#     list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/vendors/protobuf/x64_linux")
-# else()
-#     list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/vendors/protobuf/x64_win32")
-# endif()
+list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/vendors/protobuf")
 find_package(Protobuf REQUIRED)
 include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
