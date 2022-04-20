@@ -11,23 +11,20 @@ EXPORT int VoiceChannel_HasMetaData(void *base, const char *key) {
     return baseObject->HasMetaData(key);
 }
 
-EXPORT MetaData VoiceChannel_GetMetaData(void *base, const char *key) {
+EXPORT Array VoiceChannel_GetMetaData(void *base, const char *key) {
 
     auto channel = reinterpret_cast<alt::IVoiceChannel *>(base);
     auto meta = channel->GetMetaData(key);
 
-    // Temporary
-    MetaData metaData;
-    metaData.Ptr = meta.Get();
-    metaData.Type = static_cast<unsigned char>(meta->GetType());
+    auto metaData = Go::Runtime::MValueToProtoBytes(meta);
 
     return metaData;
 }
 
-EXPORT void VoiceChannel_SetMetaData(void *base, const char *key, void *val) {
+EXPORT void VoiceChannel_SetMetaData(void *base, const char *key, unsigned char *data, unsigned long long size) {
 
     auto channel = reinterpret_cast<alt::IVoiceChannel *>(base);
-    auto value = reinterpret_cast<alt::IMValue *>(val);
+    auto value = Go::Runtime::ProtoToMValue(data, size);
 
     channel->SetMetaData(key, value);
 }
@@ -36,7 +33,7 @@ EXPORT void VoiceChannel_DeleteMetaData(void *base, const char *key) {
 
     auto channel = reinterpret_cast<alt::IVoiceChannel *>(base);
     channel->DeleteMetaData(key);
-    channel->RemoveRef();
+    // channel->RemoveRef();
 }
 
 EXPORT void VoiceChannel_Destroy(void *b) {
