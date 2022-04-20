@@ -1,7 +1,7 @@
 #include <sstream>
 #include "Runtime.h"
 
-EXPORT int RegisterAltEvent(const char *resourceName, unsigned short eventType) {
+EXPORT int Runtime_RegisterAltEvent(const char *resourceName, unsigned short eventType) {
     auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(resourceName));
     if (resource == nullptr) {
         return false;
@@ -11,7 +11,7 @@ EXPORT int RegisterAltEvent(const char *resourceName, unsigned short eventType) 
     return true;
 }
 
-EXPORT int UnregisterAltEvent(const char *resourceName, unsigned short eventType) {
+EXPORT int Runtime_UnregisterAltEvent(const char *resourceName, unsigned short eventType) {
     auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(resourceName));
     if (resource == nullptr) {
         return false;
@@ -21,7 +21,7 @@ EXPORT int UnregisterAltEvent(const char *resourceName, unsigned short eventType
     return true;
 }
 
-EXPORT int RegisterAltExport(const char *resourceName, const char *exportName, CustomData data) {
+EXPORT int Runtime_RegisterAltExport(const char *resourceName, const char *exportName, CustomData data) {
     auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(resourceName));
     if (resource == nullptr) {
         return 0;
@@ -38,7 +38,7 @@ EXPORT int RegisterAltExport(const char *resourceName, const char *exportName, C
     return 1;
 }
 
-EXPORT void *CreateMValueFunction(const char *resourceName, unsigned long long id) {
+EXPORT void *Runtime_CreateMValueFunction(const char *resourceName, unsigned long long id) {
     auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(resourceName));
     if (resource == nullptr) {
         return 0;
@@ -52,7 +52,7 @@ EXPORT void *CreateMValueFunction(const char *resourceName, unsigned long long i
     return defaultMVal.Get();
 }
 
-EXPORT MetaData CallMValueFunction(void *ptr, CustomData *mValues, unsigned long long mValueSize) {
+EXPORT MetaData Runtime_CallMValueFunction(void *ptr, CustomData *mValues, unsigned long long mValueSize) {
     MetaData data;
 
     auto mValRef = reinterpret_cast<alt::IMValue *>(ptr);
@@ -72,9 +72,7 @@ EXPORT MetaData CallMValueFunction(void *ptr, CustomData *mValues, unsigned long
     return data;
 }
 
-EXPORT MetaData
-
-GetAltExport(const char *targetResourceName, const char *exportName) {
+EXPORT MetaData Runtime_GetAltExport(const char *targetResourceName, const char *exportName) {
     auto targetResource = alt::ICore::Instance().GetResource(targetResourceName);
 
     if (targetResource == nullptr) {

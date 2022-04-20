@@ -4,7 +4,7 @@
 #define ALT_SERVER_API
 
 // Temporary
-typedef struct meta {
+typedef struct metaData {
     const void *Ptr;
     unsigned char Type;
 } MetaData;

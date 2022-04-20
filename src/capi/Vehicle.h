@@ -180,10 +180,6 @@ EXPORT void Vehicle_SetFrozen(void *v, int state);
 EXPORT int Vehicle_HasCollision(void *v);
 EXPORT void Vehicle_SetCollision(void *v, int state);
 
-EXPORT void Vehicle_LoadDamageDataFromBase64(void *v, const char *base64);
-EXPORT void Vehicle_LoadScriptDataFromBase64(void *v, const char *base64);
-EXPORT void Vehicle_LoadGameStateFromBase64(void *v, const char *base64);
-EXPORT void Vehicle_LoadHealthDataFromBase64(void *v, const char *base64);
 EXPORT int Vehicle_IsDriftMode(void *v);
 EXPORT void Vehicle_SetDriftMode(void *v, int state);
 
