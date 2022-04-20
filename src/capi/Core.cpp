@@ -202,7 +202,7 @@ EXPORT void *Core_CreateMValueByteArray(unsigned char *data, unsigned long long 
     return defaultMVal.Get();
 }
 
-EXPORT bool Core_GetMValueBool(void *val) {
+EXPORT int Core_GetMValueBool(void *val) {
     auto value = reinterpret_cast<alt::IMValue *>(val);
     auto boolValue = dynamic_cast<alt::IMValueBool *>(value);
     return boolValue->Value();

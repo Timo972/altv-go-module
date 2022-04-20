@@ -26,7 +26,7 @@ EXPORT void *Core_CreateMValueVector2(float x, float y);
 EXPORT void *Core_CreateMValueVector3(float x, float y, float z);
 EXPORT void *Core_CreateMValueRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 EXPORT void *Core_CreateMValueByteArray(unsigned char *data, unsigned long long size);
-EXPORT bool Core_GetMValueBool(void *val);
+EXPORT int Core_GetMValueBool(void *val);
 EXPORT long long Core_GetMValueInt(void *val);
 EXPORT unsigned long long Core_GetMValueUInt(void *val);
 EXPORT double Core_GetMValueDouble(void *val);
