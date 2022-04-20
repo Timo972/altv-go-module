@@ -145,6 +145,9 @@ namespace Go {
         static MValue::MValue MValueToProto(alt::MValue mValue);
         static MValue::MValue MValueToProto(alt::MValueConst mValue);
 
+        static Array MValueArgsToProtoBytes(alt::MValueArgs args);
+        static alt::MValueArgs ProtoToMValueArgs(unsigned char* data, unsigned long long size);
+
         static Go::Runtime *GetInstance();
     };
 }

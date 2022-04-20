@@ -495,3 +495,30 @@ Array Go::Runtime::MValueToProtoBytes(alt::MValueConst mValue) {
 
     return arr;
 }
+
+Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {
+    Array all;
+    all.size = args.GetSize();
+
+#ifdef _WIN32
+    auto constArgs = new Array[all.size];
+#else
+    Array constArgs[all.size];
+#endif
+
+    for (auto i = 0; i < all.size; i++) {
+        alt::MValueConst mValue = args[i];
+        auto bytes = MValueToProtoBytes(mValue);
+        constArgs[i] = bytes;
+    }
+
+    all.array = constArgs;
+
+    return all;
+}
+
+alt::MValueArgs Go::Runtime::ProtoToMValueArgs(unsigned char *data, unsigned long long size) {
+    alt::MValueArgs args;
+
+    return args;
+}
