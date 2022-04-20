@@ -49,7 +49,7 @@ jobs:
         run: |
           mkdir build
           pushd build
-          cmake -G"Visual Studio 17" -A x64 -DGO_MODULE_VERSION=%VERSION% ..
+          cmake -G"Visual Studio 16" -A x64 -DGO_MODULE_VERSION=%VERSION% ..
           cmake --build . --config Release
           popd
           mkdir dist\go-module
