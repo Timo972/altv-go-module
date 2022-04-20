@@ -19,6 +19,12 @@ jobs:
           submodules: recursive
           lfs: true
 
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+        with:
+          version: '3.19.4'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Extract version
         id: version
         shell: bash
@@ -71,6 +77,12 @@ jobs:
         with:
           submodules: recursive
           lfs: true
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+        with:
+          version: '3.19.4'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract version
         id: version
