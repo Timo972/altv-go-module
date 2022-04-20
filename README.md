@@ -18,3 +18,12 @@ modules: [
 ]
 ```
 Thats it!
+
+## Building
+**To build the module there are some prerequisites needed:**
+- [Windows] Visual Studio 2019 or later
+- [Linux] GCC 8
+- [CMake](https://cmake.org/download/)
+- [ProtoC 3.19.4](https://github.com/protocolbuffers/protobuf/releases/tag/v3.19.4)
+
+Then just run ``build.bat`` or ``build.sh`` in the root folder (depending on os).
