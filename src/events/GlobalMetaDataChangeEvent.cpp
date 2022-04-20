@@ -1,10 +1,11 @@
 #include "GlobalMetaDataChangeEvent.h"
+#include "GoRuntime.h"
 
 Go::GlobalMetaDataChangeEvent::GlobalMetaDataChangeEvent(ModuleLibrary *module) : IEvent(module) { }
 
 void Go::GlobalMetaDataChangeEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altGlobalMetaDataChangeEvent", void (*)(const char* key, MetaData newValue, MetaData oldValue));
+    static auto call = GET_FUNC(Library, "altGlobalMetaDataChangeEvent", void (*)(const char* key, Array newValue, Array oldValue));
 
     if (call == nullptr)
     {
@@ -17,14 +18,8 @@ void Go::GlobalMetaDataChangeEvent::Call(const alt::CEvent *ev)
     auto newValueMeta = event->GetVal();
     auto oldValueMeta = event->GetOldVal();
 
-    // Temporary
-    MetaData newValue;
-    newValue.Ptr = newValueMeta.Get();
-    newValue.Type = static_cast<unsigned char>(newValueMeta->GetType());
-
-    MetaData oldValue;
-    oldValue.Ptr = oldValueMeta.Get();
-    oldValue.Type = static_cast<unsigned char>(oldValueMeta->GetType());
+    auto newValue = Go::Runtime::MValueToProtoBytes(newValueMeta);
+    auto oldValue = Go::Runtime::MValueToProtoBytes(oldValueMeta);
 
     call(key, newValue, oldValue);
 }

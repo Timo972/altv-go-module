@@ -21,7 +21,7 @@ EXPORT int Runtime_UnregisterAltEvent(const char *resourceName, unsigned short e
     return true;
 }
 
-EXPORT int Runtime_RegisterAltExport(const char *resourceName, const char *exportName, CustomData data) {
+EXPORT int Runtime_RegisterAltExport(const char *resourceName, const char *exportName, unsigned char *data, unsigned long long size) {
     auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(resourceName));
     if (resource == nullptr) {
         return 0;
@@ -31,7 +31,7 @@ EXPORT int Runtime_RegisterAltExport(const char *resourceName, const char *expor
         return 0;
     }
 
-    auto mValue = reinterpret_cast<alt::IMValue *>(data.mValue);
+    auto mValue = Go::Runtime::ProtoToMValue(data, size);
 
     resource->AddExport(exportName, mValue);
 
@@ -52,27 +52,26 @@ EXPORT void *Runtime_CreateMValueFunction(const char *resourceName, unsigned lon
     return defaultMVal.Get();
 }
 
-EXPORT MetaData Runtime_CallMValueFunction(void *ptr, CustomData *mValues, unsigned long long mValueSize) {
-    MetaData data;
-
+EXPORT Array Runtime_CallMValueFunction(void *ptr, unsigned char *data, unsigned long long mValueSize) {
     auto mValRef = reinterpret_cast<alt::IMValue *>(ptr);
     auto func = dynamic_cast<alt::IMValueFunction *>(mValRef);
+    // TODO: implement MValueArgs
+    //alt::MValueArgs args;
+    //if (mValueSize > 0) {
+    //    args = Go::Runtime::CreateMValueArgs(mValues, mValueSize);
+    //}
 
-    alt::MValueArgs args;
-    if (mValueSize > 0) {
-        args = Go::Runtime::CreateMValueArgs(mValues, mValueSize);
-    }
+    //auto retVal = func->Call(args);
 
-    auto retVal = func->Call(args);
+    //retVal->AddRef();
+    //data.Ptr = retVal.Get();
+    //data.Type = static_cast<unsigned int>(retVal->GetType());
 
-    retVal->AddRef();
-    data.Ptr = retVal.Get();
-    data.Type = static_cast<unsigned int>(retVal->GetType());
-
-    return data;
+    //return data;
+    return Array{};
 }
 
-EXPORT MetaData Runtime_GetAltExport(const char *targetResourceName, const char *exportName) {
+EXPORT Array Runtime_GetAltExport(const char *targetResourceName, const char *exportName) {
     auto targetResource = alt::ICore::Instance().GetResource(targetResourceName);
 
     if (targetResource == nullptr) {
@@ -80,9 +79,9 @@ EXPORT MetaData Runtime_GetAltExport(const char *targetResourceName, const char 
         ss << "Failed to get export: " << exportName << " of resource: " << targetResourceName
            << ". Resource does not exist!";
         alt::ICore::Instance().LogError(ss.str());
-        MetaData data;
-        data.Ptr = nullptr;
-        data.Type = static_cast<unsigned int>(alt::IMValue::Type::NONE);
+        
+        alt::MValue none = alt::ICore::Instance().CreateMValueNone();
+        auto data = Go::Runtime::MValueToProtoBytes(none);
         return data;
     }
 
@@ -93,17 +92,14 @@ EXPORT MetaData Runtime_GetAltExport(const char *targetResourceName, const char 
         ss << "Failed to get export: " << exportName << " of resource: " << targetResourceName
            << ". Did you forgot to specify dependencies?";
         alt::ICore::Instance().LogError(ss.str());
-        MetaData data;
-        data.Ptr = nullptr;
-        data.Type = static_cast<unsigned int>(alt::IMValue::Type::NONE);
+        alt::MValue none = alt::ICore::Instance().CreateMValueNone();
+        auto data = Go::Runtime::MValueToProtoBytes(none);
         return data;
     }
 
     alt::MValue exportMVal = exports->Get(exportName);
 
-    MetaData data;
-    data.Ptr = exportMVal.Get();
-    data.Type = static_cast<unsigned int>(exportMVal->GetType());
+    auto data = Go::Runtime::MValueToProtoBytes(exportMVal);
 
     return data;
 }

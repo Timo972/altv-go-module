@@ -1,10 +1,11 @@
 #include "StreamSyncedMetaDataChangeEvent.h"
+#include "GoRuntime.h"
 
 Go::StreamSyncedMetaDataChangeEvent::StreamSyncedMetaDataChangeEvent(ModuleLibrary *module) : IEvent(module) { }
 
 void Go::StreamSyncedMetaDataChangeEvent::Call(const alt::CEvent *ev)
 {
-    static auto call = GET_FUNC(Library, "altStreamSyncedMetaDataChangeEvent", void (*)(Entity entity, const char* key, MetaData newValue, MetaData oldValue));
+    static auto call = GET_FUNC(Library, "altStreamSyncedMetaDataChangeEvent", void (*)(Entity entity, const char* key, Array newValue, Array oldValue));
 
     if (call == nullptr)
     {
@@ -20,14 +21,8 @@ void Go::StreamSyncedMetaDataChangeEvent::Call(const alt::CEvent *ev)
 
     Entity e = Go::Runtime::GetEntity(entity);
 
-    // Temporary
-    MetaData newValue;
-    newValue.Ptr = newValueMeta.Get();
-    newValue.Type = static_cast<unsigned char>(newValueMeta->GetType());
-
-    MetaData oldValue;
-    oldValue.Ptr = oldValueMeta.Get();
-    oldValue.Type = static_cast<unsigned char>(oldValueMeta->GetType());
+    auto newValue = Go::Runtime::MValueToProtoBytes(newValueMeta);
+    auto oldValue = Go::Runtime::MValueToProtoBytes(oldValueMeta);
 
     call(e, key, newValue, oldValue);
 }
