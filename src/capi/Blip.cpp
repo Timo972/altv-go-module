@@ -14,23 +14,20 @@ EXPORT int Blip_HasMetaData(void* base, const char *key)
     return baseObject->HasMetaData(key);
 }
 
-EXPORT MetaData Blip_GetMetaData(void* base, const char *key)
+EXPORT Array Blip_GetMetaData(void* base, const char *key)
 {
     auto baseObject = reinterpret_cast<alt::IBlip*>(base);
     auto meta = baseObject->GetMetaData(key);
 
-    // Temporary
-    MetaData metaData;
-    metaData.Ptr = meta.Get();
-    metaData.Type = static_cast<unsigned char>(meta->GetType());
+    auto metaData = Go::Runtime::MValueToProtoBytes(meta);
 
     return metaData;
 }
 
-EXPORT void Blip_SetMetaData(void *base, const char *key, void *val)
+EXPORT void Blip_SetMetaData(void *base, const char *key, unsigned char* data, unsigned long long size)
 {
     auto baseObject = reinterpret_cast<alt::IBlip*>(base);
-    auto value = reinterpret_cast<alt::IMValue*>(val);
+    auto value = Go::Runtime::ProtoToMValue(data, size);
 
     baseObject->SetMetaData(key, value);
 }
@@ -39,13 +36,19 @@ EXPORT void Blip_DeleteMetaData(void *base, const char *key)
 {
     auto baseObject = reinterpret_cast<alt::IBlip*>(base);
     baseObject->DeleteMetaData(key);
-    baseObject->RemoveRef();
+    // baseObject->RemoveRef();
 }
 
 EXPORT void Blip_Destroy(void *b)
 {
     auto blip = reinterpret_cast<alt::IBlip*>(b);
     alt::ICore::Instance().DestroyBaseObject(blip);
+}
+
+EXPORT int Blip_IsValid(void* p)
+{
+    auto cs = reinterpret_cast<alt::IBlip*>(p);
+    return cs ? 1 : 0;
 }
 
 // WorldObject inherited

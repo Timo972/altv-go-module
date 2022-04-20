@@ -6,23 +6,20 @@ EXPORT int Vehicle_HasMetaData(void *base, const char *key) {
     return vehicle->HasMetaData(key);
 }
 
-EXPORT MetaData Vehicle_GetMetaData(void *base, const char *key) {
+EXPORT Array Vehicle_GetMetaData(void *base, const char *key) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
     auto meta = vehicle->GetMetaData(key);
 
-    // Temporary
-    MetaData metaData;
-    metaData.Ptr = meta.Get();
-    metaData.Type = static_cast<unsigned char>(meta->GetType());
+    auto metaData = Go::Runtime::MValueToProtoBytes(meta);
 
     return metaData;
 }
 
-EXPORT void Vehicle_SetMetaData(void *base, const char *key, void *val) {
+EXPORT void Vehicle_SetMetaData(void *base, const char *key, unsigned char* data, unsigned long long size) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
-    auto value = reinterpret_cast<alt::IMValue *>(val);
+    auto value = Go::Runtime::ProtoToMValue(data, size);
 
     vehicle->SetMetaData(key, value);
 }
@@ -31,7 +28,7 @@ EXPORT void Vehicle_DeleteMetaData(void *base, const char *key) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
     vehicle->DeleteMetaData(key);
-    vehicle->RemoveRef();
+    // vehicle->RemoveRef();
 }
 
 EXPORT int Vehicle_HasSyncedMetaData(void *base, const char *key) {
@@ -39,23 +36,20 @@ EXPORT int Vehicle_HasSyncedMetaData(void *base, const char *key) {
     return vehicle->HasSyncedMetaData(key);
 }
 
-EXPORT MetaData Vehicle_GetSyncedMetaData(void *base, const char *key) {
+EXPORT Array Vehicle_GetSyncedMetaData(void *base, const char *key) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
     auto meta = vehicle->GetSyncedMetaData(key);
 
-    // Temporary
-    MetaData metaData;
-    metaData.Ptr = meta.Get();
-    metaData.Type = static_cast<unsigned char>(meta->GetType());
+    auto metaData = Go::Runtime::MValueToProtoBytes(meta);
 
     return metaData;
 }
 
-EXPORT void Vehicle_SetSyncedMetaData(void *base, const char *key, void *val) {
+EXPORT void Vehicle_SetSyncedMetaData(void *base, const char *key, unsigned char* data, unsigned long long size) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
-    auto value = reinterpret_cast<alt::IMValue *>(val);
+    auto value = Go::Runtime::ProtoToMValue(data, size);
 
     vehicle->SetSyncedMetaData(key, value);
 }
@@ -64,7 +58,7 @@ EXPORT void Vehicle_DeleteSyncedMetaData(void *base, const char *key) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
     vehicle->DeleteSyncedMetaData(key);
-    vehicle->RemoveRef();
+    // vehicle->RemoveRef();
 }
 
 EXPORT int Vehicle_HasStreamSyncedMetaData(void *base, const char *key) {
@@ -72,23 +66,20 @@ EXPORT int Vehicle_HasStreamSyncedMetaData(void *base, const char *key) {
     return vehicle->HasStreamSyncedMetaData(key);
 }
 
-EXPORT MetaData Vehicle_GetStreamSyncedMetaData(void *base, const char *key) {
+EXPORT Array Vehicle_GetStreamSyncedMetaData(void *base, const char *key) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
     auto meta = vehicle->GetStreamSyncedMetaData(key);
 
-    // Temporary
-    MetaData metaData;
-    metaData.Ptr = meta.Get();
-    metaData.Type = static_cast<unsigned char>(meta->GetType());
+    auto metaData = Go::Runtime::MValueToProtoBytes(meta);
 
     return metaData;
 }
 
-EXPORT void Vehicle_SetStreamSyncedMetaData(void *base, const char *key, void *val) {
+EXPORT void Vehicle_SetStreamSyncedMetaData(void *base, const char *key, unsigned char* data, unsigned long long size) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
-    auto value = reinterpret_cast<alt::IMValue *>(val);
+    auto value = Go::Runtime::ProtoToMValue(data, size);
 
     vehicle->SetStreamSyncedMetaData(key, value);
 }
@@ -97,7 +88,7 @@ EXPORT void Vehicle_DeleteStreamSyncedMetaData(void *base, const char *key) {
 
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
     vehicle->DeleteStreamSyncedMetaData(key);
-    vehicle->RemoveRef();
+    // vehicle->RemoveRef();
 }
 
 EXPORT Position Vehicle_GetPosition(void *v) {
