@@ -477,17 +477,15 @@ EXPORT int Core_HasMetaData(const char *key) {
     return alt::ICore::Instance().HasMetaData(key);
 }
 
-EXPORT MetaData Core_GetMetaData(const char *key) {
+EXPORT Array Core_GetMetaData(const char *key) {
     auto meta = alt::ICore::Instance().GetMetaData(key);
-    MetaData metaData;
-    metaData.Ptr = meta.Get();
-    metaData.Type = static_cast<unsigned char>(meta->GetType());
+    auto metaData = Go::Runtime::MValueToProtoBytes(meta);
 
     return metaData;
 }
 
-EXPORT void Core_SetMetaData(const char *key, void *val) {
-    auto value = reinterpret_cast<alt::IMValue *>(val);
+EXPORT void Core_SetMetaData(const char *key, unsigned char *data, unsigned long long size) {
+    auto value = Go::Runtime::ProtoToMValue(data, size);
     alt::ICore::Instance().SetMetaData(key, value);
 }
 
@@ -499,11 +497,9 @@ EXPORT int Core_HasSyncedMetaData(const char *key) {
     return alt::ICore::Instance().HasSyncedMetaData(key);
 }
 
-EXPORT MetaData Core_GetSyncedMetaData(const char *key) {
+EXPORT Array Core_GetSyncedMetaData(const char *key) {
     auto meta = alt::ICore::Instance().GetSyncedMetaData(key);
-    MetaData metaData;
-    metaData.Ptr = meta.Get();
-    metaData.Type = static_cast<unsigned char>(meta->GetType());
+    auto metaData = Go::Runtime::MValueToProtoBytes(meta);
 
     return metaData;
 }
@@ -539,8 +535,8 @@ EXPORT void Core_RestartResource(const char *name) {
     alt::ICore::Instance().RestartResource(name);
 }
 
-EXPORT void Core_SetSyncedMetaData(const char *key, void *val) {
-    auto value = reinterpret_cast<alt::IMValue *>(val);
+EXPORT void Core_SetSyncedMetaData(const char *key, unsigned char *data, unsigned long long size) {
+    auto value = Go::Runtime::ProtoToMValue(data, size);
     alt::ICore::Instance().SetSyncedMetaData(key, value);
 }
 
