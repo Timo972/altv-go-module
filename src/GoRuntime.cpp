@@ -233,6 +233,10 @@ alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
 }
 
 alt::MValue Go::Runtime::ProtoToMValue(unsigned char *data, unsigned long long size) {
+    if (size == 0) {
+        return alt::ICore::Instance().CreateMValueNone();
+    }
+
     MValue::MValue mValue;
     mValue.ParseFromArray(data, size);
     return ProtoToMValue(mValue);
