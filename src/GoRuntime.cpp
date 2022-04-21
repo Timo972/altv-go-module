@@ -309,7 +309,6 @@ MValue::MValue Go::Runtime::MValueToProto(alt::MValue mValue) {
         auto mValueBaseObject = mValue.As<alt::IMValueBaseObject>();
         auto object = mValueBaseObject->Value();
         MValue::BaseObject base;
-        // TODO:
         base.set_ptr(PointerToString(object.Get()));
         base.set_type(static_cast<uint32_t>(object->GetType()));
         value.set_allocated_baseobjectvalue(&base);
@@ -370,14 +369,17 @@ MValue::MValue Go::Runtime::MValueToProto(alt::MValue mValue) {
     }
     case alt::IMValue::Type::DICT: {
         auto mValueDict = mValue.As<alt::IMValueDict>();
+        google::protobuf::RepeatedPtrField<MValue::MValue> *list = value.mutable_list();
+        MValue::MValue** data = list->mutable_data();
 
-        alt::Size i = 0;
+        uint64_t i = 0;
         for (auto it = mValueDict->Begin(); it; it = mValueDict->Next()) {
             auto k = it->GetKey();
-            value.set_dict(i, k.c_str());
+            value.add_dict(k.c_str());
             
             auto v = it->GetValue();
             auto pv = MValueToProto(v);
+            data[i] = &pv;
 
             i++;
         }
@@ -386,13 +388,15 @@ MValue::MValue Go::Runtime::MValueToProto(alt::MValue mValue) {
     }
     case alt::IMValue::Type::LIST: {
         auto mValueList = mValue.As<alt::IMValueList>();
+        google::protobuf::RepeatedPtrField<MValue::MValue> *list = value.mutable_list();
+        MValue::MValue** data = list->mutable_data();
 
         alt::Size size = mValueList->GetSize();
         for (alt::Size i = 0; i < size; i++) {
             auto mValue = mValueList->Get(i);
             auto p = MValueToProto(mValue);
 
-            //value.set_list
+            data[i] = &p;
         }
 
         break;
@@ -440,34 +444,95 @@ MValue::MValue Go::Runtime::MValueToProto(alt::MValueConst mValue) {
     }
     case alt::IMValue::Type::BASE_OBJECT: {
         auto mValueBaseObject = mValue.As<const alt::IMValueBaseObject>();
+        auto object = mValueBaseObject->Value();
+        MValue::BaseObject base;
+        base.set_ptr(PointerToString(object.Get()));
+        base.set_type(static_cast<uint32_t>(object->GetType()));
+        value.set_allocated_baseobjectvalue(&base);
         break;
     }
     case alt::IMValue::Type::BYTE_ARRAY: {
         auto mValueByteArray = mValue.As<const alt::IMValueByteArray>();
+        const auto bytes = mValueByteArray->GetData();
+        const auto size = mValueByteArray->GetSize();
+
+        value.set_bytesvalue(bytes, size);
         break;
     }
     case alt::IMValue::Type::RGBA: {
         auto mValueRGBA = mValue.As<const alt::IMValueRGBA>();
+        auto rgba = mValueRGBA->Value();
+
+        MValue::RGBA color;
+        color.set_r(rgba.r);
+        color.set_g(rgba.g);
+        color.set_b(rgba.b);
+        color.set_a(rgba.a);
+
+        value.set_allocated_rgbavalue(&color);
         break;
     }
     case alt::IMValue::Type::VECTOR2: {
         auto mValueV2 = mValue.As<const alt::IMValueVector2>();
+        auto v2 = mValueV2->Value();
+
+        MValue::Vector2 vec;
+        vec.set_x(v2[0]);
+        vec.set_y(v2[1]);
+
+        value.set_allocated_vector2value(&vec);
         break;
     }
     case alt::IMValue::Type::VECTOR3: {
         auto mValueV3 = mValue.As<const alt::IMValueVector3>();
+        auto v3 = mValueV3->Value();
+
+        MValue::Vector3 vec;
+        vec.set_x(v3[0]);
+        vec.set_y(v3[1]);
+        vec.set_z(v3[2]);
+
+        value.set_allocated_vector3value(&vec);
         break;
     }
     case alt::IMValue::Type::FUNCTION: {
         auto mValueFunc = mValue.As<const alt::IMValueFunction>();
+        MValue::ExternFunction func;
+        func.set_ptr(PointerToString(const_cast<alt::IMValueFunction*>(mValueFunc.Get())));
+
+        value.set_allocated_externfunctionvalue(&func);
         break;
     }
     case alt::IMValue::Type::DICT: {
         auto mValueDict = mValue.As<const alt::IMValueDict>();
+        google::protobuf::RepeatedPtrField<MValue::MValue>* list = value.mutable_list();
+        MValue::MValue** data = list->mutable_data();
+
+        uint64_t i = 0;
+        for (auto it = mValueDict->Begin(); it; it = mValueDict->Next()) {
+            auto k = it->GetKey();
+            value.add_dict(k.c_str());
+
+            auto v = it->GetValue();
+            auto pv = MValueToProto(v);
+            data[i] = &pv;
+
+            i++;
+        }
         break;
     }
     case alt::IMValue::Type::LIST: {
         auto mValueList = mValue.As<const alt::IMValueList>();
+        google::protobuf::RepeatedPtrField<MValue::MValue>* list = value.mutable_list();
+        MValue::MValue** data = list->mutable_data();
+
+        alt::Size size = mValueList->GetSize();
+        for (alt::Size i = 0; i < size; i++) {
+            auto mValue = mValueList->Get(i);
+            auto p = MValueToProto(mValue);
+
+            data[i] = &p;
+        }
         break;
     }
     case alt::IMValue::Type::NIL: {
@@ -508,7 +573,7 @@ Array Go::Runtime::MValueToProtoBytes(alt::MValueConst mValue) {
     return arr;
 }
 
-Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {
+Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {  
     Array all;
     all.size = args.GetSize();
 
