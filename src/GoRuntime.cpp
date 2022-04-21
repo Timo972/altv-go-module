@@ -4,6 +4,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <google/protobuf/text_format.h>
 #include <cstdio>
+#include <sstream>
 
 Go::Runtime *Go::Runtime::Instance = nullptr;
 
@@ -181,8 +182,9 @@ alt::IBaseObject* Go::Runtime::GetBaseObjectRef(Entity baseObject) {
 }
 
 std::string Go::Runtime::PointerToString(void* p) {
-    // TODO:
-    return "";
+    std::stringstream ss;
+    ss << p;
+    return ss.str();
 }
 
 alt::MValue Go::Runtime::ProtoToMValue(unsigned char *data, unsigned long long size) {
