@@ -77,10 +77,10 @@ EXPORT void *Core_CreateColShapeCube(float posX1, float posY1, float posZ1, floa
 EXPORT void *Core_CreateColShapeRectangle(float x1, float y1, float x2, float y2, float z);
 EXPORT void *Core_CreateColShapeCircle(float posX, float posY, float posZ, float radius);
 EXPORT void *Core_CreateColShapeSphere(float posX, float posY, float posZ, float radius);
-EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned long long mValuesSize);
-EXPORT void Core_TriggerClientEvent(void *p, const char *ev, CustomData *MValues, unsigned long long size);
-EXPORT void Core_TriggerClientEventFor(void **p, unsigned long long clientSize, const char *ev, CustomData *MValues, unsigned long long size);
-EXPORT void Core_TriggerClientEventForAll(const char *ev, CustomData *MValues, unsigned long long size);
+EXPORT void Core_TriggerLocalEvent(const char *ev, Array args);
+EXPORT void Core_TriggerClientEvent(void *p, const char *ev, Array args);
+EXPORT void Core_TriggerClientEventFor(Array clients, const char *ev, Array args);
+EXPORT void Core_TriggerClientEventForAll(const char *ev, Array args);
 EXPORT void *Core_CreatePointBlipPosition(float x, float y, float z);
 EXPORT void *Core_CreatePointBlipEntity(Entity entity);
 EXPORT void *Core_CreateAreaBlip(float x, float y, float z, float width, float height);

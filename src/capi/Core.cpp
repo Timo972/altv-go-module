@@ -597,38 +597,36 @@ EXPORT void *Core_CreateColShapeCylinder(float posX, float posY, float posZ, flo
     return colShape.Get();
 }
 
-EXPORT void Core_TriggerLocalEvent(const char *ev, CustomData *MValues, unsigned long long size) {
-    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
+EXPORT void Core_TriggerLocalEvent(const char *ev, Array data) {
+    auto args = Go::Runtime::ProtoToMValueArgs(data);
     // call event
     alt::ICore::Instance().TriggerLocalEvent(ev, args);
 }
 
-EXPORT void Core_TriggerClientEvent(void *p, const char *ev, CustomData *MValues, unsigned long long size) {
+EXPORT void Core_TriggerClientEvent(void *p, const char *ev, Array data) {
 
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
+    auto args = Go::Runtime::ProtoToMValueArgs(data);
     // call event
     alt::ICore::Instance().TriggerClientEvent(alt::Ref<alt::IPlayer>(player), ev, args);
 }
 
-EXPORT void Core_TriggerClientEventFor(void **p, unsigned long long clientSize, const char *ev, CustomData *MValues,
-                                       unsigned long long size) {
+EXPORT void Core_TriggerClientEventFor(Array clients, const char *ev, Array data) {
     alt::Array<alt::Ref<alt::IPlayer>> players;
 
-    for (unsigned long long i = 0; i < clientSize; i++) {
-        auto player = reinterpret_cast<alt::IPlayer *>(p[i]);
-        alt::Ref<alt::IPlayer> playerRef(player);
+    auto playerRefs = reinterpret_cast<alt::IPlayer**>(clients.array);
 
-        players.Push(playerRef);
+    for (unsigned long long i = 0; i < clients.size; i++) {
+        players.Push(alt::Ref<alt::IPlayer>(playerRefs[i]));
     }
 
-    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
+    auto args = Go::Runtime::ProtoToMValueArgs(data);
 
     alt::ICore::Instance().TriggerClientEvent(players, ev, args);
 }
 
-EXPORT void Core_TriggerClientEventForAll(const char *ev, CustomData *MValues, unsigned long long size) {
-    auto args = Go::Runtime::CreateMValueArgs(MValues, size);
+EXPORT void Core_TriggerClientEventForAll(const char *ev, Array data) {
+    auto args = Go::Runtime::ProtoToMValueArgs(data);
 
     alt::ICore::Instance().TriggerClientEventForAll(ev, args);
 }
