@@ -517,7 +517,7 @@ Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {
     return all;
 }
 
-alt::MValueArgs Go::Runtime::ProtoToMValueArgs(unsigned char *data, unsigned long long size) {
+alt::MValueArgs Go::Runtime::ProtoToMValueArgs(Array data) {
     alt::MValueArgs args;
 
     return args;
