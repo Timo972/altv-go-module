@@ -3,12 +3,6 @@
 
 #define ALT_SERVER_API
 
-// Temporary
-typedef struct metaData {
-    const void *Ptr;
-    unsigned char Type;
-} MetaData;
-
 typedef struct pos {
     float x;
     float y;
@@ -74,11 +68,6 @@ typedef struct array {
     void *array;
 } Array;
 
-typedef struct data {
-    void *mValue;
-    unsigned int Type;
-} CustomData;
-
 typedef struct connectionInfo {
     const char *name;
     unsigned long long socialID;
@@ -143,11 +132,5 @@ typedef struct vehicleModelInfo {
    unsigned short defaultExtras;
 } VehicleModelInfo;
 
-typedef struct mValueDict {
-    //const char **keys;
-    void *keys;
-    MetaData *values;
-    unsigned long long size;
-} MValueDict;
 
 #include "SDK.h"

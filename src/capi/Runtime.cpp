@@ -52,23 +52,15 @@ EXPORT void *Runtime_CreateMValueFunction(const char *resourceName, unsigned lon
     return defaultMVal.Get();
 }
 
-EXPORT Array Runtime_CallMValueFunction(void *ptr, unsigned char *data, unsigned long long mValueSize) {
+EXPORT Array Runtime_CallMValueFunction(void *ptr, Array data) {
     auto mValRef = reinterpret_cast<alt::IMValue *>(ptr);
     auto func = dynamic_cast<alt::IMValueFunction *>(mValRef);
-    // TODO: implement MValueArgs
-    //alt::MValueArgs args;
-    //if (mValueSize > 0) {
-    //    args = Go::Runtime::CreateMValueArgs(mValues, mValueSize);
-    //}
 
-    //auto retVal = func->Call(args);
+    auto args = Go::Runtime::ProtoToMValueArgs(data);
+    alt::MValue retValue = func->Call(args);
 
-    //retVal->AddRef();
-    //data.Ptr = retVal.Get();
-    //data.Type = static_cast<unsigned int>(retVal->GetType());
-
-    //return data;
-    return Array{};
+    auto bytes = Go::Runtime::MValueToProtoBytes(retValue);
+    return bytes;
 }
 
 EXPORT Array Runtime_GetAltExport(const char *targetResourceName, const char *exportName) {
@@ -100,6 +92,5 @@ EXPORT Array Runtime_GetAltExport(const char *targetResourceName, const char *ex
     alt::MValue exportMVal = exports->Get(exportName);
 
     auto data = Go::Runtime::MValueToProtoBytes(exportMVal);
-
     return data;
 }

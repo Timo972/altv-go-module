@@ -43,79 +43,6 @@ alt::IResource::Impl *Go::Runtime::GetResource(const std::string &name) {
     return nullptr;
 }
 
-alt::MValueArgs Go::Runtime::CreateMValueArgs(CustomData *MValues, unsigned long long size) {
-    alt::MValueArgs args;
-
-    for (unsigned long long i = 0; i < size; ++i) {
-        switch (static_cast<alt::IMValue::Type>(MValues[i].Type)) {
-            case alt::IMValue::Type::STRING:
-                args.Push(reinterpret_cast<alt::IMValueString *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::INT:
-                args.Push(reinterpret_cast<alt::IMValueInt *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::UINT:
-                args.Push(reinterpret_cast<alt::IMValueUInt *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::DOUBLE:
-                args.Push(reinterpret_cast<alt::IMValueDouble *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::BOOL:
-                args.Push(reinterpret_cast<alt::IMValueBool *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::RGBA:
-                args.Push(reinterpret_cast<alt::IMValueRGBA *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::VECTOR2:
-                args.Push(reinterpret_cast<alt::IMValueVector2 *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::VECTOR3:
-                args.Push(reinterpret_cast<alt::IMValueVector3 *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::BYTE_ARRAY:
-                args.Push(reinterpret_cast<alt::IMValueByteArray *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::BASE_OBJECT:
-                args.Push(reinterpret_cast<alt::IMValueBaseObject *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::FUNCTION:
-                args.Push(reinterpret_cast<alt::IMValueBool *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::LIST:
-                args.Push(reinterpret_cast<alt::IMValueList *>(MValues[i].mValue));
-                break;
-            case alt::IMValue::Type::DICT:
-                args.Push(reinterpret_cast<alt::IMValueDict *>(MValues[i].mValue));
-                break;
-        }
-    }
-
-    return args;
-}
-
-alt::RefBase <alt::RefStore<alt::IMValue>> Go::Runtime::CreateMValueFromJSONValue(rapidjson::Value &value) {
-    switch (value.GetType()) {
-        case rapidjson::kNullType:
-            return alt::ICore::Instance().CreateMValueNone();
-        case rapidjson::kFalseType:
-        case rapidjson::kTrueType:
-            return alt::ICore::Instance().CreateMValueBool(value.GetBool());
-        case rapidjson::kObjectType:
-            break;
-        case rapidjson::kArrayType: {
-            alt::RefBase <alt::RefStore<alt::IMValueList>> list = alt::ICore::Instance().CreateMValueList(
-                    value.GetArray().Size());
-            list->Push(CreateMValueFromJSONValue(value));
-
-            return list;
-        }
-        case rapidjson::kStringType:
-            return alt::ICore::Instance().CreateMValueString(value.GetString());
-        case rapidjson::kNumberType:
-            return alt::ICore::Instance().CreateMValueInt(value.GetInt());
-    }
-}
-
 Entity Go::Runtime::GetEntity(alt::Ref <alt::IEntity> entity) {
     Entity e;
 
@@ -232,6 +159,32 @@ alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {
     }
 }
 
+alt::IBaseObject* Go::Runtime::GetBaseObjectRef(Entity baseObject) {
+    auto type = static_cast<alt::IBaseObject::Type>(baseObject.Type);
+
+    switch (type) {
+    case alt::IBaseObject::Type::BLIP:
+        return reinterpret_cast<alt::IBlip*>(baseObject.Ptr);
+    case alt::IBaseObject::Type::CHECKPOINT:
+        return reinterpret_cast<alt::ICheckpoint*>(baseObject.Ptr);
+    case alt::IBaseObject::Type::COLSHAPE:
+        return reinterpret_cast<alt::IColShape*>(baseObject.Ptr);
+    case alt::IBaseObject::Type::PLAYER:
+        return reinterpret_cast<alt::IPlayer*>(baseObject.Ptr);
+    case alt::IBaseObject::Type::VEHICLE:
+        return reinterpret_cast<alt::IVehicle*>(baseObject.Ptr);
+    case alt::IBaseObject::Type::VOICE_CHANNEL:
+        return reinterpret_cast<alt::IVehicle*>(baseObject.Ptr);
+    }
+
+    return nullptr;
+}
+
+std::string Go::Runtime::PointerToString(void* p) {
+    // TODO:
+    return "";
+}
+
 alt::MValue Go::Runtime::ProtoToMValue(unsigned char *data, unsigned long long size) {
     if (size == 0) {
         return alt::ICore::Instance().CreateMValueNone();
@@ -256,15 +209,14 @@ alt::MValue Go::Runtime::ProtoToMValue(MValue::MValue mValue) {
     } else if (mValue.has_baseobjectvalue()) {
         const auto &baseObject = mValue.baseobjectvalue();
         Entity e;
-        sscanf(baseObject.ptr().c_str(), "%p", &e.Ptr);
         e.Type = baseObject.type();
-        // FIXME: only works for player and vehicle currently
-        auto altBaseObject = GetEntityRef(e);
+        sscanf(baseObject.ptr().c_str(), "%p", &e.Ptr);
+
+        auto altBaseObject = GetBaseObjectRef(e);
         return alt::ICore::Instance().CreateMValueBaseObject(altBaseObject);
     } else if (mValue.has_bytesvalue()) {
         auto bytes = mValue.bytesvalue();
-        return alt::ICore::Instance().CreateMValueByteArray(reinterpret_cast<const uint8_t *>(bytes.data()),
-                                                            bytes.size());
+        return alt::ICore::Instance().CreateMValueByteArray(reinterpret_cast<const uint8_t *>(bytes.data()), bytes.size());
     } else if (mValue.has_rgbavalue()) {
         const auto &rgba = mValue.rgbavalue();
         return alt::ICore::Instance().CreateMValueRGBA(alt::RGBA(rgba.r(), rgba.g(), rgba.b(), rgba.a()));
@@ -281,8 +233,8 @@ alt::MValue Go::Runtime::ProtoToMValue(MValue::MValue mValue) {
         v3[1] = vector3.y();
         v3[2] = vector3.z();
         return alt::ICore::Instance().CreateMValueVector3(v3);
-    } else if (mValue.has_functionvalue()) {
-        const auto &func = mValue.functionvalue();
+    } else if (mValue.has_internfunctionvalue()) {
+        const auto &func = mValue.internfunctionvalue();
         auto resource = dynamic_cast<Go::Resource *>(Go::Runtime::GetInstance()->GetResource(func.resourcename()));
         if (resource == nullptr) {
             return alt::ICore::Instance().CreateMValueNil();
@@ -355,34 +307,94 @@ MValue::MValue Go::Runtime::MValueToProto(alt::MValue mValue) {
     }
     case alt::IMValue::Type::BASE_OBJECT: {
         auto mValueBaseObject = mValue.As<alt::IMValueBaseObject>();
+        auto object = mValueBaseObject->Value();
+        MValue::BaseObject base;
+        // TODO:
+        base.set_ptr(PointerToString(object.Get()));
+        base.set_type(static_cast<uint32_t>(object->GetType()));
+        value.set_allocated_baseobjectvalue(&base);
         break;
     }
     case alt::IMValue::Type::BYTE_ARRAY: {
         auto mValueByteArray = mValue.As<alt::IMValueByteArray>();
+        const auto bytes = mValueByteArray->GetData();
+        const auto size = mValueByteArray->GetSize();
+
+        value.set_bytesvalue(bytes, size);
         break;
     }
     case alt::IMValue::Type::RGBA: {
         auto mValueRGBA = mValue.As<alt::IMValueRGBA>();
+        auto rgba = mValueRGBA->Value();
+
+        MValue::RGBA color;
+        color.set_r(rgba.r);
+        color.set_g(rgba.g);
+        color.set_b(rgba.b);
+        color.set_a(rgba.a);
+
+        value.set_allocated_rgbavalue(&color);
         break;
     }
     case alt::IMValue::Type::VECTOR2: {
         auto mValueV2 = mValue.As<alt::IMValueVector2>();
+        auto v2 = mValueV2->Value();
+
+        MValue::Vector2 vec;
+        vec.set_x(v2[0]);
+        vec.set_y(v2[1]);
+
+        value.set_allocated_vector2value(&vec);
         break;
     }
     case alt::IMValue::Type::VECTOR3: {
         auto mValueV3 = mValue.As<alt::IMValueVector3>();
+        auto v3 = mValueV3->Value();
+
+        MValue::Vector3 vec;
+        vec.set_x(v3[0]);
+        vec.set_y(v3[1]);
+        vec.set_z(v3[2]);
+
+        value.set_allocated_vector3value(&vec);
         break;
     }
     case alt::IMValue::Type::FUNCTION: {
         auto mValueFunc = mValue.As<alt::IMValueFunction>();
+        
+        MValue::ExternFunction func;
+        func.set_ptr(PointerToString(mValueFunc.Get()));
+
+        value.set_allocated_externfunctionvalue(&func);
         break;
     }
     case alt::IMValue::Type::DICT: {
         auto mValueDict = mValue.As<alt::IMValueDict>();
+
+        alt::Size i = 0;
+        for (auto it = mValueDict->Begin(); it; it = mValueDict->Next()) {
+            auto k = it->GetKey();
+            value.set_dict(i, k.c_str());
+            
+            auto v = it->GetValue();
+            auto pv = MValueToProto(v);
+
+            i++;
+        }
+
         break;
     }
     case alt::IMValue::Type::LIST: {
         auto mValueList = mValue.As<alt::IMValueList>();
+
+        alt::Size size = mValueList->GetSize();
+        for (alt::Size i = 0; i < size; i++) {
+            auto mValue = mValueList->Get(i);
+            auto p = MValueToProto(mValue);
+
+            //value.set_list
+        }
+
         break;
     }
     case alt::IMValue::Type::NIL: {
@@ -519,6 +531,20 @@ Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {
 
 alt::MValueArgs Go::Runtime::ProtoToMValueArgs(Array data) {
     alt::MValueArgs args;
+    auto byteArrays = reinterpret_cast<Array*>(data.array);
+
+    for (auto i = 0; i < data.size; i++) {
+        Array arr = byteArrays[i];
+        auto data = reinterpret_cast<unsigned char*>(arr.array);
+
+        alt::MValue arg = ProtoToMValue(data, arr.size);
+
+        args.Push(arg);
+    }
+
+#ifdef _WIN32
+    delete[] data.array;
+#endif
 
     return args;
 }

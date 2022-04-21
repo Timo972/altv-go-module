@@ -13,7 +13,7 @@ extern "C"
     EXPORT int Runtime_RegisterAltExport(const char *resourceName, const char *exportName, unsigned char *data, unsigned long long size);
     EXPORT Array Runtime_GetAltExport(const char *targetResourceName, const char *exportName);
     EXPORT void *Runtime_CreateMValueFunction(const char *resourceName, unsigned long long id);
-    EXPORT Array Runtime_CallMValueFunction(void *ptr, unsigned char *data, unsigned long long mValueSize);
+    EXPORT Array Runtime_CallMValueFunction(void *ptr, Array args);
 #ifdef __cplusplus
 }
 #endif

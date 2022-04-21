@@ -23,13 +23,10 @@ namespace Go {
 
         alt::IResource::Impl *GetResource(const std::string &name);
 
-        static alt::MValueArgs CreateMValueArgs(CustomData *MValues, unsigned long long size);
-
-        alt::MValue CreateMValueFromJSONValue(rapidjson::Value &value);
-
         static Entity GetEntity(alt::Ref<alt::IEntity> entity);
 
         static alt::IEntity *GetEntityRef(Entity entity);
+        static alt::IBaseObject *GetBaseObjectRef(Entity baseObject);
 
         static ConnectionInfo GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info);
 
@@ -135,6 +132,8 @@ namespace Go {
 
             return arr;
         }*/
+
+        static std::string PointerToString(void* p);
 
         // Protobuf MValue stuff
         static alt::MValue ProtoToMValue(unsigned char *data, unsigned long long size);
