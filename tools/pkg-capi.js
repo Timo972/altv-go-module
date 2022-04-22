@@ -70,6 +70,14 @@ function generateCFuncBody(returnType, pureName, argStr) {
     }
     return name;
   });
+
+    if (returnType === "void")
+        return `
+${returnType} ${pureName}(${argStr})
+{
+    g_call_${pureName}(${args.join(', ')});
+}\n`;
+        else
   return `
 ${returnType} ${pureName}(${argStr})
 {
@@ -150,7 +158,7 @@ const files = [
 
 const cBegin =
   `
-#include "Module.h"
+#include "capi.h"
 
 Module module;
 `
@@ -236,8 +244,8 @@ async function main() {
 
   if (!fs.existsSync('./out'))
     fs.mkdirSync('./out');
-  await writeFile(`./out/Module.h`, hBegin + "\n" + typedefs + "\n" + h + "\n" + "\n#endif");
-  await writeFile(`./out/Module.c`, cBegin + "\n" + c + "\n\n" + getFuncsStr);
+  await writeFile(`./out/capi.h`, hBegin + "\n" + typedefs + "\n" + h + "\n" + "\n#endif");
+  await writeFile(`./out/capi.c`, cBegin + "\n" + c + "\n\n" + getFuncsStr);
 
   console.log("done!");
 }
