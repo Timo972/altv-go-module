@@ -141,8 +141,8 @@ namespace Go {
 
         static Array MValueToProtoBytes(alt::MValue mValue);
         static Array MValueToProtoBytes(alt::MValueConst mValue);
-        static MValue::MValue MValueToProto(alt::MValue mValue);
-        static MValue::MValue MValueToProto(alt::MValueConst mValue);
+        static void MValueToProto(alt::MValue mValue, MValue::MValue *out);
+        static void MValueToProto(alt::MValueConst mValue, MValue::MValue *out);
 
         static Array MValueArgsToProtoBytes(alt::MValueArgs args);
         static alt::MValueArgs ProtoToMValueArgs(Array data);

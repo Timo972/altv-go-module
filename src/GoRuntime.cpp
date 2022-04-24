@@ -278,42 +278,39 @@ alt::MValue Go::Runtime::ProtoToMValue(MValue::MValue mValue) {
     }
 }
 
-MValue::MValue Go::Runtime::MValueToProto(alt::MValue mValue) {
-    MValue::MValue value;
-
+void Go::Runtime::MValueToProto(alt::MValue mValue, MValue::MValue *value) {
     switch (mValue->GetType()) {
     case alt::IMValue::Type::BOOL: {
         auto b = mValue.As<alt::IMValueBool>();
-        value.set_boolvalue(b->Value());
+        value->set_boolvalue(b->Value());
         break;
     }
     case alt::IMValue::Type::UINT: {
         auto mValueUint = mValue.As<alt::IMValueUInt>();
-        value.set_uintvalue(mValueUint->Value());
+        value->set_uintvalue(mValueUint->Value());
         break;
     }
     case alt::IMValue::Type::INT: {
         auto mValueInt = mValue.As<alt::IMValueInt>();
-        value.set_intvalue(mValueInt->Value());
+        value->set_intvalue(mValueInt->Value());
         break;
     }
     case alt::IMValue::Type::DOUBLE: {
         auto mValueDouble = mValue.As<alt::IMValueDouble>();
-        value.set_doublevalue(mValueDouble->Value());
+        value->set_doublevalue(mValueDouble->Value());
         break;
     }
     case alt::IMValue::Type::STRING: {
         auto mValueString = mValue.As<alt::IMValueString>();
-        value.set_stringvalue(mValueString->Value());
+        value->set_stringvalue(mValueString->Value());
         break;
     }
     case alt::IMValue::Type::BASE_OBJECT: {
         auto mValueBaseObject = mValue.As<alt::IMValueBaseObject>();
         auto object = mValueBaseObject->Value();
-        MValue::BaseObject base;
-        base.set_ptr(PointerToString(object.Get()));
-        base.set_type(static_cast<uint32_t>(object->GetType()));
-        value.set_allocated_baseobjectvalue(&base);
+        auto base = value->mutable_baseobjectvalue();
+        base->set_ptr(PointerToString(object.Get()));
+        base->set_type(static_cast<uint32_t>(object->GetType()));
         break;
     }
     case alt::IMValue::Type::BYTE_ARRAY: {
@@ -321,136 +318,122 @@ MValue::MValue Go::Runtime::MValueToProto(alt::MValue mValue) {
         const auto bytes = mValueByteArray->GetData();
         const auto size = mValueByteArray->GetSize();
 
-        value.set_bytesvalue(bytes, size);
+        value->set_bytesvalue(bytes, size);
         break;
     }
     case alt::IMValue::Type::RGBA: {
         auto mValueRGBA = mValue.As<alt::IMValueRGBA>();
         auto rgba = mValueRGBA->Value();
+        auto color = value->mutable_rgbavalue();
 
-        MValue::RGBA color;
-        color.set_r(rgba.r);
-        color.set_g(rgba.g);
-        color.set_b(rgba.b);
-        color.set_a(rgba.a);
+        color->set_r(rgba.r);
+        color->set_g(rgba.g);
+        color->set_b(rgba.b);
+        color->set_a(rgba.a);
 
-        value.set_allocated_rgbavalue(&color);
         break;
     }
     case alt::IMValue::Type::VECTOR2: {
         auto mValueV2 = mValue.As<alt::IMValueVector2>();
         auto v2 = mValueV2->Value();
+        auto vec = value->mutable_vector2value();
 
-        MValue::Vector2 vec;
-        vec.set_x(v2[0]);
-        vec.set_y(v2[1]);
+        vec->set_x(v2[0]);
+        vec->set_y(v2[1]);
 
-        value.set_allocated_vector2value(&vec);
         break;
     }
     case alt::IMValue::Type::VECTOR3: {
         auto mValueV3 = mValue.As<alt::IMValueVector3>();
         auto v3 = mValueV3->Value();
+        auto vec = value->mutable_vector3value();
+        
+        vec->set_x(v3[0]);
+        vec->set_y(v3[1]);
+        vec->set_z(v3[2]);
 
-        MValue::Vector3 vec;
-        vec.set_x(v3[0]);
-        vec.set_y(v3[1]);
-        vec.set_z(v3[2]);
-
-        value.set_allocated_vector3value(&vec);
         break;
     }
     case alt::IMValue::Type::FUNCTION: {
         auto mValueFunc = mValue.As<alt::IMValueFunction>();
         
-        MValue::ExternFunction func;
-        func.set_ptr(PointerToString(mValueFunc.Get()));
+        auto func = value->mutable_externfunctionvalue();
+        func->set_ptr(PointerToString(mValueFunc.Get()));
 
-        value.set_allocated_externfunctionvalue(&func);
         break;
     }
     case alt::IMValue::Type::DICT: {
         auto mValueDict = mValue.As<alt::IMValueDict>();
-        google::protobuf::RepeatedPtrField<MValue::MValue> *list = value.mutable_list();
-        MValue::MValue** data = list->mutable_data();
 
-        uint64_t i = 0;
         for (auto it = mValueDict->Begin(); it; it = mValueDict->Next()) {
             auto k = it->GetKey();
-            value.add_dict(k.c_str());
+            value->add_dict(k.c_str());
             
             auto v = it->GetValue();
-            auto pv = MValueToProto(v);
-            data[i] = &pv;
-
-            i++;
+            auto lv = value->add_list();
+            MValueToProto(v, lv);
         }
 
         break;
     }
     case alt::IMValue::Type::LIST: {
         auto mValueList = mValue.As<alt::IMValueList>();
-        google::protobuf::RepeatedPtrField<MValue::MValue> *list = value.mutable_list();
-        MValue::MValue** data = list->mutable_data();
 
         alt::Size size = mValueList->GetSize();
         for (alt::Size i = 0; i < size; i++) {
             auto mValue = mValueList->Get(i);
-            auto p = MValueToProto(mValue);
+            auto lv = value->add_list();
 
-            data[i] = &p;
+            MValueToProto(mValue, lv);
         }
 
         break;
     }
     case alt::IMValue::Type::NIL: {
-        value.set_nilvalue(true);
+        value->set_nilvalue(true);
         break;
     }
     default:
-        value.set_nonevalue(true);
+        value->set_nonevalue(true);
         break;
     }
-
-    return value;
 }
 
-MValue::MValue Go::Runtime::MValueToProto(alt::MValueConst mValue) {
-    MValue::MValue value;
-
+void Go::Runtime::MValueToProto(alt::MValueConst mValue, MValue::MValue *value) {
     switch (mValue->GetType()) {
     case alt::IMValue::Type::BOOL: {
         auto b = mValue.As<const alt::IMValueBool>();
-        value.set_boolvalue(b->Value());
+        value->set_boolvalue(b->Value());
         break;
     }
     case alt::IMValue::Type::UINT: {
         auto mValueUint = mValue.As<const alt::IMValueUInt>();
-        value.set_uintvalue(mValueUint->Value());
+        value->set_uintvalue(mValueUint->Value());
         break;
     }
     case alt::IMValue::Type::INT: {
         auto mValueInt = mValue.As<const alt::IMValueInt>();
-        value.set_intvalue(mValueInt->Value());
+        value->set_intvalue(mValueInt->Value());
         break;
     }
     case alt::IMValue::Type::DOUBLE: {
         auto mValueDouble = mValue.As<const alt::IMValueDouble>();
-        value.set_doublevalue(mValueDouble->Value());
+        value->set_doublevalue(mValueDouble->Value());
         break;
     }
     case alt::IMValue::Type::STRING: {
         auto mValueString = mValue.As<const alt::IMValueString>();
-        value.set_stringvalue(mValueString->Value());
+        value->set_stringvalue(mValueString->Value());
         break;
     }
     case alt::IMValue::Type::BASE_OBJECT: {
         auto mValueBaseObject = mValue.As<const alt::IMValueBaseObject>();
         auto object = mValueBaseObject->Value();
-        MValue::BaseObject base;
-        base.set_ptr(PointerToString(object.Get()));
-        base.set_type(static_cast<uint32_t>(object->GetType()));
-        value.set_allocated_baseobjectvalue(&base);
+        auto base = value->mutable_baseobjectvalue();
+
+        base->set_ptr(PointerToString(object.Get()));
+        base->set_type(static_cast<uint32_t>(object->GetType()));
+
         break;
     }
     case alt::IMValue::Type::BYTE_ARRAY: {
@@ -458,124 +441,114 @@ MValue::MValue Go::Runtime::MValueToProto(alt::MValueConst mValue) {
         const auto bytes = mValueByteArray->GetData();
         const auto size = mValueByteArray->GetSize();
 
-        value.set_bytesvalue(bytes, size);
+        value->set_bytesvalue(bytes, size);
         break;
     }
     case alt::IMValue::Type::RGBA: {
         auto mValueRGBA = mValue.As<const alt::IMValueRGBA>();
         auto rgba = mValueRGBA->Value();
+        auto color = value->mutable_rgbavalue();
+        
+        color->set_r(rgba.r);
+        color->set_g(rgba.g);
+        color->set_b(rgba.b);
+        color->set_a(rgba.a);
 
-        MValue::RGBA color;
-        color.set_r(rgba.r);
-        color.set_g(rgba.g);
-        color.set_b(rgba.b);
-        color.set_a(rgba.a);
-
-        value.set_allocated_rgbavalue(&color);
         break;
     }
     case alt::IMValue::Type::VECTOR2: {
         auto mValueV2 = mValue.As<const alt::IMValueVector2>();
         auto v2 = mValueV2->Value();
+        auto vec = value->mutable_vector2value();
+        
+        vec->set_x(v2[0]);
+        vec->set_y(v2[1]);
 
-        MValue::Vector2 vec;
-        vec.set_x(v2[0]);
-        vec.set_y(v2[1]);
-
-        value.set_allocated_vector2value(&vec);
         break;
     }
     case alt::IMValue::Type::VECTOR3: {
         auto mValueV3 = mValue.As<const alt::IMValueVector3>();
         auto v3 = mValueV3->Value();
+        auto vec = value->mutable_vector3value();
 
-        MValue::Vector3 vec;
-        vec.set_x(v3[0]);
-        vec.set_y(v3[1]);
-        vec.set_z(v3[2]);
+        vec->set_x(v3[0]);
+        vec->set_y(v3[1]);
+        vec->set_z(v3[2]);
 
-        value.set_allocated_vector3value(&vec);
         break;
     }
     case alt::IMValue::Type::FUNCTION: {
         auto mValueFunc = mValue.As<const alt::IMValueFunction>();
-        MValue::ExternFunction func;
-        func.set_ptr(PointerToString(const_cast<alt::IMValueFunction*>(mValueFunc.Get())));
+        auto func = value->mutable_externfunctionvalue();
 
-        value.set_allocated_externfunctionvalue(&func);
+        func->set_ptr(PointerToString(const_cast<alt::IMValueFunction*>(mValueFunc.Get())));
+
         break;
     }
     case alt::IMValue::Type::DICT: {
         auto mValueDict = mValue.As<const alt::IMValueDict>();
-        google::protobuf::RepeatedPtrField<MValue::MValue>* list = value.mutable_list();
-        MValue::MValue** data = list->mutable_data();
 
-        uint64_t i = 0;
         for (auto it = mValueDict->Begin(); it; it = mValueDict->Next()) {
             auto k = it->GetKey();
-            value.add_dict(k.c_str());
+            value->add_dict(k.c_str());
 
-            auto v = it->GetValue();
-            auto pv = MValueToProto(v);
-            data[i] = &pv;
-
-            i++;
+            alt::MValueConst v = it->GetValue();
+            MValue::MValue* lv = value->add_list();
+            MValueToProto(v, lv);
         }
+
         break;
     }
     case alt::IMValue::Type::LIST: {
         auto mValueList = mValue.As<const alt::IMValueList>();
-        google::protobuf::RepeatedPtrField<MValue::MValue>* list = value.mutable_list();
-        MValue::MValue** data = list->mutable_data();
 
         alt::Size size = mValueList->GetSize();
         for (alt::Size i = 0; i < size; i++) {
             auto mValue = mValueList->Get(i);
-            auto p = MValueToProto(mValue);
-
-            data[i] = &p;
+            MValue::MValue* lv = value->add_list();
+            MValueToProto(mValue, lv);
         }
         break;
     }
     case alt::IMValue::Type::NIL: {
-        value.set_nilvalue(true);
+        value->set_nilvalue(true);
         break;
     }
     default:
-        value.set_nonevalue(true);
+        value->set_nonevalue(true);
         break;
     }
-
-    return value;
 }
 
 Array Go::Runtime::MValueToProtoBytes(alt::MValue mValue) {
-    auto value = MValueToProto(mValue);
+    auto value = new MValue::MValue();
+    MValueToProto(mValue, value);
 
     Array arr;
-    arr.size = value.ByteSizeLong();
+    arr.size = value->ByteSizeLong();
 
     unsigned char *byteArray = new unsigned char[arr.size];
-    value.SerializeToArray(byteArray, arr.size);
+    value->SerializeToArray(byteArray, arr.size);
     arr.array = byteArray;
 
     return arr;
 }
 
 Array Go::Runtime::MValueToProtoBytes(alt::MValueConst mValue) {
-    auto value = MValueToProto(mValue);
+    auto value = new MValue::MValue();
+    MValueToProto(mValue, value);
 
     Array arr;
-    arr.size = value.ByteSizeLong();
+    arr.size = value->ByteSizeLong();
 
     unsigned char* byteArray = new unsigned char[arr.size];
-    value.SerializeToArray(byteArray, arr.size);
+    value->SerializeToArray(byteArray, arr.size);
     arr.array = byteArray;
 
     return arr;
 }
 
-Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {  
+Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {
     Array all;
     all.size = args.GetSize();
 
