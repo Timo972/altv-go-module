@@ -598,6 +598,11 @@ Array Go::Runtime::MValueArgsToProtoBytes(alt::MValueArgs args) {
 
 alt::MValueArgs Go::Runtime::ProtoToMValueArgs(Array data) {
     alt::MValueArgs args;
+
+    if (!data.size || data.array == nullptr) {
+        return args;
+    }
+
     auto byteArrays = reinterpret_cast<Array*>(data.array);
 
     for (auto i = 0; i < data.size; i++) {
@@ -609,9 +614,10 @@ alt::MValueArgs Go::Runtime::ProtoToMValueArgs(Array data) {
         args.Push(arg);
     }
 
-#ifdef _WIN32
-    delete[] data.array;
-#endif
+// crashes
+//#ifdef _WIN32
+//    delete[] data.array;
+//#endif
 
     return args;
 }
