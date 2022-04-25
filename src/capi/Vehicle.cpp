@@ -1,5 +1,6 @@
 #include "Vehicle.h"
 #include "GoRuntime.h"
+#include "GoResource.h"
 
 EXPORT int Vehicle_HasMetaData(void *base, const char *key) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(base);
@@ -881,9 +882,11 @@ EXPORT void Vehicle_Destroy(void *v) {
     alt::ICore::Instance().DestroyBaseObject(vehicle);
 }
 
-EXPORT int Vehicle_IsValid(void *p) {
+EXPORT int Vehicle_IsValid(const char *resourceName, void *p) {
     auto vehicle = reinterpret_cast<alt::IVehicle *>(p);
-    return vehicle ? 1 : 0;
+    auto resource = dynamic_cast<Go::Resource*>(Go::Runtime::GetInstance()->GetResource(resourceName));
+
+    return resource->HasEntity(vehicle);
 }
 
 EXPORT int Vehicle_GetStreamed(void *v) {

@@ -1,5 +1,6 @@
 #include "VoiceChannel.h"
 #include "GoRuntime.h"
+#include "GoResource.h"
 
 EXPORT int VoiceChannel_GetType(void *c) {
     auto channel = reinterpret_cast<alt::IVoiceChannel *>(c);
@@ -41,9 +42,11 @@ EXPORT void VoiceChannel_Destroy(void *b) {
     alt::ICore::Instance().DestroyBaseObject(channel);
 }
 
-EXPORT int VoiceChannel_IsValid(void *p) {
+EXPORT int VoiceChannel_IsValid(const char *resourceName, void *p) {
     auto vc = reinterpret_cast<alt::IVoiceChannel *>(p);
-    return vc ? 1 : 0;
+    auto resource = dynamic_cast<Go::Resource*>(Go::Runtime::GetInstance()->GetResource(resourceName));
+
+    return resource->HasEntity(vc);
 }
 
 EXPORT int VoiceChannel_IsSpatial(void *v) {

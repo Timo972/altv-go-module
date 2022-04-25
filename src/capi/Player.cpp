@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "GoRuntime.h"
+#include "GoResource.h"
 
 EXPORT const char *Player_GetName(void *p) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
@@ -543,9 +544,11 @@ EXPORT void Player_Destroy(void *b) {
     alt::ICore::Instance().DestroyBaseObject(player);
 }
 
-EXPORT int Player_IsValid(void *p) {
+EXPORT int Player_IsValid(const char *resourceName, void *p) {
     auto player = reinterpret_cast<alt::IPlayer *>(p);
-    return player ? 1 : 0;
+    auto resource = dynamic_cast<Go::Resource*>(Go::Runtime::GetInstance()->GetResource(resourceName));
+
+    return resource->HasEntity(player);
 }
 
 EXPORT int Player_GetStreamed(void *p) {

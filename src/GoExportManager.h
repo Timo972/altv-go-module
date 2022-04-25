@@ -22,8 +22,9 @@ namespace Go
             {
             public:
                 ExportsManager() = default;
-                alt::MValueDict _registeredExports = alt::ICore::Instance().CreateMValueDict();
                 void AddExport(const char *exportName, alt::MValue data);
                 bool IsExportSet(const char *exportName);
+            protected:
+                alt::MValueDict _registeredExports = alt::ICore::Instance().CreateMValueDict();
             };
 }

@@ -99,7 +99,7 @@ EXPORT unsigned long Player_GetID(void *p);
 EXPORT void *Player_GetNetworkOwner(void *p);
 EXPORT void Player_SetNetworkOwner(void *p, void *owner, int disableMigration);
 EXPORT void Player_Destroy(void *p);
-EXPORT int Player_IsValid(void *p);
+EXPORT int Player_IsValid(const char* resourceName, void *p);
 EXPORT int Player_GetStreamed(void *p);
 EXPORT void Player_SetStreamed(void *p, int toggle);
 EXPORT int Player_GetInvincible(void *p);

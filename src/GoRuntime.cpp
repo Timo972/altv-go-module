@@ -183,9 +183,12 @@ alt::IBaseObject* Go::Runtime::GetBaseObjectRef(Entity baseObject) {
 }
 
 std::string Go::Runtime::PointerToString(void* p) {
+    std::cout << "Ptr: " << p << std::endl;
     auto i = reinterpret_cast<std::uintptr_t>(p);
+    std::cout << "Uint Ptr: " << i << std::endl;
     std::stringstream ss;
     ss << i;
+    std::cout << "Stringified Ptr: " << ss.str() << std::endl;
     return ss.str();
 }
 

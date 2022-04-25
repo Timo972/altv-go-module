@@ -1,5 +1,6 @@
 #include "Checkpoint.h"
 #include "GoRuntime.h"
+#include "GoResource.h"
 
 // BaseObject inherited
 EXPORT int Checkpoint_GetType(void *c)
@@ -196,8 +197,10 @@ EXPORT void Checkpoint_SetNextPosition(void *c, float x, float y, float z)
     checkpoint->SetNextPosition(pos);
 }
 
-EXPORT int Checkpoint_IsValid(void *p)
+EXPORT int Checkpoint_IsValid(const char *resourceName, void *p)
 {
     auto cp = reinterpret_cast<alt::ICheckpoint*>(p);
-    return cp ? 1 : 0;
+    auto resource = dynamic_cast<Go::Resource*>(Go::Runtime::GetInstance()->GetResource(resourceName));
+
+    return resource->HasEntity(cp);
 }

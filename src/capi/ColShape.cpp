@@ -1,5 +1,6 @@
 #include "ColShape.h"
 #include "GoRuntime.h"
+#include "GoResource.h"
 
 // BaseObject inherited
 EXPORT int ColShape_GetType(void *c)
@@ -45,10 +46,12 @@ EXPORT void ColShape_Destroy(void *b)
     alt::ICore::Instance().DestroyBaseObject(colShape);
 }
 
-EXPORT int ColShape_IsValid(void *p)
+EXPORT int ColShape_IsValid(const char *resourceName, void *p)
 {
     auto cs = reinterpret_cast<alt::IColShape*>(p);
-    return cs ? 1 : 0;
+    auto resource = dynamic_cast<Go::Resource*>(Go::Runtime::GetInstance()->GetResource(resourceName));
+
+    return resource->HasEntity(cs);
 }
 
 // WorldObject inherited

@@ -1,5 +1,6 @@
 #include "Blip.h"
 #include "GoRuntime.h"
+#include "GoResource.h"
 
 // BaseObject inherited
 EXPORT int Blip_GetType(void *c)
@@ -45,10 +46,12 @@ EXPORT void Blip_Destroy(void *b)
     alt::ICore::Instance().DestroyBaseObject(blip);
 }
 
-EXPORT int Blip_IsValid(void* p)
+EXPORT int Blip_IsValid(const char *resourceName, void* p)
 {
     auto cs = reinterpret_cast<alt::IBlip*>(p);
-    return cs ? 1 : 0;
+    auto resource = dynamic_cast<Go::Resource*>(Go::Runtime::GetInstance()->GetResource(resourceName));
+
+    return resource->HasEntity(cs);
 }
 
 // WorldObject inherited

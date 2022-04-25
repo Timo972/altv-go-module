@@ -14,7 +14,7 @@ EXPORT Array Blip_GetMetaData(void *base, const char *key);
 EXPORT void Blip_SetMetaData(void *base, const char *key, unsigned char* data, unsigned long long size);
 EXPORT void Blip_DeleteMetaData(void *base, const char *key);
 EXPORT void Blip_Destroy(void *b);
-EXPORT int Blip_IsValid(void *p);
+EXPORT int Blip_IsValid(const char *resourceName, void *p);
 
 // WorldObject inherited
 EXPORT Position Blip_GetPosition(void *p);

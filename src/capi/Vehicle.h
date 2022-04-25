@@ -172,7 +172,7 @@ EXPORT void Vehicle_LoadHealthDataFromBase64(void *v, const char *base64);
 EXPORT void *Vehicle_GetAttached(void *v);
 EXPORT void *Vehicle_GetAttachedTo(void *v);
 EXPORT void Vehicle_Destroy(void *v);
-EXPORT int Vehicle_IsValid(void *p);
+EXPORT int Vehicle_IsValid(const char *resourceName, void *p);
 EXPORT int Vehicle_GetStreamed(void *v);
 EXPORT void Vehicle_SetStreamed(void *v, int toggle);
 EXPORT int Vehicle_IsFrozen(void *v);

@@ -6,7 +6,7 @@
 extern "C"
 {
 #endif
-    EXPORT int VoiceChannel_IsValid(void *p);
+    EXPORT int VoiceChannel_IsValid(const char* resourceName, void *p);
     // BaseObject inherited
     EXPORT int VoiceChannel_GetType(void *c);
     EXPORT int VoiceChannel_HasMetaData(void* base, const char *key);

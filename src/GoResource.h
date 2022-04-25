@@ -50,6 +50,7 @@ class Resource : public alt::IResource::Impl, public Go::EventsManager, public G
     private:
         Go::Runtime *_runtime;
         alt::IResource *_resource;
+        std::list<alt::IBaseObject*> _entities;
 
     public:
         ModuleLibrary *Module = nullptr;
@@ -59,5 +60,31 @@ class Resource : public alt::IResource::Impl, public Go::EventsManager, public G
         bool Stop() override;
         bool OnEvent(const alt::CEvent *ev) override;
         void OnTick() override;
+        void OnCreateBaseObject(alt::Ref<alt::IBaseObject> handle) override;
+        void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> handle) override;
+
+        inline bool AddEntity(alt::IBaseObject* baseObject)
+        {
+            auto entityFound = std::find(this->_entities.begin(), this->_entities.end(), baseObject) != this->_entities.end();
+            if (entityFound)
+                return false;
+
+            this->_entities.push_back(baseObject);
+            return true;
+        }
+
+        inline bool RemoveEntity(alt::IBaseObject* baseObject)
+        {
+            auto it = std::find(this->_entities.begin(), this->_entities.end(), baseObject);
+            if (it == this->_entities.end())
+                return false;
+
+            this->_entities.erase(it);
+            return true;
+        }
+
+        inline bool HasEntity(alt::IBaseObject* baseObject) {
+            return std::find(this->_entities.begin(), this->_entities.end(), baseObject) != this->_entities.end();
+        }
     };
 }
