@@ -3,7 +3,8 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 #include <google/protobuf/text_format.h>
-#include <cstdio>
+// #include <cstdio>
+#include <cstdint>
 #include <sstream>
 
 Go::Runtime *Go::Runtime::Instance = nullptr;
@@ -182,8 +183,9 @@ alt::IBaseObject* Go::Runtime::GetBaseObjectRef(Entity baseObject) {
 }
 
 std::string Go::Runtime::PointerToString(void* p) {
+    auto i = reinterpret_cast<std::uintptr_t>(p);
     std::stringstream ss;
-    ss << p;
+    ss << i;
     return ss.str();
 }
 
