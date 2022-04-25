@@ -8,3 +8,4 @@ cmake-build-default/
 .vs/
 Module.c
 Module.h
+out/
