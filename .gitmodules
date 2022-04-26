@@ -1,9 +1,6 @@
 [submodule "vendors/cpp-sdk"]
 	path = vendors/cpp-sdk
 	url = https://github.com/altmp/cpp-sdk.git
-[submodule "vendors/rapidjson"]
-	path = vendors/rapidjson
-	url = https://github.com/Tencent/rapidjson.git
 [submodule "vendors/protobuf"]
 	path = vendors/protobuf
 	url = https://github.com/protocolbuffers/protobuf
