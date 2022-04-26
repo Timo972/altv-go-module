@@ -6,6 +6,8 @@
 #include "GoEventManager.h"
 #include "GoExportManager.h"
 
+#include <list>
+
 #include "events/PlayerConnectEvent.h"
 #include "events/PlayerDisconnectEvent.h"
 #include "events/PlayerDamageEvent.h"
