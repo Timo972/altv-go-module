@@ -67,7 +67,7 @@ EXPORT Array Core_GetAllResources();
 EXPORT const char *Core_StringToSHA256(const char *str);
 EXPORT void Core_StopServer();
 EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash);
-EXPORT const char *Core_GetServerConfig();
+EXPORT Array Core_GetServerConfig();
 EXPORT unsigned long long Core_HashServerPassword(const char *password);
 #ifdef __cplusplus
 }

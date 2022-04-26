@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "Main.h"
-#include "rapidjson/document.h"
 
 namespace Go {
     class Runtime : public alt::IScriptRuntime {
@@ -30,9 +29,10 @@ namespace Go {
 
         static ConnectionInfo GetConnectionInfo(alt::Ref<alt::IConnectionInfo> info);
 
-        rapidjson::Document SerializeConfigNode(alt::config::Node node);
+        static Array ConfigNodeToProtoBytes(alt::config::Node node);
+        static void ConfigNodeToProto(alt::config::Node node, MValue::MValue *out);
 
-        const char *SerializeConfig(alt::config::Node rootNode);
+        // const char *SerializeConfig(alt::config::Node rootNode);
 
         // Array helper stuff
         template<class ClassInstance>

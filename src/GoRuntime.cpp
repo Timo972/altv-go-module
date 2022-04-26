@@ -1,7 +1,5 @@
 #include "GoRuntime.h"
 #include "GoResource.h"
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
 #include <google/protobuf/text_format.h>
 // #include <cstdio>
 #include <cstdint>
@@ -85,65 +83,62 @@ ConnectionInfo Go::Runtime::GetConnectionInfo(alt::Ref <alt::IConnectionInfo> in
     return conn;
 }
 
-rapidjson::Document Go::Runtime::SerializeConfigNode(alt::config::Node node) {
+Array Go::Runtime::ConfigNodeToProtoBytes(alt::config::Node node) 
+{
+    auto value = new MValue::MValue();
+    ConfigNodeToProto(node, value);
+
+    Array arr;
+    arr.size = value->ByteSizeLong();
+
+    unsigned char* byteArray = new unsigned char[arr.size];
+    value->SerializeToArray(byteArray, arr.size);
+    arr.array = byteArray;
+
+    return arr;
+}
+
+void Go::Runtime::ConfigNodeToProto(alt::config::Node node, MValue::MValue *out)
+{
     alt::config::Node::Type type = node.GetType();
-    rapidjson::Document doc;
 
     if (type == alt::config::Node::Type::DICT) {
         auto dict = node.ToDict();
+
         for (auto it = dict.begin(); it != dict.end(); ++it) {
             auto key = it->first;
-            auto value = SerializeConfigNode(it->second);
+            out->add_dict(key);
 
-            doc.AddMember(rapidjson::Value(key.c_str(), key.size()), value, doc.GetAllocator());
+            auto value = out->add_list();
+            ConfigNodeToProto(it->second, value);
         }
     } else if (type == alt::config::Node::Type::LIST) {
         auto list = node.ToList();
 
         for (auto it = list.begin(); it != list.end(); ++it) {
-            auto value = SerializeConfigNode(*it);
-
-            doc.PushBack(value.Move(), doc.GetAllocator());
+            auto value = out->add_list();
+            ConfigNodeToProto(*it, value);
         }
     } else if (type == alt::config::Node::Type::SCALAR) {
         for (uint8_t i = 0; i < 3; i++) {
             try {
                 if (i == 0) {
-                    //doc.Bool(node.ToBool());
-                    doc.SetBool(node.ToBool());
-                } else if (i == 1) {
-                    //doc.Double(node.ToNumber());
-                    doc.SetDouble(node.ToNumber());
-                } else if (i == 2) {
-                    auto str = node.ToString();
-                    //doc.String(str.c_str(), str.size(), true);
-                    doc.SetString(str.c_str(), str.size());
+                    out->set_boolvalue(node.ToBool());
                 }
-            } catch (...) {
+                else if (i == 1) {
+                    out->set_doublevalue(node.ToNumber());
+                }
+                else if (i == 2) {
+                    out->set_stringvalue(node.ToString());
+                }
+            }
+            catch (...) {
                 continue;
             }
         }
-
+    } else {
+        out->set_nilvalue(true);
     }
-
-    return doc;
-}
-
-const char *Go::Runtime::SerializeConfig(alt::config::Node rootNode) {
-    if (!rootNode.IsDict()) {
-        return "{}";
-    }
-
-    auto root = rootNode.ToDict();
-
-    rapidjson::Document doc = SerializeConfigNode(rootNode);
-
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer <rapidjson::StringBuffer> writer(buffer);
-
-    doc.Accept(writer);
-
-    return buffer.GetString();
 }
 
 alt::IEntity *Go::Runtime::GetEntityRef(Entity entity) {

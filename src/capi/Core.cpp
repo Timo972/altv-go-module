@@ -1,6 +1,5 @@
 #include "Core.h"
 #include "Runtime.h"
-#include "rapidjson/document.h"
 
 EXPORT void Core_LogInfo(const char *message) {
     alt::ICore::Instance().LogInfo(message);
@@ -365,9 +364,9 @@ EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash) {
     return m;
 }
 
-EXPORT const char *Core_GetServerConfig() {
+EXPORT Array Core_GetServerConfig() {
     auto config = alt::ICore::Instance().GetServerConfig();
-    return Go::Runtime::GetInstance()->SerializeConfig(config);
+    return Go::Runtime::ConfigNodeToProtoBytes(config);
 }
 
 EXPORT unsigned long long Core_HashServerPassword(const char *password) {
