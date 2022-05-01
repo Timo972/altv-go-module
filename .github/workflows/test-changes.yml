@@ -30,7 +30,7 @@ jobs:
 
       - name: Move protobuf lib into vendors dir
         shell: bash
-        run: cp ${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib/* vendors/protobuf/lib/
+        run: cp vcpkg/installed/x64-windows-static/lib/* vendors/protobuf/lib/
 
       - name: Build
         shell: cmd
