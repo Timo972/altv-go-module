@@ -276,14 +276,9 @@ EXPORT void *Core_CreatePointBlipPosition(float x, float y, float z) {
     return blip.Get();
 }
 
-EXPORT void *Core_CreatePointBlipEntity(Entity
-                                        entity) {
-// FIXME: Entity struct to alt::IEntity and pass then
-    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, nullptr);
-    return blip.
-
-            Get();
-
+EXPORT void *Core_CreatePointBlipEntity(Entity entity) {
+    auto blip = alt::ICore::Instance().CreateBlip(nullptr, alt::IBlip::BlipType::DESTINATION, Go::Runtime::GetEntityRef(entity));
+    return blip.Get();
 }
 
 EXPORT void *Core_CreateAreaBlip(float x, float y, float z, float width, float height) {
@@ -301,9 +296,16 @@ EXPORT void *Core_CreateRadiusBlip(float x, float y, float z, float radius) {
 }
 
 EXPORT void *Core_CreateColShapePolygon(float minZ, float maxZ, Array points) {
-    // auto cs = alt::ICore::Instance().CreateColShapePolygon(minZ, maxZ, );
-    // return cs.Get();
-    return nullptr;
+    std::vector<alt::Vector2f> p;
+    auto data = reinterpret_cast<Vector2*>(points.array);
+
+    for (uint64_t i = 0; i < points.size; i++) {
+        Vector2 v = data[i];
+        p.push_back(alt::Vector2f(v.x, v.y));
+    }
+
+    auto cs = alt::ICore::Instance().CreateColShapePolygon(minZ, maxZ, p);
+    return cs.Get();
 }
 
 EXPORT Array Core_GetBlips() {
