@@ -17,6 +17,16 @@ file(GLOB_RECURSE PROJECT_PROTO_FILES "src/*.proto")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
+if(MSVC)
+    add_compile_options(
+        $<$<CONFIG:>:/MT>
+        $<$<CONFIG:Debug>:/MTd>
+        $<$<CONFIG:Release>:/MT>
+    )
+endif()
+
+MESSAGE(STATUS "Flags:" ${CMAKE_CXX_FLAGS_RELEASE})
+
 # protobuf dependency
 list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/vendors/protobuf")
 find_package(Protobuf REQUIRED)
@@ -39,5 +49,5 @@ add_library(
         ${PROJECT_SOURCE_FILES} ${PROTO_SRCS} ${PROTO_HDRS}
 )
 
-add_dependencies(${PROJECT_NAME} alt-sdk)
-target_link_libraries(${PROJECT_NAME} PRIVATE ${Protobuf_LIBRARIES})
+add_dependencies(${PROJECT_MODULE_NAME} alt-sdk)
+target_link_libraries(${PROJECT_MODULE_NAME} PRIVATE ${Protobuf_LIBRARIES})

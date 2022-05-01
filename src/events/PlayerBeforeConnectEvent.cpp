@@ -4,7 +4,7 @@ Go::PlayerBeforeConnectEvent::PlayerBeforeConnectEvent(ModuleLibrary *module) : 
 
 void Go::PlayerBeforeConnectEvent::Call(const alt::CEvent *ev) {
     static auto call = GET_FUNC(Library, "altPlayerBeforeConnectEvent",
-                                const char * (*)(connectionInfo info, const char *reason));
+                                void (*)(void *connectionHandle, connectionInfo info, const char *reason));
 
     if (call == nullptr) {
         alt::ICore::Instance().LogError("Couldn't not call PlayerBeforeConnectEvent.");
@@ -16,9 +16,5 @@ void Go::PlayerBeforeConnectEvent::Call(const alt::CEvent *ev) {
     auto reason = event->GetReason().c_str();
     auto conn = Go::Runtime::GetConnectionInfo(info);
 
-    auto result = std::string(call(conn, reason));
-    if (result.empty())
-        info->Accept();
-    else
-        info->Decline(result);
+    call(info.Get(), conn, reason);
 }

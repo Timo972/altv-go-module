@@ -94,3 +94,18 @@ EXPORT Array Runtime_GetAltExport(const char *targetResourceName, const char *ex
     auto data = Go::Runtime::MValueToProtoBytes(exportMVal);
     return data;
 }
+
+EXPORT void Connection_Accept(void* handle) {
+    auto conn = reinterpret_cast<alt::IConnectionInfo*>(handle);
+    conn->Accept();
+}
+
+EXPORT void Connection_Decline(void* handle, const char* reason) {
+    auto conn = reinterpret_cast<alt::IConnectionInfo*>(handle);
+    conn->Decline(reason);
+}
+
+EXPORT int Connection_IsAccepted(void* handle) {
+    auto conn = reinterpret_cast<alt::IConnectionInfo*>(handle);
+    return conn->IsAccepted();
+}

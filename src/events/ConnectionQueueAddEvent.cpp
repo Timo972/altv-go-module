@@ -4,7 +4,7 @@ Go::ConnectionQueueAddEvent::ConnectionQueueAddEvent(ModuleLibrary *module) : IE
 
 void Go::ConnectionQueueAddEvent::Call(const alt::CEvent *ev) {
     static auto call = GET_FUNC(Library, "altConnectionQueueAddEvent",
-                                const char * (*)(connectionInfo info));
+                                int (*)(void *handle, connectionInfo info));
 
     if (call == nullptr) {
         alt::ICore::Instance().LogError("Couldn't not call ConnectionQueueAddEvent.");
@@ -15,12 +15,9 @@ void Go::ConnectionQueueAddEvent::Call(const alt::CEvent *ev) {
     auto info = event->GetConnectionInfo();
     auto conn = Go::Runtime::GetConnectionInfo(info);
 
-    auto result = std::string(call(conn));
-    if (result.empty())
-        info->Accept();
-    else {
-        info->Decline(result);
-        // FIXME: not sure how queue denying is supposed to be done
-        // event->Cancel();
+    int cancel = call(info.Get(), conn);
+
+    if (cancel == 0) {
+        event->Cancel();
     }
 }

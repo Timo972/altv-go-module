@@ -4,7 +4,7 @@ Go::ConnectionQueueRemoveEvent::ConnectionQueueRemoveEvent(ModuleLibrary *module
 
 void Go::ConnectionQueueRemoveEvent::Call(const alt::CEvent *ev) {
     static auto call = GET_FUNC(Library, "altConnectionQueueRemoveEvent",
-                               void (*)(connectionInfo info));
+                               int (*)(void *handle, connectionInfo info));
 
     if (call == nullptr) {
         alt::ICore::Instance().LogError("Couldn't not call ConnectionQueueRemoveEvent.");
@@ -15,5 +15,8 @@ void Go::ConnectionQueueRemoveEvent::Call(const alt::CEvent *ev) {
     auto info = event->GetConnectionInfo();
     auto conn = Go::Runtime::GetConnectionInfo(info);
 
-    call(conn);
+    int cancel = call(info.Get(), conn);
+    if (cancel == 0) {
+        event->Cancel();
+    }
 }
