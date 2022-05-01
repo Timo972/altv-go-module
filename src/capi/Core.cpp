@@ -348,6 +348,7 @@ EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash) {
 
     m.title = modelInfo.title.c_str();
     m.modelType = static_cast<unsigned char>(modelInfo.modelType);
+    m.hasAutoAttachTrailer = static_cast<unsigned char>(modelInfo.hasAutoAttachTrailer);
     m.wheelsCount = modelInfo.wheelsCount;
     m.hasArmoredWindows = modelInfo.hasArmoredWindows;
     m.primaryColor = modelInfo.primaryColor;

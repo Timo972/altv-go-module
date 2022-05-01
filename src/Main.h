@@ -120,6 +120,8 @@ typedef struct vehicleModelInfo {
    unsigned char wheelsCount;
    // bool
    unsigned char hasArmoredWindows;
+   unsigned char hasAutoAttachTrailer;
+
    unsigned char primaryColor;
    unsigned char secondaryColor;
    unsigned char pearlColor;

@@ -14,6 +14,9 @@ extern "C"
     EXPORT Array Runtime_GetAltExport(const char *targetResourceName, const char *exportName);
     EXPORT void *Runtime_CreateMValueFunction(const char *resourceName, unsigned long long id);
     EXPORT Array Runtime_CallMValueFunction(void *ptr, Array args);
+    EXPORT void Connection_Accept(void *handle);
+    EXPORT void Connection_Decline(void *handle, const char *reason);
+    EXPORT int Connection_IsAccepted(void *handle);
 #ifdef __cplusplus
 }
 #endif

@@ -1,6 +1,4 @@
 #include "LocalSyncedMetaDataChangeEvent.h"
-// cpp-sdk does not include it by default??
-#include "events/CLocalMetaDataChangeEvent.h"
 #include "GoRuntime.h"
 
 Go::LocalSyncedMetaDataChangeEvent::LocalSyncedMetaDataChangeEvent(ModuleLibrary *module) : IEvent(module) {}
