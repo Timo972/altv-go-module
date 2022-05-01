@@ -171,7 +171,7 @@ alt::IBaseObject* Go::Runtime::GetBaseObjectRef(Entity baseObject) {
     case alt::IBaseObject::Type::VEHICLE:
         return reinterpret_cast<alt::IVehicle*>(baseObject.Ptr);
     case alt::IBaseObject::Type::VOICE_CHANNEL:
-        return reinterpret_cast<alt::IVehicle*>(baseObject.Ptr);
+        return reinterpret_cast<alt::IVoiceChannel*>(baseObject.Ptr);
     }
 
     return nullptr;
