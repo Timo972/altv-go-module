@@ -134,5 +134,23 @@ typedef struct vehicleModelInfo {
    unsigned short defaultExtras;
 } VehicleModelInfo;
 
+/*
+typedef struct resourceInfo {
+    void *ptr;
+    unsigned char isStarted;
+    const char *type;
+    const char *name;
+    const char *main;
+    Array exports;
+    Array dependencies;
+    Array dependants;
+    Array requiredPermissions;
+    Array optionalPermissions;
+
+    const char *path;
+    Array config;
+} ResourceInfo;
+*/
+
 
 #include "SDK.h"
