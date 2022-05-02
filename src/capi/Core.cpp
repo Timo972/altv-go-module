@@ -375,3 +375,9 @@ EXPORT Array Core_GetServerConfig() {
 EXPORT unsigned long long Core_HashServerPassword(const char *password) {
     return alt::ICore::Instance().HashServerPassword(password);
 }
+
+EXPORT void* Core_GetResourceByName(const char* resourceName) {
+    alt::IResource *r = alt::ICore::Instance().GetResource(resourceName);
+
+    return r;
+}

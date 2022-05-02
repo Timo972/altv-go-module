@@ -69,6 +69,7 @@ EXPORT void Core_StopServer();
 EXPORT VehicleModelInfo Core_GetVehicleModelByHash(unsigned int hash);
 EXPORT Array Core_GetServerConfig();
 EXPORT unsigned long long Core_HashServerPassword(const char *password);
+EXPORT void* Core_GetResourceByName(const char *resourceName);
 #ifdef __cplusplus
 }
 #endif
