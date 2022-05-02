@@ -44,6 +44,7 @@
 #include "events/ServerStartedEvent.h"
 #include "events/LocalSyncedMetaDataChangeEvent.h"
 #include "events/MetaDataChangeEvent.h"
+#include "events/PlayerRequestControlEvent.h"
 
 namespace Go
 {

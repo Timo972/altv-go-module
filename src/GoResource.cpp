@@ -67,6 +67,7 @@ bool Go::Resource::Start() {
     RegisterEventHandler(Go::EventType::SERVER_STARTED, new ServerStartedEvent(Module));
     RegisterEventHandler(Go::EventType::LOCAL_SYNCED_META_CHANGE, new LocalSyncedMetaDataChangeEvent(Module));
     RegisterEventHandler(Go::EventType::META_CHANGE, new MetaDataChangeEvent(Module));
+    RegisterEventHandler(Go::EventType::PLAYER_REQUEST_CONTROL, new PlayerRequestControlEvent(Module));
 
     start();
 
