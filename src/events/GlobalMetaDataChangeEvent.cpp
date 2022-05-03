@@ -22,4 +22,9 @@ void Go::GlobalMetaDataChangeEvent::Call(const alt::CEvent *ev)
     auto oldValue = Go::Runtime::MValueToProtoBytes(oldValueMeta);
 
     call(key, newValue, oldValue);
+
+#ifdef _WIN32
+    delete[] newValue.array;
+    delete[] oldValue.array;
+#endif
 }

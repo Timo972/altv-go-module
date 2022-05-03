@@ -17,15 +17,8 @@ alt::MValue Go::Function::Call(alt::MValueArgs args) const {
     delete[] data.array;
 #endif
 
-    // TODO: free proto.array
     auto bytes = reinterpret_cast<unsigned char*>(proto.array);
-    auto retValue = Go::Runtime::ProtoToMValue(bytes, proto.size);
-
-#ifdef _WIN32
-    delete[] proto.array;
-#endif
-
-    return retValue;
+    return Go::Runtime::ProtoToMValue(bytes, proto.size);
 }
 
 void Go::ExportsManager::AddExport(const char *exportName, alt::MValue data) {
